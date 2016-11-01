@@ -1,5 +1,8 @@
 package com.example.t_ste.resumekings;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -33,6 +36,10 @@ public class MainActivity extends AppCompatActivity
         ap.setEmail("Test@email.com");
         ap.setNotes("Android Sucks");
         ap.setStars(2);
+        Drawable myDrawable = getResources().getDrawable(R.drawable.ic_action_name);
+        Bitmap anImage      = ((BitmapDrawable) myDrawable).getBitmap();
+        ap.setResumePicture(anImage);
+        ap.setProfilePicture(anImage);
         taskList.add(ap);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

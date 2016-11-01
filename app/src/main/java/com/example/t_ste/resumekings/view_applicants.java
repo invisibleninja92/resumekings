@@ -74,10 +74,10 @@ public class view_applicants extends Fragment {
 
         LL.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ImageView ResumePic= (ImageView)view.findViewById(R.id.imageView2);
-                ResumePic.setImageBitmap(lTaskList.get(position).getResumePicture());
-                ImageView ProfilePic= (ImageView)view.findViewById(R.id.imageView);
+                ImageView ResumePic= (ImageView)((MainActivity)getActivity()).findViewById(R.id.imageView2);
                 ResumePic.setImageBitmap(lTaskList.get(position).getProfilePicture());
+                ImageView ProfilePic= (ImageView)((MainActivity)getActivity()).findViewById(R.id.imageView);
+                ProfilePic.setImageBitmap(lTaskList.get(position).getProfilePicture());
             }
         });
         return view;
