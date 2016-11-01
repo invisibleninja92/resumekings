@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:icon="@android:drawable/ic_menu_add"
+            android:title="Create New User"
+            android:id="@+id/Create_New_User" />
+        <item
+            android:id="@+id/View_Recent_Applicants"
+            android:icon="@android:drawable/ic_menu_recent_history"
+            android:title="View Recent Applicants" />
+        <item
+            android:icon="@android:drawable/btn_star"
+            android:title="Favorites"
+            android:id="@+id/Favorite_Applicants" />
+        <item
+            android:id="@+id/Something"
+            android:icon="@android:drawable/ic_menu_myplaces"
+            android:title="Something..." />
+    </group>
+
+    <item android:title="Settings">
+        <menu>
+            <item
+                android:id="@+id/Tutorial"
+                android:icon="@android:drawable/ic_menu_help"
+                android:title="Tutorial" />
+            <item
+                android:icon="@android:drawable/ic_menu_preferences"
+                android:title="Settings"
+                android:id="@+id/Settings" />
+        </menu>
+    </item>
+
+</menu>

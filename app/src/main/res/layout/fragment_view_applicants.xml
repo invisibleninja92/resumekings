@@ -1,0 +1,71 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.t_ste.resumekings.view_applicants">
+
+    <!-- TODO: Update blank fragment layout -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        >
+
+        <TextView
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Resume Kings"
+            android:id="@+id/textView"
+            android:textAlignment="center"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="0dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="16dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView"
+            android:src="@drawable/person"
+            android:textAlignment="center"
+            android:longClickable="false"
+            android:layout_alignTop="@+id/imageView2"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="165dp"
+            android:layout_marginStart="165dp" />
+
+        <SearchView
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/searchView2"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="0dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="144dp" />
+
+        <ListView
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/listView"
+            android:layout_gravity="right|left"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="0dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="177dp" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/imageView2"
+            android:src="@drawable/person"
+            android:layout_toRightOf="@+id/searchView2"
+            android:layout_toEndOf="@+id/searchView2"
+            android:layout_below="@+id/textView" />
+
+    </RelativeLayout>
+
+</FrameLayout>

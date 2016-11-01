@@ -1,0 +1,146 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.t_ste.resumekings.create_new_applicant"
+    android:rowCount="3"
+    android:columnCount="3">
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:columnCount="3"
+        android:rowCount="7">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/EditProfilePic"
+            android:src="@drawable/person"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="0dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="0dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:id="@+id/saveButton"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="480dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="0dp" />
+        <android.support.design.widget.TextInputLayout
+            android:layout_row="1"
+            android:layout_column="0"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="0dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="96dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:hint="Name"
+                android:ems="10"
+                android:id="@+id/EditName"
+                android:layout_row="1"
+                android:layout_column="0" />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_row="2"
+            android:layout_column="0"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="0dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="181dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:hint="Email"
+                android:ems="10"
+                android:id="@+id/EditEmail" />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_row="3"
+            android:layout_column="0"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="0dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="266dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:ems="10"
+                android:hint="Phone"
+                android:id="@+id/EditPhone"
+                android:layout_row="3"
+                android:layout_column="0" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_row="4"
+            android:layout_column="0"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="0dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="351dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content">
+            <EditText
+                android:layout_width="217dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/EditNotes"
+                android:hint="Notes"
+                android:layout_row="4"
+                android:layout_column="0" />
+        </android.support.design.widget.TextInputLayout>
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/EditResumePic"
+            android:src="@drawable/person"
+            android:layout_row="1"
+            android:layout_column="1"
+            android:layout_rowSpan="4"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="480dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="96dp" />
+
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/EditRating"
+            android:layout_row="5"
+            android:layout_column="0"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="0dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="436dp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
