@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 
 /**
  * Created by t_ste on 11/1/2016.
+ * This is the data structure for the applicantProfile there is an array of these objects in the main
+ * Activity this is important
  */
 public class applicantProfile {
     private Bitmap ProfilePicture;

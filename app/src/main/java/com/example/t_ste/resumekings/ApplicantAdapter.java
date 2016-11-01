@@ -12,6 +12,8 @@ import java.util.ArrayList;
 
 /**
  * Created by t_ste on 11/1/2016.
+ * The ApplicantAdapter class the creates a new personitem object and places the converView into
+ * The listview in the Fragment_view_applicants The adapter is important.
  */
 
 public class ApplicantAdapter extends ArrayAdapter<applicantProfile> {
