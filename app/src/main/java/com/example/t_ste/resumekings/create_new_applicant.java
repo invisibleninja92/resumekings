@@ -93,7 +93,7 @@ public class create_new_applicant extends Fragment {
         save.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View V){
-                applicantProfile ap = new applicantProfile();
+                Applicant_Profile ap = new Applicant_Profile();
                 ap.setUserName(Name.getText().toString());
                 ap.setPhoneNumber(Phone.getText().toString());
                 ap.setEmail(Email.getText().toString());

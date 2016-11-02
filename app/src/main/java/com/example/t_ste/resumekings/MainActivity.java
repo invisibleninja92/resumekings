@@ -27,6 +27,25 @@ import static android.R.id.toggle;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+
+    /*
+    FUUUUUUUUUUUUUUCCCCCCCCCCCCCKKKKKKKKKKKKKKKKKKK YYYYYYYYYYYOOOOOOOOOOOOOUUUUUUUUUUUUUUUUU
+    GGGGGGGRRRRRRRRRRREEEEEEEEEEEGGGGGGGGGGGGGGGGGGGGGGG
+    FFFFFFFFFFUUUUUUUUUUUUUUCCCCCCCCCCCCCCKKKKKKKKKKKKK YYYYYYYYYYYYOOOOOOOOOOUUUUUUUUUUU
+     */
+
+
+
+
+
+
+
+
+
+
+
+
+
     // Temporary (possibly permanent) list of applicants to keep locally
     ArrayList<Applicant_Profile> taskList= new ArrayList<>();
     FragmentManager fm = getSupportFragmentManager();
@@ -41,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Set the initial fragment in that container
         FragmentTransaction ft = fm.beginTransaction();
 
-        View_Applicants newFragment = new View_Applicants();
+        view_applicants newFragment = new view_applicants();
         ft.add(R.id.Container, newFragment);
         ft.commit();
 
@@ -158,11 +177,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch(viewId) {
             case R.id.Create_New_Applicant:
                 // Initialize the new fragment to swap out
-                newFragment = new Create_New_Applicant();
+                newFragment = new create_new_applicant();
                 break;
             case R.id.View_Recent_Applicants:
                 // Initialize the view applicants fragment
-                newFragment = new View_Applicants();
+                newFragment = new view_applicants();
                 break;
             case R.id.Favorite_Applicants:
                 //fragment = new Favorite_Applicants_Fragment();

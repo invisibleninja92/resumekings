@@ -23,7 +23,7 @@ import java.util.ArrayList;
  */
 public class view_applicants extends Fragment {
     ListView LL;
-    ArrayList<applicantProfile> lTaskList;
+    ArrayList<Applicant_Profile> lTaskList;
 
     public view_applicants() {
         // Required empty public constructor
@@ -55,7 +55,7 @@ public class view_applicants extends Fragment {
         View view= inflater.inflate(R.layout.fragment_view_applicants, container, false);//Creates the view(Fragment)
         LL = (ListView)view.findViewById(R.id.listView);
         //we need to create an application adapter to create the elements in the list
-        final ApplicantAdapter adapt = new ApplicantAdapter(view.getContext(),lTaskList);
+        final Applicant_Adapter adapt = new Applicant_Adapter(view.getContext(),lTaskList);
         LL.setAdapter(adapt);//set the adapter of elements to listview
         //When the ListView Element is clicked we need to change the images
         LL.setOnItemClickListener(new AdapterView.OnItemClickListener() {
