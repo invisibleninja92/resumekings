@@ -7,7 +7,8 @@ import android.graphics.Bitmap;
  * This is the data structure for the applicantProfile there is an array of these objects in the main
  * Activity this is important
  */
-public class applicantProfile {
+public class Applicant_Profile {
+
     private Bitmap ProfilePicture;
     private Bitmap ResumePicture;
     public String UserName;
@@ -72,6 +73,7 @@ public class applicantProfile {
     public void setNotes(String notes) {
         Notes = notes;
     }
+
     @Override
     public String toString() {
         return UserName+"\n"+Email;

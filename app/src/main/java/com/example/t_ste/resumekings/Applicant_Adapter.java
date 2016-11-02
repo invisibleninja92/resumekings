@@ -16,13 +16,14 @@ import java.util.ArrayList;
  * The listview in the Fragment_view_applicants The adapter is important.
  */
 
-public class ApplicantAdapter extends ArrayAdapter<applicantProfile> {
-    public ApplicantAdapter(Context context, ArrayList<applicantProfile> users){
+public class Applicant_Adapter extends ArrayAdapter<Applicant_Profile> {
+
+    public Applicant_Adapter(Context context, ArrayList<Applicant_Profile> users){
         super(context,0,users);
     }
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
-        applicantProfile up = getItem(position);
+        Applicant_Profile up = getItem(position);
         if(convertView==null){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.personitem, parent, false);
         }

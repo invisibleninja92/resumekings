@@ -4,15 +4,15 @@
     <group android:checkableBehavior="single">
         <item
             android:icon="@android:drawable/ic_menu_add"
-            android:title="Create New User"
-            android:id="@+id/Create_New_User" />
+            android:title="@string/create_new_applicant"
+            android:id="@+id/Create_New_Applicant" />
         <item
             android:id="@+id/View_Recent_Applicants"
             android:icon="@android:drawable/ic_menu_recent_history"
-            android:title="View Recent Applicants" />
+            android:title="@string/view_recent_applicants" />
         <item
             android:icon="@android:drawable/btn_star"
-            android:title="Favorites"
+            android:title="@string/favorites"
             android:id="@+id/Favorite_Applicants" />
         <item
             android:id="@+id/Something"
@@ -20,15 +20,15 @@
             android:title="Something..." />
     </group>
 
-    <item android:title="Settings">
+    <item android:title="@string/settings">
         <menu>
             <item
                 android:id="@+id/Tutorial"
                 android:icon="@android:drawable/ic_menu_help"
-                android:title="Tutorial" />
+                android:title="@string/tutorial" />
             <item
                 android:icon="@android:drawable/ic_menu_preferences"
-                android:title="Settings"
+                android:title="@string/settings"
                 android:id="@+id/Settings" />
         </menu>
     </item>

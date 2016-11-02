@@ -4,9 +4,12 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,28 +23,41 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
-    ArrayList<applicantProfile> taskList= new ArrayList<applicantProfile>();
+import static android.R.id.toggle;
+
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    // Temporary (possibly permanent) list of applicants to keep locally
+    ArrayList<Applicant_Profile> taskList= new ArrayList<>();
+    FragmentManager fm = getSupportFragmentManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // The standard on create items and initializing the toolbars
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Set the initial fragment in that container
+        FragmentTransaction ft = fm.beginTransaction();
+
+        View_Applicants newFragment = new View_Applicants();
+        ft.add(R.id.Container, newFragment);
+        ft.commit();
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        applicantProfile ap = new applicantProfile();
-        ap.setUserName("Test");
+        Applicant_Profile ap = new Applicant_Profile();
+
+        // Testing Derpage
+        ap.setUserName("Derpina");
         ap.setPhoneNumber("1234456789");
-        ap.setEmail("Test@email.com");
+        ap.setEmail("Derpina@yuno.net");
         ap.setNotes("Android Sucks");
         ap.setStars(2);
-        Drawable myDrawable = getResources().getDrawable(R.drawable.ic_action_name);
-        Bitmap anImage      = ((BitmapDrawable) myDrawable).getBitmap();
-        ap.setResumePicture(anImage);
-        ap.setProfilePicture(anImage);
         taskList.add(ap);
 
+        // Floating action bar that we may turn into a hotswap to something else if we think we need it...
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +67,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        // The drawer on the left side of the home screen
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -60,18 +77,17 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Fragment fragment = null;
-        Class fragmentClass;
-        fragmentClass = view_applicants.class;
+        // Class fragmentClass;
+        // fragmentClass = view_applicants.class;
 
-        try {
-            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            fragment = (Fragment) fragmentClass.newInstance();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
-        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-        final int commit = fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+        // android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+        // final int commit = fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
     }
 
     @Override
@@ -81,6 +97,11 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+        }
+        int fragments = getSupportFragmentManager().getBackStackEntryCount();
+        if (fragments == 1) {
+            finish();
+            return;
         }
     }
 
@@ -110,7 +131,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        if (id == R.id.Create_New_User) {
+        if (id == R.id.Create_New_Applicant) {
             displayView(id);
         } else if (id == R.id.Tutorial) {
             displayView(id);
@@ -130,50 +151,50 @@ public class MainActivity extends AppCompatActivity
     }
     public void displayView(int viewId) {
 
-        Fragment fragment = null;
-        Class fragmentClass = null;
-        String title = getString(R.string.app_name);
+        // Create a new fragment here to swap out with the one that was already there.
+        Fragment newFragment = null;
+
 
         switch(viewId) {
-            case R.id.Create_New_User:
-                fragmentClass = create_new_applicant.class;
-                break;
-            case R.id.Tutorial:
-                //fragment = new Tutorial_Fragment();
-                //title = getString(R.string.Tutorial);
-                Toast.makeText(this, "Here we will start the tutorial!", Toast.LENGTH_SHORT).show();
+            case R.id.Create_New_Applicant:
+                // Initialize the new fragment to swap out
+                newFragment = new Create_New_Applicant();
                 break;
             case R.id.View_Recent_Applicants:
-                fragmentClass = view_applicants.class;
-                //title = getString(R.string.View_Recent_Applicants);
-                Toast.makeText(this, "Here we will show the recent applicants", Toast.LENGTH_SHORT).show();
+                // Initialize the view applicants fragment
+                newFragment = new View_Applicants();
                 break;
             case R.id.Favorite_Applicants:
                 //fragment = new Favorite_Applicants_Fragment();
                 //title = getString(R.id.Favorite_Applicants);
                 Toast.makeText(this, "Show the favorite applicants", Toast.LENGTH_SHORT).show();
                 break;
+            case R.id.Tutorial:
+                //fragment = new Tutorial_Fragment();
+                //title = getString(R.string.Tutorial);
+                Toast.makeText(this, "Show the tutorial", Toast.LENGTH_SHORT).show();
+                break;
             case R.id.Settings:
                 //fragment = new Settings_Fragment();
                 //title = getString(R.id.Settings);
-                Toast.makeText(this, "Show the settings...if we add any", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "Show the settings...if we add any", Toast.LENGTH_SHORT).show();
                 break;
         }
-        try {
-            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
+
+        // If the new
+        if (newFragment != null) {
+            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.Container, newFragment);
+            transaction.commit();
         }
-
-        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-        final int commit = fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
-
     }
-    public void setTaskList(applicantProfile ap){
+
+    public void setTaskList(Applicant_Profile ap){
         taskList.add(ap);
 
     }
-    public ArrayList<applicantProfile> getTaskList(){
+    public ArrayList<Applicant_Profile> getTaskList(){
         return taskList;
     }
 }
