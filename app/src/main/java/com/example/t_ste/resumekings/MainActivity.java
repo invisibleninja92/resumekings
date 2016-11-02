@@ -38,14 +38,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 
-
-
-
-
-
-
-
-
     // Temporary (possibly permanent) list of applicants to keep locally
     ArrayList<Applicant_Profile> taskList= new ArrayList<>();
     FragmentManager fm = getSupportFragmentManager();
