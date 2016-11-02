@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 
-
+// I SWEAR I FUCKING HATE YOU
 
     // Temporary (possibly permanent) list of applicants to keep locally
     ArrayList<Applicant_Profile> taskList= new ArrayList<>();
