@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // Temporary (possibly permanent) list of applicants to keep locally
     ArrayList<Applicant_Profile> taskList= new ArrayList<>();
     FragmentManager fm = getSupportFragmentManager();
+    Boolean BaseView = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,17 +89,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        // Class fragmentClass;
-        // fragmentClass = view_applicants.class;
-
-//        try {
-//            fragment = (Fragment) fragmentClass.newInstance();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
-        // android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-        // final int commit = fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
     }
 
     @Override
@@ -164,7 +154,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Create a new fragment here to swap out with the one that was already there.
         Fragment newFragment = null;
-
 
         switch(viewId) {
             case R.id.Create_New_Applicant:
