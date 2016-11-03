@@ -17,7 +17,7 @@
         <item
             android:id="@+id/Something"
             android:icon="@android:drawable/ic_menu_myplaces"
-            android:title="Something..." />
+            android:title="@string/something" />
     </group>
 
     <item android:title="@string/settings">

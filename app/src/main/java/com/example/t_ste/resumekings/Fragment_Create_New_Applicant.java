@@ -137,6 +137,7 @@ public class Fragment_Create_New_Applicant extends Fragment {
         }
     }
 
-
-
+    public void onBackPressed() {
+        getFragmentManager().popBackStack();
+    }
 }

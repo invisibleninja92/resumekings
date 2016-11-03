@@ -5,11 +5,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 
 /**
@@ -22,7 +24,8 @@ import android.view.ViewGroup;
  */
 public class Fragment_View_Applicant extends Fragment {
 
-    FragmentManager fm = getFragmentManager();
+    Button SaveApplicant = (Button) getView().findViewById(R.id.saveApplicant);
+
     public Fragment_View_Applicant() {
         // Required empty public constructor
     }
@@ -46,8 +49,23 @@ public class Fragment_View_Applicant extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment__view__applicant,container, false);
+
+        SaveApplicant.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View V){
+                Fragment fragment = new Fragment_View_Applicants();
+                android.support.v4.app.FragmentManager fm = getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction().replace(R.id.Container, fragment);
+                ft.commit();
+            }
+        });
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment__view__applicant, container, false);
+        return view;
     }
 
+    public void onBackPressed(){
+        getFragmentManager().popBackStack();
+    }
 }

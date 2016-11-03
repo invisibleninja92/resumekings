@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+            return;
         }
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
@@ -186,7 +187,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.replace(R.id.Container, newFragment);
-            if(TAG.equals("Home")) { transaction.addToBackStack(null);}
+            transaction.addToBackStack(null);
             transaction.commit();
         }
     }
