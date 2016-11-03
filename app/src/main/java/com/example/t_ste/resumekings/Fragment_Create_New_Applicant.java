@@ -70,17 +70,17 @@ public class Fragment_Create_New_Applicant extends Fragment {
         ProfilePic = (ImageView)view.findViewById(R.id.EditProfilePic);
         ResumePic = (ImageView)view.findViewById(R.id.EditResumePic);
         SaveButton = (Button) view.findViewById(R.id.saveButton);
-        Name= (EditText)view.findViewById(R.id.EditName);
-        Email= (EditText)view.findViewById(R.id.EditEmail);
-        Phone= (EditText)view.findViewById(R.id.EditPhone);
-        Notes= (EditText)view.findViewById(R.id.EditNotes);
-        RatingBar =(RatingBar)view.findViewById(R.id.EditRating);
+        Name = (EditText)view.findViewById(R.id.EditName);
+        Email = (EditText)view.findViewById(R.id.EditEmail);
+        Phone = (EditText)view.findViewById(R.id.EditPhone);
+        Notes = (EditText)view.findViewById(R.id.EditNotes);
+        RatingBar = (RatingBar)view.findViewById(R.id.EditRating);
 
         ProfilePic.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent,0); // 0 specifies the requestCode so the on activity result know what to do
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(takePictureIntent,REQUEST_IMAGE_CAPTURE); // 0 specifies the requestCode so the on activity result know what to do
             }
         });
 
@@ -123,6 +123,8 @@ public class Fragment_Create_New_Applicant extends Fragment {
 
         super.onActivityResult(requestCode, resultCode, data);
         bitmap = (Bitmap) data.getExtras().get("data");
+
+        if (bitmap == null) return;
 
         switch(requestCode){
             case 0: //if the requestCode was 0 the user took a profile picture

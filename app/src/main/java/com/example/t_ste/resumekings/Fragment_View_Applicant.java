@@ -24,7 +24,7 @@ import android.widget.Button;
  */
 public class Fragment_View_Applicant extends Fragment {
 
-    Button SaveApplicant = (Button) getView().findViewById(R.id.saveApplicant);
+    Button SaveApplicant;
 
     public Fragment_View_Applicant() {
         // Required empty public constructor
@@ -36,7 +36,7 @@ public class Fragment_View_Applicant extends Fragment {
      *
      * @return A new instance of fragment Fragment_View_Applicant.
      */
-    public static Fragment_View_Applicant newInstance(String param1, String param2) {
+    public static Fragment_View_Applicant newInstance() {
         Fragment_View_Applicant fragment = new Fragment_View_Applicant();
         return fragment;
     }
@@ -47,9 +47,9 @@ public class Fragment_View_Applicant extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment__view__applicant,container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment__view__applicant, container, false);
+        SaveApplicant = (Button) view.findViewById(R.id.save_applicant);
 
         SaveApplicant.setOnClickListener(new View.OnClickListener(){
             @Override
