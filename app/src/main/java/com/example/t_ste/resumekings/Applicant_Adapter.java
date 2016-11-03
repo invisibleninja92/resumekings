@@ -28,10 +28,10 @@ public class Applicant_Adapter extends ArrayAdapter<Applicant_Profile> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.personitem, parent, false);
         }
         TextView name = (TextView) convertView.findViewById(R.id.UserName);
-        RatingBar rb = (RatingBar) convertView.findViewById((R.id.ratingBar));
+        RatingBar RatingBar = (RatingBar) convertView.findViewById((R.id.RatingBar));
 
         name.setText(up.getUserName()+"\n"+up.getEmail());
-        rb.setRating(up.getStars());
+        RatingBar.setRating(up.getStars());
         return convertView;
     }
 

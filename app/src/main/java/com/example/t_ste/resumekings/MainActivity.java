@@ -1,15 +1,11 @@
 package com.example.t_ste.resumekings;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -23,8 +19,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import static android.R.id.toggle;
-
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
@@ -37,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 // I SWEAR I FUCKING HATE YOU
+    // LOVE YOU TOO!
 
     // Temporary (possibly permanent) list of applicants to keep locally
     ArrayList<Applicant_Profile> taskList= new ArrayList<>();
@@ -48,14 +43,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // The standard on create items and initializing the toolbars
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main_activity_drawer);
 
         // Set the initial fragment in that container
         FragmentTransaction ft = fm.beginTransaction();
 
-        view_applicants newFragment = new view_applicants();
-        ft.add(R.id.Container, newFragment);
-        ft.commit();
+        Fragment_View_Applicants newFragment = new Fragment_View_Applicants();
+        ft.add(R.id.Container, newFragment).commit();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -99,10 +93,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             super.onBackPressed();
         }
-        int fragments = getSupportFragmentManager().getBackStackEntryCount();
-        if (fragments == 1) {
-            finish();
-            return;
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
         }
     }
 
@@ -154,29 +148,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Create a new fragment here to swap out with the one that was already there.
         Fragment newFragment = null;
+        String TAG = null;
 
         switch(viewId) {
             case R.id.Create_New_Applicant:
                 // Initialize the new fragment to swap out
-                newFragment = new create_new_applicant();
+                newFragment = new Fragment_Create_New_Applicant();
+                TAG = "NotHome";
                 break;
             case R.id.View_Recent_Applicants:
                 // Initialize the view applicants fragment
-                newFragment = new view_applicants();
+                newFragment = new Fragment_View_Applicants();
+                TAG = "Home";
                 break;
             case R.id.Favorite_Applicants:
                 //fragment = new Favorite_Applicants_Fragment();
                 //title = getString(R.id.Favorite_Applicants);
                 Toast.makeText(this, "Show the favorite applicants", Toast.LENGTH_SHORT).show();
+                TAG = "NotHome";
                 break;
             case R.id.Tutorial:
                 //fragment = new Tutorial_Fragment();
                 //title = getString(R.string.Tutorial);
+                TAG = "NotHome";
                 Toast.makeText(this, "Show the tutorial", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.Settings:
                 //fragment = new Settings_Fragment();
                 //title = getString(R.id.Settings);
+                TAG = "NotHome";
                 Toast.makeText(getBaseContext(), "Show the settings...if we add any", Toast.LENGTH_SHORT).show();
                 break;
         }
@@ -186,6 +186,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.replace(R.id.Container, newFragment);
+            if(TAG.equals("Home")) { transaction.addToBackStack(null);}
             transaction.commit();
         }
     }

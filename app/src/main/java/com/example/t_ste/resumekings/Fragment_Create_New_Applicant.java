@@ -24,10 +24,10 @@ import android.widget.TextView;
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
  * to handle interaction events.
- * Use the {@link Create_New_Applicant#newInstance} factory method to
+ * Use the {@link Fragment_Create_New_Applicant#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Create_New_Applicant extends Fragment {
+public class Fragment_Create_New_Applicant extends Fragment {
 
     Button SaveButton;
     ImageView ProfilePic;
@@ -42,7 +42,7 @@ public class Create_New_Applicant extends Fragment {
     Bitmap ResumePicBit;
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
-    public Create_New_Applicant() {
+    public Fragment_Create_New_Applicant() {
         // Required empty public constructor
     }
 
@@ -51,8 +51,8 @@ public class Create_New_Applicant extends Fragment {
      * this fragment using the provided parameters
      * @return A new instance of fragment Create_New_Applicant.
      */
-    public static Create_New_Applicant newInstance() {
-        return new Create_New_Applicant();
+    public static Fragment_Create_New_Applicant newInstance() {
+        return new Fragment_Create_New_Applicant();
     }
 
     @Override
@@ -108,7 +108,7 @@ public class Create_New_Applicant extends Fragment {
                 // call the setTaskListFunction then call the displayView to go back to the main screen.
                 ((MainActivity)getActivity()).setTaskList(ap);
 
-                Fragment fragment = new View_Applicants();
+                Fragment fragment = new Fragment_View_Applicants();
                 android.support.v4.app.FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction().replace(R.id.Container, fragment);
                 ft.commit();

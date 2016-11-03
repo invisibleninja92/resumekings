@@ -1,69 +1,65 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.t_ste.resumekings.view_applicants">
+    tools:context="com.example.t_ste.resumekings.Fragment_View_Applicants"
+    android:orientation="vertical"
+    android:scrollbars="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
-    <RelativeLayout
+    <ImageView
+        android:layout_height="90dp"
+        android:id="@+id/Resume_Applicant_ImageView"
+        android:src="@drawable/person"
+        android:textAlignment="center"
+        android:longClickable="false"
+        android:layout_width="90dp"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Resume Kings"
+        android:id="@+id/textView"
+        android:textAlignment="center"
+        android:layout_marginTop="16dp"
         android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/imageView2"
+        android:layout_alignEnd="@+id/imageView2"
+        android:backgroundTint="@android:color/darker_gray" />
+
+    <SearchView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchView2"
+        android:orientation="horizontal"
+        android:layout_below="@+id/Resume_Applicant_ImageView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Applicant_ListView"
+        android:layout_gravity="right|left"
+        android:layout_below="@+id/searchView2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/searchView2"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        >
-
-        <SearchView
-            android:layout_width="400dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/searchView2"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="0dp"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="144dp" />
-
-        <ListView
-            android:layout_width="400dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/listView"
-            android:layout_gravity="right|left"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="0dp"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="177dp" />
+        android:layout_marginTop="108dp">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/imageView2"
-            android:src="@drawable/person"
-            android:layout_toRightOf="@+id/searchView2"
-            android:layout_toEndOf="@+id/searchView2"
-            android:layout_below="@+id/textView" />
-
-        <ImageView
-            android:layout_height="90dp"
-            android:id="@+id/imageView"
-            android:src="@drawable/person"
-            android:textAlignment="center"
-            android:longClickable="false"
-            android:layout_width="90dp"
-            android:layout_below="@+id/textView"
-            android:layout_centerHorizontal="true" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Resume Kings"
-            android:id="@+id/textView"
-            android:textAlignment="center"
-            android:layout_marginTop="16dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignRight="@+id/imageView2"
-            android:layout_alignEnd="@+id/imageView2"
-            android:backgroundTint="@android:color/darker_gray" />
-
+            android:src="@drawable/person" />
     </RelativeLayout>
 
-</FrameLayout>
+</LinearLayout>
