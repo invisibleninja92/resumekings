@@ -122,7 +122,7 @@ public class Fragment_Create_New_Applicant extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
-        bitmap = (Bitmap) data.getExtras().get("data");
+//        bitmap = (Bitmap) data.getExtras().get("data");
 
         if (bitmap == null) return;
 

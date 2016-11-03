@@ -1,11 +1,15 @@
 package com.example.t_ste.resumekings;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,16 +23,15 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+import static android.R.id.toggle;
 
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     /*
     FUUUUUUUUUUUUUUCCCCCCCCCCCCCKKKKKKKKKKKKKKKKKKK YYYYYYYYYYYOOOOOOOOOOOOOUUUUUUUUUUUUUUUUU
     GGGGGGGRRRRRRRRRRREEEEEEEEEEEGGGGGGGGGGGGGGGGGGGGGGG
     FFFFFFFFFFUUUUUUUUUUUUUUCCCCCCCCCCCCCCKKKKKKKKKKKKK YYYYYYYYYYYYOOOOOOOOOOUUUUUUUUUUU
      */
-
-
 
 // I SWEAR I FUCKING HATE YOU
     // LOVE YOU TOO!
@@ -54,6 +57,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Applicant_Profile ap = new Applicant_Profile();
+        Applicant_Profile ap2 = new Applicant_Profile();
+        Applicant_Profile ap3 = new Applicant_Profile();
+        Applicant_Profile ap4 = new Applicant_Profile();
 
         // Testing Derpage
         ap.setUserName("Derpina");
@@ -62,6 +68,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ap.setNotes("Android Sucks");
         ap.setStars(2);
         taskList.add(ap);
+        ap2.setUserName("Ronald Cross");
+        ap2.setPhoneNumber("16662126969");
+        ap2.setEmail("RonaldCross@IWorkAtLockheed.com");
+        ap2.setNotes("Doesnt know what a conclusion paragraph is. ");
+        ap2.setStars(2);
+        taskList.add(ap2);
+        ap3.setUserName("Brother Morgan");
+        ap3.setPhoneNumber("12555847777");
+        ap3.setEmail("BrotherMogran@RUOKJesusSaves.com");
+        ap3.setNotes("Doesnt stop smileing, Seriously this guy is too happy");
+        ap3.setStars(1);
+        taskList.add(ap3);
+
+        ap4.setUserName("humm");
+        ap4.setEmail("Yayitworked");
+        ap4.setStars(5);
+        taskList.add(ap4);
 
         // Floating action bar that we may turn into a hotswap to something else if we think we need it...
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -92,7 +115,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
-            return;
         }
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
@@ -129,6 +151,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         if (id == R.id.Create_New_Applicant) {
             displayView(id);
+            callAPI aps = new callAPI();
+            aps.doInBackground();
         } else if (id == R.id.Tutorial) {
             displayView(id);
         } else if (id == R.id.View_Recent_Applicants) {
