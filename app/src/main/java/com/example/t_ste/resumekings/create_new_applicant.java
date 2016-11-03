@@ -2,11 +2,14 @@ package com.example.t_ste.resumekings;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +40,7 @@ public class Create_New_Applicant extends Fragment {
     Bitmap bitmap;
     Bitmap ProfilePicBit;
     Bitmap ResumePicBit;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
 
     public Create_New_Applicant() {
         // Required empty public constructor
@@ -48,8 +52,7 @@ public class Create_New_Applicant extends Fragment {
      * @return A new instance of fragment Create_New_Applicant.
      */
     public static Create_New_Applicant newInstance() {
-        Create_New_Applicant fragment = new Create_New_Applicant();
-        return fragment;
+        return new Create_New_Applicant();
     }
 
     @Override
@@ -84,8 +87,8 @@ public class Create_New_Applicant extends Fragment {
         ResumePic.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent,1);// 1 specifies the requestCode so the on activity result know what to do
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
             }
         });
 
@@ -104,7 +107,11 @@ public class Create_New_Applicant extends Fragment {
                 // We want to send it back to the mainActivity to do this we get the main activity and
                 // call the setTaskListFunction then call the displayView to go back to the main screen.
                 ((MainActivity)getActivity()).setTaskList(ap);
-                ((MainActivity)getActivity()).displayView(R.id.View_Recent_Applicants);
+
+                Fragment fragment = new View_Applicants();
+                android.support.v4.app.FragmentManager fm = getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction().replace(R.id.Container, fragment);
+                ft.commit();
             }
         });
         return view; // This returns the view(Fragment) with all the initializers
@@ -125,7 +132,7 @@ public class Create_New_Applicant extends Fragment {
 
             case 1: //if the requestCode was 1 the user took a Resume picture
                 ResumePic.setImageBitmap(bitmap);
-                ResumePicBit=bitmap;
+                ResumePicBit = bitmap;
                 break;
         }
     }
