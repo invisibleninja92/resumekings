@@ -181,29 +181,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.Create_New_Applicant:
                 // Initialize the new fragment to swap out
                 newFragment = new Fragment_Create_New_Applicant();
-                TAG = "NotHome";
+                TAG = "CreateNewApplicant";
                 break;
             case R.id.View_Recent_Applicants:
                 // Initialize the view applicants fragment
                 newFragment = new Fragment_View_Applicants();
-                TAG = "Home";
+                TAG = "ViewApplicants";
                 break;
             case R.id.Favorite_Applicants:
-                //fragment = new Favorite_Applicants_Fragment();
-                //title = getString(R.id.Favorite_Applicants);
+                //fragment = new Fragment_Favorite_Applicants();
                 Toast.makeText(this, "Show the favorite applicants", Toast.LENGTH_SHORT).show();
-                TAG = "NotHome";
+                TAG = "FavoriteApplicants";
                 break;
             case R.id.Tutorial:
-                //fragment = new Tutorial_Fragment();
-                //title = getString(R.string.Tutorial);
-                TAG = "NotHome";
+                //fragment = new Fragment_Tutorial();
+                TAG = "Tutorial";
                 Toast.makeText(this, "Show the tutorial", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.Settings:
-                //fragment = new Settings_Fragment();
-                //title = getString(R.id.Settings);
-                TAG = "NotHome";
+                //fragment = new Fragment_Settings();
+                TAG = "Settings";
                 Toast.makeText(getBaseContext(), "Show the settings...if we add any", Toast.LENGTH_SHORT).show();
                 break;
         }
@@ -213,15 +210,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.replace(R.id.Container, newFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            transaction.addToBackStack(null);
+            transaction.addToBackStack(TAG);
             transaction.commit();
         }
     }
 
     public void setTaskList(Applicant_Profile ap){
         taskList.add(ap);
-
     }
+
     public ArrayList<Applicant_Profile> getTaskList(){
         return taskList;
     }
