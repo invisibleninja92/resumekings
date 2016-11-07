@@ -1,13 +1,8 @@
 package com.example.t_ste.resumekings;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,16 +12,16 @@ import android.widget.Button;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link Fragment_View_Applicant} interface
+ * {@link Fragment_View_Single_Applicant} interface
  * to handle interaction events.
- * Use the {@link Fragment_View_Applicant#newInstance} factory method to
+ * Use the {@link Fragment_View_Single_Applicant#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Fragment_View_Applicant extends Fragment {
+public class Fragment_View_Single_Applicant extends Fragment {
 
     Button SaveApplicant;
 
-    public Fragment_View_Applicant() {
+    public Fragment_View_Single_Applicant() {
         // Required empty public constructor
     }
 
@@ -34,10 +29,10 @@ public class Fragment_View_Applicant extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment Fragment_View_Applicant.
+     * @return A new instance of fragment Fragment_View_Single_Applicant.
      */
-    public static Fragment_View_Applicant newInstance() {
-        Fragment_View_Applicant fragment = new Fragment_View_Applicant();
+    public static Fragment_View_Single_Applicant newInstance() {
+        Fragment_View_Single_Applicant fragment = new Fragment_View_Single_Applicant();
         return fragment;
     }
 

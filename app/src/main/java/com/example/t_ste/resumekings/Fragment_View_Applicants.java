@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.example.t_ste.resumekings.R.id.Applicant_ListView;
 
@@ -69,7 +68,7 @@ public class Fragment_View_Applicants extends Fragment {
                 ImageView ProfilePic= (ImageView)((MainActivity)getActivity()).findViewById(R.id.Resume_Applicant_ImageView);
                 ProfilePic.setImageBitmap(lTaskList.get(position).getProfilePicture());
 
-                Fragment viewApplicant = new Fragment_View_Applicant();
+                Fragment viewApplicant = new Fragment_View_Single_Applicant();
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction transaction = fm.beginTransaction();
                 transaction.replace(R.id.Container, viewApplicant).addToBackStack(null).commit();
