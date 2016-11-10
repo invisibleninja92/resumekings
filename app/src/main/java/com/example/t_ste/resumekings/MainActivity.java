@@ -3,6 +3,7 @@ package com.example.t_ste.resumekings;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -21,7 +23,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Filter;
+
+import cz.msebera.android.httpclient.NameValuePair;
+import cz.msebera.android.httpclient.message.BasicNameValuePair;
 
 import static android.R.id.toggle;
 
@@ -41,10 +50,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     FragmentManager fm = getSupportFragmentManager();
     Boolean BaseView = false;
     Applicant_Profile tempProfile = new Applicant_Profile();
+    private JSONParser jsonParser;
+    private callAPI CA = new callAPI();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        jsonParser=new JSONParser();
         // The standard on create items and initializing the toolbars
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity_drawer);
@@ -144,9 +155,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if (id == R.id.Create_New_Applicant) {
+            CA.execute();
             displayView("CreateNewApplicant");
-            //callAPI aps = new callAPI();
-            //aps.doInBackground();
         } else if (id == R.id.Tutorial) {
             displayView("Tutorial");
         } else if (id == R.id.View_Recent_Applicants) {
@@ -234,4 +244,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void removeFromCache(Applicant_Profile ap) {
         taskList.remove(ap);
     }
+
+    private class callAPI extends AsyncTask<Void,Void,Void>{
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            jsonParser.getJSONFromUrl("http://wqpum6myib.execute-api.us-east-1.amazonaws.com/test1_deploy/hellostring?name=hello");
+            System.out.println("Made It Here Atleast");
+        return null;
+        }
+
+    }
+
 }

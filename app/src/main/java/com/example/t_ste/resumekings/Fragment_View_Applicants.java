@@ -56,8 +56,8 @@ public class Fragment_View_Applicants extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_view_applicants, container, false);//Creates the view(Fragment)
 
-        EditText searchText = (EditText)view.findViewById(R.id.search);
-        Toast.makeText(getContext(), "eventually this will search " + searchText, Toast.LENGTH_SHORT).show();
+//        EditText searchText = (EditText)view.findViewById(R.id.search);
+  //      Toast.makeText(getContext(), "eventually this will search " + searchText, Toast.LENGTH_SHORT).show();
 
         ListViewCache = (ListView)view.findViewById(Applicant_ListView);
         lTaskList = ((MainActivity)getActivity()).getTaskList(); //Local tasklist from Main Activity
@@ -69,7 +69,7 @@ public class Fragment_View_Applicants extends Fragment {
         //When the ListView Element is clicked we need to change the images
         ListViewCache.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ((MainActivity)getActivity()).viewApplicant(lTaskList.get(position));
+               // ((MainActivity)getActivity()).viewApplicant(lTaskList.get(position));
 
                 ImageView ResumePic= (ImageView)getActivity().findViewById(R.id.imageView2);
                 ResumePic.setImageBitmap(lTaskList.get(position).getProfilePicture());
