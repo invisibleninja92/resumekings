@@ -22,7 +22,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -31,9 +30,7 @@ import java.util.logging.Filter;
 
 import cz.msebera.android.httpclient.NameValuePair;
 import cz.msebera.android.httpclient.message.BasicNameValuePair;
-
 import static android.R.id.toggle;
-
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     /*
@@ -249,7 +246,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         @Override
         protected Void doInBackground(Void... voids) {
-            jsonParser.getJSONFromUrl("");//place URL here
+            jsonParser.getJSONFromUrl("");
+
             System.out.println("Made It Here Atleast");
         return null;
         }
