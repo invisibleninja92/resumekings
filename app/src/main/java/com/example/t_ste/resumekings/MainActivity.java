@@ -249,7 +249,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         @Override
         protected Void doInBackground(Void... voids) {
-            jsonParser.getJSONFromUrl("http://wqpum6myib.execute-api.us-east-1.amazonaws.com/test1_deploy/hellostring?name=hello");
+            jsonParser.getJSONFromUrl("");
             System.out.println("Made It Here Atleast");
         return null;
         }
