@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 
 /**
@@ -20,6 +21,8 @@ import android.widget.Button;
 public class Fragment_View_Single_Applicant extends Fragment {
 
     Button SaveApplicant;
+    Button DeleteApplicant;
+    Applicant_Profile ap;
 
     public Fragment_View_Single_Applicant() {
         // Required empty public constructor
@@ -43,16 +46,29 @@ public class Fragment_View_Single_Applicant extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment__view__applicant, container, false);
+        View view = inflater.inflate(R.layout.fragment_view_single_applicant, container, false);
+        ap = ((MainActivity)getActivity()).getTempProfile();
+
         SaveApplicant = (Button) view.findViewById(R.id.save_applicant);
+        DeleteApplicant = (Button) view.findViewById(R.id.delete_applicant);
+
+        DeleteApplicant.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View V){
+                ((MainActivity)getActivity()).removeFromCache(ap);
+                ((MainActivity)getActivity()).displayView("ViewApplicants");
+            }
+        });
 
         SaveApplicant.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View V){
-                Fragment fragment = new Fragment_View_Applicants();
-                android.support.v4.app.FragmentManager fm = getFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction().replace(R.id.Container, fragment);
-                ft.commit();
+                Applicant_Profile ap = new Applicant_Profile();
+                ap.setUserName("LULZ MOAR BREAK");
+                ap.setStars(1);
+                ap.setEmail("BORKED");
+                ((MainActivity)getActivity()).addToCache(ap);
+                ((MainActivity)getActivity()).displayView("ViewApplicants");
             }
         });
 
@@ -60,7 +76,7 @@ public class Fragment_View_Single_Applicant extends Fragment {
         return view;
     }
 
-    public void onBackPressed(){
-        getFragmentManager().popBackStack();
+    public String getName(){
+        return "ViewSingleApplicant";
     }
 }

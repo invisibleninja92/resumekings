@@ -1,14 +1,11 @@
 package com.example.t_ste.resumekings;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,8 +14,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
-import android.widget.TextView;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -49,7 +44,7 @@ public class Fragment_Create_New_Applicant extends Fragment {
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters
-     * @return A new instance of fragment Create_New_Applicant.
+     * @return A new instance of Fragment_Create_New_Applicant.
      */
     public static Fragment_Create_New_Applicant newInstance() {
         return new Fragment_Create_New_Applicant();
@@ -104,14 +99,11 @@ public class Fragment_Create_New_Applicant extends Fragment {
                 ap.setStars((int) RatingBar.getRating());
                 ap.setProfilePicture(ProfilePicBit);
                 ap.setResumePicture(ResumePicBit);
+
                 // We want to send it back to the mainActivity to do this we get the main activity and
                 // call the setTaskListFunction then call the displayView to go back to the main screen.
-                ((MainActivity)getActivity()).setTaskList(ap);
-
-                Fragment fragment = new Fragment_View_Applicants();
-                android.support.v4.app.FragmentManager fm = getFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction().replace(R.id.Container, fragment);
-                ft.commit();
+                ((MainActivity)getActivity()).addToCache(ap);
+                ((MainActivity)getActivity()).viewApplicant(ap);
             }
         });
         return view; // This returns the view(Fragment) with all the initializers
@@ -137,10 +129,6 @@ public class Fragment_Create_New_Applicant extends Fragment {
                 ResumePicBit = bitmap;
                 break;
         }
-    }
-
-    public void onBackPressed() {
-        getFragmentManager().popBackStack();
     }
 
     public String getName(){
