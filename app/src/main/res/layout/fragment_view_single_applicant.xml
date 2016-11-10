@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context="com.example.t_ste.resumekings.Fragment_View_Applicant"
+    tools:context="com.example.t_ste.resumekings.Fragment_View_Single_Applicant"
     android:orientation="vertical"
     android:scrollbars="vertical">
 
@@ -17,5 +17,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/save_applicant" />
+
+    <Button
+        android:text="Delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/delete_applicant" />
 
 </LinearLayout>

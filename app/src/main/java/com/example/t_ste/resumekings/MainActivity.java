@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ArrayList<Applicant_Profile> taskList= new ArrayList<>();
     FragmentManager fm = getSupportFragmentManager();
     Boolean BaseView = false;
+    Applicant_Profile tempProfile = new Applicant_Profile();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,35 +57,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Applicant_Profile ap = new Applicant_Profile();
-        Applicant_Profile ap2 = new Applicant_Profile();
-        Applicant_Profile ap3 = new Applicant_Profile();
-        Applicant_Profile ap4 = new Applicant_Profile();
+
 
         // Testing Derpage
-        ap.setUserName("Derpina");
-        ap.setPhoneNumber("1234456789");
-        ap.setEmail("Derpina@yuno.net");
-        ap.setNotes("Android Sucks");
-        ap.setStars(2);
-        taskList.add(ap);
-        ap2.setUserName("Ronald Cross");
-        ap2.setPhoneNumber("16662126969");
-        ap2.setEmail("RonaldCross@IWorkAtLockheed.com");
-        ap2.setNotes("Doesnt know what a conclusion paragraph is. ");
-        ap2.setStars(2);
-        taskList.add(ap2);
-        ap3.setUserName("Brother Morgan");
-        ap3.setPhoneNumber("12555847777");
-        ap3.setEmail("BrotherMogran@RUOKJesusSaves.com");
-        ap3.setNotes("Doesnt stop smileing, Seriously this guy is too happy");
-        ap3.setStars(1);
-        taskList.add(ap3);
+        String[] Names = new String[] {"Bob", "Jill", "Paul", "Brother morgan", "Spidey", "Ronald Cross", "Derpina", "humm", "Trevor Stevens", "Greg Wilkinson"};
+        String[] Email = new String[] {"Bob@yahoo.whynot", "jill@weirdo.net", "PaulBiggers@gmail.com", "psychward@where.fired",
+                "Spidey@web.net", "kissme.com", "derpina@yuno.net", "yayitworked!", "Trevor.Stevens@HI", "Greg.Wilkinson@IBREAKEVERYTHING"};
 
-        ap4.setUserName("humm");
-        ap4.setEmail("Yayitworked");
-        ap4.setStars(5);
-        taskList.add(ap4);
+
+        for (int i = 0; i < Names.length; i++) {
+            Applicant_Profile ap = new Applicant_Profile();
+            ap.setUserName(Names[i]);
+            ap.setPhoneNumber("8765309");
+            ap.setEmail(Email[i]);
+            ap.setNotes("We're all bad!");
+            ap.setStars(3);
+            addToCache(ap);
+        }
 
         // Floating action bar that we may turn into a hotswap to something else if we think we need it...
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -103,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.main_activity_drawer);
         navigationView.setNavigationItemSelectedListener(this);
 
     }
@@ -149,58 +138,65 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        Fragment newFragment = null;
+
+
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if (id == R.id.Create_New_Applicant) {
-            displayView(id);
-            callAPI aps = new callAPI();
-            aps.doInBackground();
+            displayView("CreateNewApplicant");
+            //callAPI aps = new callAPI();
+            //aps.doInBackground();
         } else if (id == R.id.Tutorial) {
-            displayView(id);
+            displayView("Tutorial");
         } else if (id == R.id.View_Recent_Applicants) {
-            displayView(id);
+            displayView("ViewRecentApplicants");
         } else if (id == R.id.Favorite_Applicants) {
-            displayView(id);
+            displayView("FavoriteApplicants");
         } else if (id == R.id.Something) {
-            displayView(id);
+            displayView("Something");
         } else if (id == R.id.Settings) {
-            displayView(id);
+            displayView("Settings");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    public void displayView(int viewId) {
+    public void displayView(String TAG) {
+        // This is a fragment by service  publisher/subscriber framework for the app. Any
+        //
 
-        // Create a new fragment here to swap out with the one that was already there.
         Fragment newFragment = null;
-        String TAG = null;
 
-        switch(viewId) {
-            case R.id.Create_New_Applicant:
+        switch(TAG) {
+            case "CreateNewApplicant":
                 // Initialize the new fragment to swap out
                 newFragment = new Fragment_Create_New_Applicant();
-                TAG = "CreateNewApplicant";
                 break;
-            case R.id.View_Recent_Applicants:
+
+            case "ViewApplicants":
                 // Initialize the view applicants fragment
                 newFragment = new Fragment_View_Applicants();
-                TAG = "ViewApplicants";
                 break;
-            case R.id.Favorite_Applicants:
+
+            case "ViewSingleApplicant":
+
+                newFragment = new Fragment_View_Single_Applicant();
+                break;
+
+            case "FavoriteApplicants":
                 //fragment = new Fragment_Favorite_Applicants();
                 Toast.makeText(this, "Show the favorite applicants", Toast.LENGTH_SHORT).show();
-                TAG = "FavoriteApplicants";
                 break;
-            case R.id.Tutorial:
-                //fragment = new Fragment_Tutorial();
-                TAG = "Tutorial";
+
+            case "Tutorial":
+                newFragment = new Fragment_Tutorial();
                 Toast.makeText(this, "Show the tutorial", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.Settings:
+
+            case "Settings":
                 //fragment = new Fragment_Settings();
-                TAG = "Settings";
                 Toast.makeText(getBaseContext(), "Show the settings...if we add any", Toast.LENGTH_SHORT).show();
                 break;
         }
@@ -215,11 +211,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    public void setTaskList(Applicant_Profile ap){
+    // Takes in a profile from create new applicant or view applicants to then save the profile in the mainactivity
+    // The getTempProfile call then allows the fragment to apply it and display to the user
+    public void viewApplicant(Applicant_Profile ap) {
+        tempProfile = ap;
+        String TAG = "ViewSingleApplicant";
+        displayView(TAG);
+    }
+
+    public Applicant_Profile getTempProfile(){
+        return tempProfile;
+    }
+
+    public void addToCache(Applicant_Profile ap){
         taskList.add(ap);
     }
 
     public ArrayList<Applicant_Profile> getTaskList(){
         return taskList;
+    }
+
+    public void removeFromCache(Applicant_Profile ap) {
+        taskList.remove(ap);
     }
 }

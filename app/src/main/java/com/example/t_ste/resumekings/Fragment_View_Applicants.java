@@ -8,8 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -45,17 +49,19 @@ public class Fragment_View_Applicants extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        View view= inflater.inflate(R.layout.fragment_view_applicants, container, false);//Creates the view(Fragment)
+
+        EditText searchText = (EditText)view.findViewById(R.id.search);
+        Toast.makeText(getContext(), "eventually this will search " + searchText, Toast.LENGTH_SHORT).show();
+
+        ListViewCache = (ListView)view.findViewById(Applicant_ListView);
         lTaskList = ((MainActivity)getActivity()).getTaskList(); //Local tasklist from Main Activity
 
-        View view= inflater.inflate(R.layout.fragment_view_applicants, container, false);//Creates the view(Fragment)
-        ListViewCache = (ListView)view.findViewById(Applicant_ListView);
         //we need to create an application adapter to create the elements in the list
         final Applicant_Adapter adapt = new Applicant_Adapter(view.getContext(),lTaskList);
         ListViewCache.setAdapter(adapt);//set the adapter of elements to listview
@@ -63,20 +69,20 @@ public class Fragment_View_Applicants extends Fragment {
         //When the ListView Element is clicked we need to change the images
         ListViewCache.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ImageView ResumePic= (ImageView)((MainActivity)getActivity()).findViewById(R.id.imageView2);
+                ((MainActivity)getActivity()).viewApplicant(lTaskList.get(position));
+
+                ImageView ResumePic= (ImageView)getActivity().findViewById(R.id.imageView2);
                 ResumePic.setImageBitmap(lTaskList.get(position).getProfilePicture());
-                ImageView ProfilePic= (ImageView)((MainActivity)getActivity()).findViewById(R.id.Resume_Applicant_ImageView);
+                ImageView ProfilePic= (ImageView)getActivity().findViewById(R.id.Resume_Applicant_ImageView);
                 ProfilePic.setImageBitmap(lTaskList.get(position).getProfilePicture());
-
-                Fragment viewApplicant = new Fragment_View_Single_Applicant();
-                FragmentManager fm = getFragmentManager();
-                FragmentTransaction transaction = fm.beginTransaction();
-                transaction.replace(R.id.Container, viewApplicant).addToBackStack(null).commit();
-
             }
         });
+
         return view; //Return the fragment with all the functionality
     }
 
+    public String getName(){
+        return "ViewApplicants";
+    }
 
 }
