@@ -3,6 +3,7 @@ package com.example.t_ste.resumekings;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+
+import org.json.JSONObject;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,6 +38,8 @@ public class Fragment_Create_New_Applicant extends Fragment {
     Bitmap bitmap;
     Bitmap ProfilePicBit;
     Bitmap ResumePicBit;
+    JSONParser jsonParser = new JSONParser();
+
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
     public Fragment_Create_New_Applicant() {
@@ -99,6 +104,7 @@ public class Fragment_Create_New_Applicant extends Fragment {
                 ap.setStars((int) RatingBar.getRating());
                 ap.setProfilePicture(ProfilePicBit);
                 ap.setResumePicture(ResumePicBit);
+                new callAPI(ap).execute();
 
                 // We want to send it back to the mainActivity to do this we get the main activity and
                 // call the setTaskListFunction then call the displayView to go back to the main screen.
@@ -133,5 +139,30 @@ public class Fragment_Create_New_Applicant extends Fragment {
 
     public String getName(){
         return "CreateNewApplicant";
+    }
+
+
+    //Private class can be placed outside this class if we want an inside its own class file
+    private class callAPI extends AsyncTask<Void,Void,Void> {
+        private Applicant_Profile ap;
+        //this constructor is to pass the applicant profile data to the class to use
+        callAPI(Applicant_Profile ap){
+            this.ap = ap;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            String urlWithValues=""+ //Place the API Link HERE 
+                    ap.getUserName()+"&email="+
+                    ap.getEmail()+"&number="+
+                    ap.getPhoneNumber()+"&notes="+
+                    ap.getNotes();
+            urlWithValues.replace(" ","%20");
+            JSONObject GatheredData= jsonParser.getJSONFromUrl(urlWithValues);
+
+            System.out.println(GatheredData);
+            return null;
+        }
+
     }
 }

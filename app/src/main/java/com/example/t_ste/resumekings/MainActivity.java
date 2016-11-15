@@ -47,12 +47,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     FragmentManager fm = getSupportFragmentManager();
     Boolean BaseView = false;
     Applicant_Profile tempProfile = new Applicant_Profile();
-    private JSONParser jsonParser;
-    private callAPI CA = new callAPI();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        jsonParser=new JSONParser();
         // The standard on create items and initializing the toolbars
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity_drawer);
@@ -152,7 +149,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if (id == R.id.Create_New_Applicant) {
-            CA.execute();
             displayView("CreateNewApplicant");
         } else if (id == R.id.Tutorial) {
             displayView("Tutorial");
@@ -242,16 +238,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         taskList.remove(ap);
     }
 
-    private class callAPI extends AsyncTask<Void,Void,Void>{
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            jsonParser.getJSONFromUrl("");
-
-            System.out.println("Made It Here Atleast");
-        return null;
-        }
-
-    }
 
 }
