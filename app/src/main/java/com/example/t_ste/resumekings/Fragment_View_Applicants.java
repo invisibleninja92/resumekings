@@ -69,7 +69,7 @@ public class Fragment_View_Applicants extends Fragment {
         //When the ListView Element is clicked we need to change the images
         ListViewCache.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               // ((MainActivity)getActivity()).viewApplicant(lTaskList.get(position));
+                ((MainActivity)getActivity()).viewApplicant(lTaskList.get(position));
 
                 ImageView ResumePic= (ImageView)getActivity().findViewById(R.id.imageView2);
                 ResumePic.setImageBitmap(lTaskList.get(position).getProfilePicture());

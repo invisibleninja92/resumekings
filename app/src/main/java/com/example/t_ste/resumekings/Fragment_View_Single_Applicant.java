@@ -3,10 +3,14 @@ package com.example.t_ste.resumekings;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 
@@ -23,6 +27,9 @@ public class Fragment_View_Single_Applicant extends Fragment {
     Button SaveApplicant;
     Button DeleteApplicant;
     Applicant_Profile ap;
+    EditText applicantName;
+    EditText applicantEmail;
+    EditText applicantNotes;
 
     public Fragment_View_Single_Applicant() {
         // Required empty public constructor
@@ -51,6 +58,13 @@ public class Fragment_View_Single_Applicant extends Fragment {
 
         SaveApplicant = (Button) view.findViewById(R.id.save_applicant);
         DeleteApplicant = (Button) view.findViewById(R.id.delete_applicant);
+        applicantName = (EditText) view.findViewById(R.id.applicantName);
+        applicantEmail = (EditText) view.findViewById(R.id.applicantEmail);
+        applicantNotes = (EditText) view.findViewById(R.id.applicantNotes);
+
+        applicantName.setText(ap.getUserName());
+        applicantEmail.setText(ap.getEmail());
+        applicantNotes.setText(ap.getNotes());
 
         DeleteApplicant.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -63,11 +77,6 @@ public class Fragment_View_Single_Applicant extends Fragment {
         SaveApplicant.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View V){
-                Applicant_Profile ap = new Applicant_Profile();
-                ap.setUserName("LULZ MOAR BREAK");
-                ap.setStars(1);
-                ap.setEmail("BORKED");
-                ((MainActivity)getActivity()).addToCache(ap);
                 ((MainActivity)getActivity()).displayView("ViewApplicants");
             }
         });

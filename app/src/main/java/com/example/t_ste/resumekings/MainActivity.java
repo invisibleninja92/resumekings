@@ -1,17 +1,11 @@
 package com.example.t_ste.resumekings;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,15 +16,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Filter;
 
-import cz.msebera.android.httpclient.NameValuePair;
-import cz.msebera.android.httpclient.message.BasicNameValuePair;
-import static android.R.id.toggle;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     /*
@@ -43,10 +30,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // LOVE YOU TOO!
 
     // Temporary (possibly permanent) list of applicants to keep locally
-    ArrayList<Applicant_Profile> taskList= new ArrayList<>();
+    ArrayList<Applicant_Profile> cachedApplicantProfiles = new ArrayList<>();
     FragmentManager fm = getSupportFragmentManager();
     Boolean BaseView = false;
     Applicant_Profile tempProfile = new Applicant_Profile();
+
+    // Set up TAGs to be allowed or not allowed to add to the backstack
+    public String[] addToBackStack = new String[] {"CreateNewApplicant", "ViewApplicants", "ViewApplicantResume", "FavoriteApplicants"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +53,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         // Testing Derpage
-        String[] Names = new String[] {"Bob", "Jill", "Paul", "Brother morgan", "Spidey", "Ronald Cross", "Derpina", "humm", "Trevor Stevens", "Greg Wilkinson"};
+        String[] Names = new String[] {"Bob", "Jill", "Paul", "Brother morgan", "Spidey", "Ronald Cross", "Derpina", "humm", "Trevor Stephens", "Greg Wilkinson"};
         String[] Email = new String[] {"Bob@yahoo.whynot", "jill@weirdo.net", "PaulBiggers@gmail.com", "psychward@where.fired",
                 "Spidey@web.net", "kissme.com", "derpina@yuno.net", "yayitworked!", "Trevor.Stevens@HI", "Greg.Wilkinson@IBREAKEVERYTHING"};
 
@@ -81,14 +70,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         // Floating action bar that we may turn into a hotswap to something else if we think we need it...
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
 
         // The drawer on the left side of the home screen
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -166,9 +155,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
     public void displayView(String TAG) {
-        // This is a fragment by service  publisher/subscriber framework for the app. Any
-        //
+        // This is a fragment by service  publisher/subscriber framework for the app. Any string passed into
+        // here will initialize the swap to one of the other accepted fragments. Some temporary variables in
+        // MainActivity will allow for passage of needed items to and from other fragments.
 
         Fragment newFragment = null;
 
@@ -188,12 +179,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 newFragment = new Fragment_View_Single_Applicant();
                 break;
 
+            case "ViewApplicantResume":
+                newFragment = new Fragment_View_Applicant_Resume();
+                break;
+
             case "FavoriteApplicants":
                 //fragment = new Fragment_Favorite_Applicants();
                 Toast.makeText(this, "Show the favorite applicants", Toast.LENGTH_SHORT).show();
                 break;
 
             case "Tutorial":
+                // fragment to show the tutorial
                 newFragment = new Fragment_Tutorial();
                 Toast.makeText(this, "Show the tutorial", Toast.LENGTH_SHORT).show();
                 break;
@@ -209,7 +205,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.replace(R.id.Container, newFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            transaction.addToBackStack(TAG);
+            isAddToBackstack(TAG, transaction);
             transaction.commit();
         }
     }
@@ -227,16 +223,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void addToCache(Applicant_Profile ap){
-        taskList.add(ap);
+        cachedApplicantProfiles.add(ap);
     }
 
     public ArrayList<Applicant_Profile> getTaskList(){
-        return taskList;
+        return cachedApplicantProfiles;
     }
 
     public void removeFromCache(Applicant_Profile ap) {
-        taskList.remove(ap);
+        cachedApplicantProfiles.remove(ap);
     }
 
-
+    public void isAddToBackstack(String TAG, FragmentTransaction transaction) {
+        for(int i = 0; i < addToBackStack.length; i++) {
+            if (TAG.equals(addToBackStack[i])) {
+                transaction.addToBackStack(TAG);
+            }
+        }
+    }
 }

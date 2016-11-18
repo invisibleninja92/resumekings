@@ -6,14 +6,30 @@
     android:orientation="vertical"
     android:scrollbars="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <EditText
+        android:text="TextView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TREVOR LOVES BEER!"
-        android:textSize="36sp" />
+        android:id="@+id/applicantName"
+        android:textSize="36sp"
+        tools:text="name" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/applicantEmail"
+        tools:text="email"
+        android:textSize="18sp" />
+
+    <EditText
+        android:text="notes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/applicantNotes"
+        android:textSize="18sp" />
 
     <Button
-        android:text="Save"
+        android:text="Back"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/save_applicant" />
