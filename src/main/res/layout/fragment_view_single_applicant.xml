@@ -1,0 +1,43 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context="com.resumekings.Fragment_View_Single_Applicant"
+    android:orientation="vertical"
+    android:scrollbars="vertical">
+
+    <EditText
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/applicantName"
+        android:textSize="36sp"
+        tools:text="name" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/applicantEmail"
+        tools:text="email"
+        android:textSize="18sp" />
+
+    <EditText
+        android:text="notes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/applicantNotes"
+        android:textSize="18sp" />
+
+    <Button
+        android:text="Back"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/save_applicant" />
+
+    <Button
+        android:text="Delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/delete_applicant" />
+
+</LinearLayout>
