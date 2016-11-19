@@ -4,9 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,10 +12,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+
 
     /*
     FUUUUUUUUUUUUUUCCCCCCCCCCCCCKKKKKKKKKKKKKKKKKKK YYYYYYYYYYYOOOOOOOOOOOOOUUUUUUUUUUUUUUUUU
@@ -32,11 +30,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // Temporary (possibly permanent) list of applicants to keep locally
     ArrayList<Applicant_Profile> cachedApplicantProfiles = new ArrayList<>();
     FragmentManager fm = getSupportFragmentManager();
-    Boolean BaseView = false;
     Applicant_Profile tempProfile = new Applicant_Profile();
 
-    // Set up TAGs to be allowed or not allowed to add to the backstack
-    public String[] addToBackStack = new String[] {"CreateNewApplicant", "ViewApplicants", "ViewApplicantResume", "FavoriteApplicants"};
+
+    public boolean addToBackStack = false; // Set up TAGs to be allowed or not allowed to add to the backstack
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +55,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String[] Names = new String[] {"Bob", "Jill", "Paul", "Brother morgan", "Spidey", "Ronald Cross", "Derpina", "humm", "Trevor Stephens", "Greg Wilkinson"};
         String[] Email = new String[] {"Bob@yahoo.whynot", "jill@weirdo.net", "PaulBiggers@gmail.com", "psychward@where.fired",
                 "Spidey@web.net", "kissme.com", "derpina@yuno.net", "yayitworked!", "Trevor.Stevens@HI", "Greg.Wilkinson@IBREAKEVERYTHING"};
-
 
         for (int i = 0; i < Names.length; i++) {
             Applicant_Profile ap = new Applicant_Profile();
@@ -81,32 +78,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // The drawer on the left side of the home screen
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.main_activity_drawer);
         navigationView.setNavigationItemSelectedListener(this);
-
     }
+
 
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
             return;
         }
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
-        } else {
-            super.onBackPressed();
+            return;
         }
-        return;
+        super.onBackPressed();
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -114,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -129,12 +125,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        Fragment newFragment = null;
-
-
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if (id == R.id.Create_New_Applicant) {
@@ -165,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch(TAG) {
             case "CreateNewApplicant":
-                // Initialize the new fragment to swap out
+                // Initialize the create new applicant fragment
                 newFragment = new Fragment_Create_New_Applicant();
                 break;
 
@@ -175,37 +167,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case "ViewSingleApplicant":
-
+                // Initialize the view single applicant fragment
                 newFragment = new Fragment_View_Single_Applicant();
                 break;
 
             case "ViewApplicantResume":
+                // Initialize the view applicant resume fragment
                 newFragment = new Fragment_View_Applicant_Resume();
                 break;
 
             case "FavoriteApplicants":
-                //fragment = new Fragment_Favorite_Applicants();
-                Toast.makeText(this, "Show the favorite applicants", Toast.LENGTH_SHORT).show();
+                // newFragment = new Fragment_Favorite_Applicants();
                 break;
 
             case "Tutorial":
                 // fragment to show the tutorial
                 newFragment = new Fragment_Tutorial();
-                Toast.makeText(this, "Show the tutorial", Toast.LENGTH_SHORT).show();
                 break;
 
             case "Settings":
-                //fragment = new Fragment_Settings();
-                Toast.makeText(getBaseContext(), "Show the settings...if we add any", Toast.LENGTH_SHORT).show();
+                // Initialize the Settings fragment
+                //newFragment = new Fragment_Settings();
                 break;
         }
 
-        // If the new
+        // If the new fragment is not null then have the fragment manager commit the swap.
         if (newFragment != null) {
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.replace(R.id.Container, newFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            isAddToBackstack(TAG, transaction);
+            if(addToBackStack) transaction.addToBackStack(TAG);
+            addToBackStack = false;
             transaction.commit();
         }
     }
@@ -214,8 +206,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // The getTempProfile call then allows the fragment to apply it and display to the user
     public void viewApplicant(Applicant_Profile ap) {
         tempProfile = ap;
-        String TAG = "ViewSingleApplicant";
-        displayView(TAG);
+        displayView("ViewSingleApplicant");
     }
 
     public Applicant_Profile getTempProfile(){
@@ -226,7 +217,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         cachedApplicantProfiles.add(ap);
     }
 
-    public ArrayList<Applicant_Profile> getTaskList(){
+    public ArrayList <Applicant_Profile> getCachedApplicantProfiles(){
         return cachedApplicantProfiles;
     }
 
@@ -234,11 +225,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         cachedApplicantProfiles.remove(ap);
     }
 
-    public void isAddToBackstack(String TAG, FragmentTransaction transaction) {
-        for(int i = 0; i < addToBackStack.length; i++) {
-            if (TAG.equals(addToBackStack[i])) {
-                transaction.addToBackStack(TAG);
-            }
-        }
+    public void setAddToBackStack(boolean input) {
+        addToBackStack = input;
     }
 }

@@ -26,6 +26,7 @@ public class Applicant_Profile {
 
     private int Stars;
 
+
     public Bitmap getProfilePicture() {
         return ProfilePicture;
     }

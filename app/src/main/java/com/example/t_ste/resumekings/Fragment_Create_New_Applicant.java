@@ -2,12 +2,10 @@ package com.example.t_ste.resumekings;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +24,25 @@ import org.json.JSONObject;
  * create an instance of this fragment.
  */
 public class Fragment_Create_New_Applicant extends Fragment {
+    // THE STANDARD BLOCK FOR A FRAGMENT DONT EDIT IN HERE ///////////
+    public Fragment_Create_New_Applicant() {}
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    public static Fragment_Create_New_Applicant newInstance() {
+        return new Fragment_Create_New_Applicant();
+    }
+
+    public String getName(){
+        return "CreateNewApplicant";
+    }
+    // THE STANDARD BLOCK FOR A FRAGMENT DONT EDIT IN HERE ///////////
+
+
+    // INITIALIZERS //////////
     Button SaveButton;
     ImageView ProfilePic;
     ImageView ResumePic;
@@ -41,27 +57,13 @@ public class Fragment_Create_New_Applicant extends Fragment {
     JSONParser jsonParser = new JSONParser();
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
+    // INITIALIZERS //////////
 
-    public Fragment_Create_New_Applicant() {
-        // Required empty public constructor
-    }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters
-     * @return A new instance of Fragment_Create_New_Applicant.
-     */
-    public static Fragment_Create_New_Applicant newInstance() {
-        return new Fragment_Create_New_Applicant();
-    }
+
+
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    // The onCreateView is where you will create the fragment and all the listeners in the fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_create_new_applicant, container, false); //create the view of the fragment
@@ -109,18 +111,19 @@ public class Fragment_Create_New_Applicant extends Fragment {
                 // We want to send it back to the mainActivity to do this we get the main activity and
                 // call the setTaskListFunction then call the displayView to go back to the main screen.
                 ((MainActivity)getActivity()).addToCache(ap);
+                ((MainActivity)getActivity()).setAddToBackStack(true);
                 ((MainActivity)getActivity()).viewApplicant(ap);
             }
         });
         return view; // This returns the view(Fragment) with all the initializers
-
     }
+
     // Since we start a camera activity we need to get the results of that this function
     // handles the camera process
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
-//        bitmap = (Bitmap) data.getExtras().get("data");
+        bitmap = (Bitmap) data.getExtras().get("data");
 
         if (bitmap == null) return;
 
@@ -136,11 +139,6 @@ public class Fragment_Create_New_Applicant extends Fragment {
                 break;
         }
     }
-
-    public String getName(){
-        return "CreateNewApplicant";
-    }
-
 
     //Private class can be placed outside this class if we want an inside its own class file
     private class callAPI extends AsyncTask<Void,Void,Void> {
