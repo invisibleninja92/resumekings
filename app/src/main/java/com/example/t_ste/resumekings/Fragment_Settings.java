@@ -2,6 +2,7 @@ package com.example.t_ste.resumekings;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,5 +46,24 @@ public class Fragment_Settings extends Fragment {
 
 
         return view; //Return the fragment with all the functionality
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                    // handle back button's click listener
+                    getActivity().onBackPressed();
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 }

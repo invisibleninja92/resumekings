@@ -2,15 +2,12 @@ package com.example.t_ste.resumekings;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,6 +43,7 @@ public class Fragment_View_Single_Applicant extends Fragment {
     EditText applicantName;
     EditText applicantEmail;
     EditText applicantNotes;
+    EditText applicantPhone;
     // INITIALIZERS //////////
 
 
@@ -54,20 +52,18 @@ public class Fragment_View_Single_Applicant extends Fragment {
         View view = inflater.inflate(R.layout.fragment_view_single_applicant, container, false);
         ap = ((MainActivity)getActivity()).getTempProfile();
 
-        if(ap == null) {
-            Toast.makeText(getContext(), "Error displaying applicant :( ", Toast.LENGTH_SHORT).show();
-            ((MainActivity)getActivity()).displayView("ViewApplicants");
-        }
-
         ((MainActivity)getActivity()).setAddToBackStack(true);
 
         SaveApplicant = (Button) view.findViewById(R.id.save_applicant);
         DeleteApplicant = (Button) view.findViewById(R.id.delete_applicant);
-        applicantName = (EditText) view.findViewById(R.id.applicant_name);
-        applicantEmail = (EditText) view.findViewById(R.id.applicant_email);
+
+        applicantName = (EditText) view.findViewById(R.id.applicantName);
+        applicantPhone = (EditText) view.findViewById(R.id.applicantPhone);
+        applicantEmail = (EditText) view.findViewById(R.id.applicantEmail);
         applicantNotes = (EditText) view.findViewById(R.id.applicantNotes);
 
         applicantName.setText(ap.getUserName());
+        applicantPhone.setText(ap.getPhoneNumber());
         applicantEmail.setText(ap.getEmail());
         applicantNotes.setText(ap.getNotes());
 
@@ -86,14 +82,29 @@ public class Fragment_View_Single_Applicant extends Fragment {
             public void onClick(View V){
                 ((MainActivity)getActivity()).setAddToBackStack(false);
                 // TODO: add the applicant to S3 Database with api call
-                ((MainActivity)getActivity()).displayView("ViewSingleApplicant");
+                ((MainActivity)getActivity()).displayView("ViewApplicants");
             }
         });
         // Inflate the layout for this fragment
         return view;
     }
 
-    public void inflater(View view) {
+    @Override
+    public void onResume() {
+        super.onResume();
 
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                    // handle back button's click listener
+                    getActivity().onBackPressed();
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 }

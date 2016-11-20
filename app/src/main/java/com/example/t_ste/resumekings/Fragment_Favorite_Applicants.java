@@ -1,9 +1,8 @@
 package com.example.t_ste.resumekings;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,16 +11,11 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link Fragment_Favorite_Applicants.OnFragmentInteractionListener} interface
- * to handle interaction events.
  * Use the {@link Fragment_Favorite_Applicants#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class Fragment_Favorite_Applicants extends Fragment {
     // THE STANDARD BLOCK FOR A FRAGMENT DONT EDIT IN HERE ///////////
-
-    private OnFragmentInteractionListener mListener;
-
     public Fragment_Favorite_Applicants() {}
 
     public static Fragment_Favorite_Applicants newInstance() {
@@ -33,43 +27,44 @@ public class Fragment_Favorite_Applicants extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    public String getName(){
+        return "FavoriteApplicants";
+    }
+    // THE STANDARD BLOCK FOR A FRAGMENT DONT EDIT IN HERE ///////////
+
+
+    // INITIALIZERS //////////
+
+
+    // INITIALIZERS //////////
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favorite_applicants, container, false);
+        View view = inflater.inflate(R.layout.fragment_favorite_applicants, container, false);
 
 
+
+        return view;
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
+    public void onResume() {
+        super.onResume();
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                    // handle back button's click listener
+                    getActivity().onBackPressed();
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 }

@@ -7,7 +7,6 @@
     android:scrollbars="vertical">
 
     <EditText
-        android:text="TextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/applicantName"
@@ -18,15 +17,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/applicantEmail"
-        tools:text="email"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        tools:text="email" />
 
     <EditText
-        android:text="notes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/applicantPhone"
+        tools:text="Phone" />
+
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/applicantNotes"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        tools:text="notes" />
 
     <Button
         android:text="Back"

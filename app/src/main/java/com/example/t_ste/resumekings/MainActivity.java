@@ -12,12 +12,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
-
-
     /*
     FUUUUUUUUUUUUUUCCCCCCCCCCCCCKKKKKKKKKKKKKKKKKKK YYYYYYYYYYYOOOOOOOOOOOOOUUUUUUUUUUUUUUUUU
     GGGGGGGRRRRRRRRRRREEEEEEEEEEEGGGGGGGGGGGGGGGGGGGGGGG
@@ -32,8 +31,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     FragmentManager fm = getSupportFragmentManager();
     Applicant_Profile tempProfile = new Applicant_Profile();
 
-
-    public boolean addToBackStack = false; // Set up TAGs to be allowed or not allowed to add to the backstack
+    public boolean addToBackStack = true; // Set up TAGs to be allowed or not allowed to add to the backstack
 
 
     @Override
@@ -90,16 +88,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
             return;
         }
-        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            getFragmentManager().popBackStack();
-            return;
+        if (fm.getBackStackEntryCount() == 0) {
+            this.finish();
+        } else {
+            fm.popBackStack();
         }
-        super.onBackPressed();
     }
 
 
@@ -197,8 +194,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.replace(R.id.Container, newFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            if(addToBackStack) transaction.addToBackStack(TAG);
-            addToBackStack = false;
+            transaction.addToBackStack(TAG);
             transaction.commit();
         }
     }
