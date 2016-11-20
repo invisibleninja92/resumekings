@@ -20,10 +20,14 @@ public class Web_Rest_API {
         client.get(getAbsoluteUrl(url), params, responseHandler);
     }
 
+
     public static void post(String url, StringEntity entity , AsyncHttpResponseHandler responseHandler) {
         client.post(null,getAbsoluteUrl(url), entity,"application/json", responseHandler);
     }
 
+    public static void delete(String url, AsyncHttpResponseHandler responseHandler) {
+        client.delete(getAbsoluteUrl(url), responseHandler);
+    }
     private static String getAbsoluteUrl(String relativeUrl) {
         return BASE_URL + relativeUrl;
     }

@@ -2,6 +2,9 @@ package com.example.t_ste.resumekings;
 
 import android.graphics.Bitmap;
 
+import java.sql.Blob;
+import java.sql.SQLException;
+
 /**
  * Created by t_ste on 11/1/2016.
  * This is the data structure for the Applicant_Profile there is an array of these objects in the main
@@ -16,6 +19,8 @@ public class Applicant_Profile {
     private String PhoneNumber;
     private String Notes;
     private int Stars;
+    private String ResumeBLOB;
+    private String ProfileBLOB;
 
     public int getStars() {
         return Stars;
@@ -76,6 +81,23 @@ public class Applicant_Profile {
 
     @Override
     public String toString() {
-        return UserName+"\n"+Email;
+        return "Name:"+UserName+" Email:"+Email+" PhoneNumber: "+PhoneNumber;
+    }
+
+
+    public String getResumeBLOB() {
+        return ResumeBLOB;
+    }
+
+    public void setResumeBLOB(String resumeBLOB) {
+        ResumeBLOB = resumeBLOB;
+    }
+
+    public String getProfileBLOB() {
+        return ProfileBLOB;
+    }
+
+    public void setProfileBLOB(String profileBLOB) {
+        ProfileBLOB = profileBLOB;
     }
 }
