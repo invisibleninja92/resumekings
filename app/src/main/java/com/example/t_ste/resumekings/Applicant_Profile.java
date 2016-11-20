@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
  * Activity this is important <- Lulz btw greg was here
  */
 public class Applicant_Profile {
+
     private Bitmap ProfilePicture;
     private Bitmap ResumePicture;
     public String UserName;

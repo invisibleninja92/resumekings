@@ -15,6 +15,7 @@ import java.net.URLConnection;
 import android.util.Log;
 
 
+
 public class JSONParser {
 
     static JSONObject json = null;
@@ -25,15 +26,16 @@ public class JSONParser {
     }
 
     public JSONObject getJSONFromUrl(String url) {
+
+
         String result="";
-        // Making the HTTP request
+        // Making the HTTPS request
         try {
             URL url2 = new URL(url);
             URLConnection urlConnection = url2.openConnection();
             InputStream in = urlConnection.getInputStream();
             result = getStringFromInputStream(in);
             Log.d("here it is",result);
-
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
