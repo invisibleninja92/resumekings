@@ -7,6 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -49,12 +53,18 @@ public class Fragment_View_Single_Applicant extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_view_single_applicant, container, false);
         ap = ((MainActivity)getActivity()).getTempProfile();
+
+        if(ap == null) {
+            Toast.makeText(getContext(), "Error displaying applicant :( ", Toast.LENGTH_SHORT).show();
+            ((MainActivity)getActivity()).displayView("ViewApplicants");
+        }
+
         ((MainActivity)getActivity()).setAddToBackStack(true);
 
         SaveApplicant = (Button) view.findViewById(R.id.save_applicant);
         DeleteApplicant = (Button) view.findViewById(R.id.delete_applicant);
-        applicantName = (EditText) view.findViewById(R.id.applicantName);
-        applicantEmail = (EditText) view.findViewById(R.id.applicantEmail);
+        applicantName = (EditText) view.findViewById(R.id.applicant_name);
+        applicantEmail = (EditText) view.findViewById(R.id.applicant_email);
         applicantNotes = (EditText) view.findViewById(R.id.applicantNotes);
 
         applicantName.setText(ap.getUserName());
@@ -65,6 +75,7 @@ public class Fragment_View_Single_Applicant extends Fragment {
             @Override
             public void onClick(View V){
                 ((MainActivity)getActivity()).removeFromCache(ap);
+                // TODO: remove the applicant from the database with api call
                 ((MainActivity)getActivity()).setAddToBackStack(false);
                 ((MainActivity)getActivity()).displayView("ViewApplicants");
             }
@@ -74,10 +85,15 @@ public class Fragment_View_Single_Applicant extends Fragment {
             @Override
             public void onClick(View V){
                 ((MainActivity)getActivity()).setAddToBackStack(false);
-                ((MainActivity)getActivity()).displayView("ViewApplicants");
+                // TODO: add the applicant to S3 Database with api call
+                ((MainActivity)getActivity()).displayView("ViewSingleApplicant");
             }
         });
         // Inflate the layout for this fragment
         return view;
+    }
+
+    public void inflater(View view) {
+
     }
 }

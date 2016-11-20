@@ -57,6 +57,7 @@ public class Fragment_View_Applicants extends Fragment {
 
         ApplicantCacheList = (ListView)view.findViewById(Applicant_ListView);
         cachedApplicantProfiles = ((MainActivity)getActivity()).getCachedApplicantProfiles(); //Local cache from Main Activity
+        ((MainActivity)getActivity()).setAddToBackStack(true);
 
         //we need to create an application adapter to create the elements in the list
         final Applicant_Adapter adapt = new Applicant_Adapter(view.getContext(),cachedApplicantProfiles);

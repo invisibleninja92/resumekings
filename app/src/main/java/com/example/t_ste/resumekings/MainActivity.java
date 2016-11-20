@@ -177,7 +177,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case "FavoriteApplicants":
-                // newFragment = new Fragment_Favorite_Applicants();
+                // Initialize the favorite applicants fragment
+                newFragment = new Fragment_Favorite_Applicants();
                 break;
 
             case "Tutorial":
@@ -187,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             case "Settings":
                 // Initialize the Settings fragment
-                //newFragment = new Fragment_Settings();
+                newFragment = new Fragment_Settings();
                 break;
         }
 

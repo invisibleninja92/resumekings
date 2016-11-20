@@ -43,6 +43,7 @@ public class Fragment_Tutorial extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tutorial, container, false); //create the view of the fragment
         // the next lines are finding the elements that are inside the fragment to then set the listeners and things
+        ((MainActivity)getActivity()).setAddToBackStack(true);
 
         return view; // This returns the view(Fragment) with all the initializers
     }

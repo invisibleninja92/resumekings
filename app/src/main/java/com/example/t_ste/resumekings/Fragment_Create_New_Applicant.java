@@ -60,14 +60,13 @@ public class Fragment_Create_New_Applicant extends Fragment {
     // INITIALIZERS //////////
 
 
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_create_new_applicant, container, false); //create the view of the fragment
         // the next lines are finding the elements that are inside the fragment to then set the listeners and things
+
+        ((MainActivity)getActivity()).setAddToBackStack(true);
 
         ProfilePic = (ImageView)view.findViewById(R.id.EditProfilePic);
         ResumePic = (ImageView)view.findViewById(R.id.EditResumePic);
@@ -111,7 +110,6 @@ public class Fragment_Create_New_Applicant extends Fragment {
                 // We want to send it back to the mainActivity to do this we get the main activity and
                 // call the setTaskListFunction then call the displayView to go back to the main screen.
                 ((MainActivity)getActivity()).addToCache(ap);
-                ((MainActivity)getActivity()).setAddToBackStack(true);
                 ((MainActivity)getActivity()).viewApplicant(ap);
             }
         });

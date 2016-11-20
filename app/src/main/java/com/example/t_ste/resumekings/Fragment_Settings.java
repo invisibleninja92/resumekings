@@ -1,6 +1,6 @@
 package com.example.t_ste.resumekings;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,7 +42,6 @@ public class Fragment_Settings extends Fragment {
         // the next lines are finding the elements that are inside the fragment to then set the listeners and things
 
         ((MainActivity)getActivity()).setAddToBackStack(true);
-
 
 
         return view; //Return the fragment with all the functionality

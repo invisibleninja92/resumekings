@@ -8,13 +8,13 @@ import android.graphics.Bitmap;
  * Activity this is important <- Lulz btw greg was here
  */
 public class Applicant_Profile {
-
     private Bitmap ProfilePicture;
     private Bitmap ResumePicture;
     public String UserName;
     private String Email;
     private String PhoneNumber;
     private String Notes;
+    private int Stars;
 
     public int getStars() {
         return Stars;
@@ -23,8 +23,6 @@ public class Applicant_Profile {
     public void setStars(int stars) {
         Stars = stars;
     }
-
-    private int Stars;
 
 
     public Bitmap getProfilePicture() {
