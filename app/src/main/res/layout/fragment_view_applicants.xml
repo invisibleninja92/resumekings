@@ -8,14 +8,6 @@
     android:scrollbars="vertical"
     app:layout_scrollFlags="scroll">
 
-    <ImageView
-        android:layout_height="90dp"
-        android:id="@+id/Resume_Applicant_ImageView"
-        android:src="@drawable/person"
-        android:textAlignment="center"
-        android:longClickable="false"
-        android:layout_width="90dp" />
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,17 +30,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/Applicant_ListView" />
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="108dp">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView2"
-            android:src="@drawable/person" />
-    </RelativeLayout>
 
 </LinearLayout>

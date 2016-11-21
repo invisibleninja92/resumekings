@@ -1,15 +1,17 @@
 package com.example.t_ste.resumekings;
 
 
-import android.preference.PreferenceActivity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
+import com.loopj.android.http.Base64;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
@@ -29,7 +31,7 @@ public class UseWebAPI {
         JO.put("Number",AP.getPhoneNumber());
         JO.put("Notes",AP.getNotes());
         JO.put("Resume",AP.getResumePicture());
-        JO.put("Picture",AP.getProfilePicture());
+        JO.put("Picture",BitMapToString(AP.getProfilePicture()));
         JO.put("Rating",AP.getStars());
 
         try {
@@ -44,7 +46,7 @@ public class UseWebAPI {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 // If the response is JSONObject instead of expected JSONArray
                 try {
-                    System.out.println(response.getString("Id"));
+                    System.out.println(response.getString("Id"));//Returns the ID WE dont need a return though
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -65,6 +67,7 @@ public class UseWebAPI {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     // If the response is JSONObject instead of expected JSONArray
+
                     try {
                         Applicant_Profile AP = new Applicant_Profile();
                         AP.setUserName(response.getString("Name"));
@@ -76,15 +79,13 @@ public class UseWebAPI {
                         AP.setStars(Integer.parseInt(response.getString("Rating")));
                         cachedApplicantProfiles.add(AP);
 
-                        System.out.println(AP.toString());
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
 
             });
-            return cachedApplicantProfiles;
+            return cachedApplicantProfiles; //return the array of size 1 else do below
         } else { //if it is null we are getting all of them
             Web_Rest_API.get("", null, new JsonHttpResponseHandler() {
 
@@ -92,6 +93,7 @@ public class UseWebAPI {
                 public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                     for (int i = 0; i < response.length(); i++) {
                         JSONObject Applicant = null;
+
                         try {
                             Applicant_Profile AP = new Applicant_Profile();
                             Applicant = (JSONObject) response.get(i);
@@ -99,11 +101,10 @@ public class UseWebAPI {
                             AP.setEmail(Applicant.getString("Email"));
                             AP.setPhoneNumber(Applicant.getString("Number"));
                             AP.setNotes(Applicant.getString("Notes"));
-                            AP.setProfileBLOB(Applicant.getString("Picture"));
-                            AP.setResumeBLOB(Applicant.getString("Resume"));
+                            AP.setProfilePicture(StringToBitMap(Applicant.getString("Picture")));
+                            AP.setResumePicture(StringToBitMap(Applicant.getString("Resume")));
                             AP.setStars(Integer.parseInt(Applicant.getString("Rating")));
                             cachedApplicantProfiles.add(AP);
-                            System.out.println(AP.toString());
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -112,7 +113,7 @@ public class UseWebAPI {
 
                 }
             });
-            return cachedApplicantProfiles;
+            return cachedApplicantProfiles; //return big array of a lot of the items.
         }
 
     }
@@ -122,9 +123,25 @@ public class UseWebAPI {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void deleteResume(String ID) throws JSONException {
         if(ID!=null){
-            Web_Rest_API.delete(ID, new JsonHttpResponseHandler() {
+            Web_Rest_API.delete(ID, new JsonHttpResponseHandler() { //just delete the thing at that ID.
             });
         }}
 
-
+    public String BitMapToString(Bitmap bitmap){
+        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
+        byte [] b=baos.toByteArray();
+        String temp=Base64.encodeToString(b, Base64.DEFAULT);
+        return temp;
+    }
+    public Bitmap StringToBitMap(String encodedString){
+        try {
+            byte [] encodeByte=Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap=BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch(Exception e) {
+            e.getMessage();
+            return null;
+        }
+    }
 }

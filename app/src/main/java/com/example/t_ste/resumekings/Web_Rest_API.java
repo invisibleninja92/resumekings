@@ -13,7 +13,7 @@ import com.loopj.android.http.*;
 
 public class Web_Rest_API {
 
-    private static final String BASE_URL = "http://10.0.2.2:3002/resume";
+    private static final String BASE_URL = "";
     private static AsyncHttpClient client = new AsyncHttpClient();
 
     public static void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {

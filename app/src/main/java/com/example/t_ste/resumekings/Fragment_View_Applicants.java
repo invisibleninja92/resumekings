@@ -67,13 +67,10 @@ public class Fragment_View_Applicants extends Fragment {
         //When the ListView Element is clicked we need to change the images
         ApplicantCacheList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ImageView ResumePic= (ImageView)getActivity().findViewById(R.id.imageView2);
-                ResumePic.setImageBitmap(cachedApplicantProfiles.get(position).getProfilePicture());
-                ImageView ProfilePic= (ImageView)getActivity().findViewById(R.id.Resume_Applicant_ImageView);
-                ProfilePic.setImageBitmap(cachedApplicantProfiles.get(position).getProfilePicture());
 
-                ((MainActivity)getActivity()).setAddToBackStack(true);
-                ((MainActivity)getActivity()).viewApplicant(cachedApplicantProfiles.get(position));
+
+               ((MainActivity)getActivity()).setAddToBackStack(true);
+               ((MainActivity)getActivity()).viewApplicant(cachedApplicantProfiles.get(position));
             }
         });
         return view; //Return the fragment with all the functionality

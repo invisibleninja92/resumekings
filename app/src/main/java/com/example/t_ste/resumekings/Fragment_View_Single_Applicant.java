@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,6 +45,8 @@ public class Fragment_View_Single_Applicant extends Fragment {
     EditText applicantEmail;
     EditText applicantNotes;
     EditText applicantPhone;
+    ImageView profilePicture;
+    ImageView resumePicture;
     // INITIALIZERS //////////
 
 
@@ -62,10 +65,17 @@ public class Fragment_View_Single_Applicant extends Fragment {
         applicantEmail = (EditText) view.findViewById(R.id.applicantEmail);
         applicantNotes = (EditText) view.findViewById(R.id.applicantNotes);
 
+        profilePicture = (ImageView) view.findViewById(R.id.ProfilePicture);
+        resumePicture = (ImageView) view.findViewById(R.id.ResumePicture);
+
+
         applicantName.setText(ap.getUserName());
         applicantPhone.setText(ap.getPhoneNumber());
         applicantEmail.setText(ap.getEmail());
         applicantNotes.setText(ap.getNotes());
+
+        profilePicture.setImageBitmap(ap.getProfilePicture());
+        resumePicture.setImageBitmap(ap.getResumePicture());
 
         DeleteApplicant.setOnClickListener(new View.OnClickListener(){
             @Override

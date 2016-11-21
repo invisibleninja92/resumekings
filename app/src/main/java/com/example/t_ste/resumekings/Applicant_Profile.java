@@ -81,7 +81,7 @@ public class Applicant_Profile {
 
     @Override
     public String toString() {
-        return "Name:"+UserName+" Email:"+Email+" PhoneNumber: "+PhoneNumber;
+        return "Name:"+UserName+" Email:"+Email+" PhoneNumber: "+PhoneNumber+" Picture: "+ProfilePicture +" BLOB: "+ ProfileBLOB;
     }
 
 
