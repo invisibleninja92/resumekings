@@ -60,7 +60,9 @@ public class Fragment_Create_New_Applicant extends Fragment {
     Bitmap bitmap;
     Bitmap ProfilePicBit;
     Bitmap ResumePicBit;
-    JSONParser jsonParser = new JSONParser();
+
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+    // INITIALIZERS //////////
 
 
     @Override
@@ -114,12 +116,11 @@ public class Fragment_Create_New_Applicant extends Fragment {
                 // We want to send it back to the mainActivity to do this we get the main activity and
                 // call the setTaskListFunction then call the displayView to go back to the main screen.
                 ((MainActivity)getActivity()).addToCache(ap);
-                ((MainActivity)getActivity()).setAddToBackStack(true);
+                ((MainActivity)getActivity()).setAddToBackStack(false);
                 ((MainActivity)getActivity()).viewApplicant(ap);
             }
         });
         return view; // This returns the view(Fragment) with all the initializers
-
     }
 
     @Override
@@ -161,48 +162,6 @@ public class Fragment_Create_New_Applicant extends Fragment {
                 ResumePic.setImageBitmap(bitmap);
                 ResumePicBit = bitmap;
                 break;
-        }
-    }
-
-    //Private class can be placed outside this class if we want an inside its own class file
-    private class callAPI extends AsyncTask<Void,Void,Void> {
-        private Applicant_Profile ap;
-        //this constructor is to pass the applicant profile data to the class to use
-        callAPI(Applicant_Profile ap){
-            this.ap = ap;
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            String ResumePic= BitMapToString(ap.getResumePicture());
-            ResumePic= ResumePic.replaceAll("/","%2F");
-            ResumePic= ResumePic.replaceAll("\n","%5Cn");
-            ResumePic= ResumePic.replaceAll("\\+", "%2B");
-            String ProfilePic= BitMapToString(ap.getProfilePicture());
-            ProfilePic= ProfilePic.replaceAll("/","%2F");
-            ProfilePic= ProfilePic.replaceAll("\n","%5Cn");
-            ProfilePic= ProfilePic.replaceAll("\\+", "%2B");
-            String urlWithValues="https://wqpum6myib.execute-api.us-east-1.amazonaws.com/test1_deploy/hellostring?name="+ //Place the API Link HERE
-                    ap.getUserName()+"&email="+
-                    ap.getEmail()+"&number="+
-                    ap.getPhoneNumber()+"&notes="+ //resume, picture, rating
-                    ap.getNotes()+"&resume="+
-                    ResumePic+"&picture="+
-                    ProfilePic+"&rating="+
-                    ap.getStars();
-                urlWithValues = urlWithValues.replaceAll(" ","%20");
-            JSONObject GatheredData= jsonParser.getJSONFromUrl(urlWithValues);
-
-            System.out.println(GatheredData);
-            return null;
-        }
-
-        public String BitMapToString(Bitmap bitmap) {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-            byte[] b = baos.toByteArray();
-            String temp = Base64.encodeToString(b, Base64.DEFAULT);
-            return temp;
         }
     }
 }

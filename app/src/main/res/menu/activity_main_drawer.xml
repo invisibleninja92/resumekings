@@ -7,9 +7,9 @@
             android:title="@string/create_new_applicant"
             android:id="@+id/Create_New_Applicant" />
         <item
-            android:id="@+id/View_Recent_Applicants"
+            android:id="@+id/View_Applicants"
             android:icon="@android:drawable/ic_menu_recent_history"
-            android:title="@string/view_recent_applicants" />
+            android:title="@string/view_applicants" />
         <item
             android:icon="@android:drawable/btn_star"
             android:title="@string/favorites"

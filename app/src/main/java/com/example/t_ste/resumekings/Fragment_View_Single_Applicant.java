@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.RatingBar;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,44 +38,39 @@ public class Fragment_View_Single_Applicant extends Fragment {
 
 
     // INITIALIZERS //////////
+    View view;
     Button SaveApplicant;
     Button DeleteApplicant;
+    Button UpdateApplicant;
     Applicant_Profile ap;
     EditText applicantName;
     EditText applicantEmail;
     EditText applicantNotes;
     EditText applicantPhone;
-    ImageView profilePicture;
-    ImageView resumePicture;
+    RatingBar ratingBar;
     // INITIALIZERS //////////
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_view_single_applicant, container, false);
+        view = inflater.inflate(R.layout.fragment_view_single_applicant, container, false);
         ap = ((MainActivity)getActivity()).getTempProfile();
-
-        ((MainActivity)getActivity()).setAddToBackStack(true);
 
         SaveApplicant = (Button) view.findViewById(R.id.save_applicant);
         DeleteApplicant = (Button) view.findViewById(R.id.delete_applicant);
+        UpdateApplicant = (Button) view.findViewById(R.id.update_applicant);
+        ratingBar = (RatingBar) view.findViewById(R.id.ratingBar);
 
         applicantName = (EditText) view.findViewById(R.id.applicantName);
         applicantPhone = (EditText) view.findViewById(R.id.applicantPhone);
         applicantEmail = (EditText) view.findViewById(R.id.applicantEmail);
         applicantNotes = (EditText) view.findViewById(R.id.applicantNotes);
 
-        profilePicture = (ImageView) view.findViewById(R.id.ProfilePicture);
-        resumePicture = (ImageView) view.findViewById(R.id.ResumePicture);
-
-
+        ratingBar.setRating(ap.getStars());
         applicantName.setText(ap.getUserName());
         applicantPhone.setText(ap.getPhoneNumber());
         applicantEmail.setText(ap.getEmail());
         applicantNotes.setText(ap.getNotes());
-
-        profilePicture.setImageBitmap(ap.getProfilePicture());
-        resumePicture.setImageBitmap(ap.getResumePicture());
 
         DeleteApplicant.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -93,6 +88,19 @@ public class Fragment_View_Single_Applicant extends Fragment {
                 ((MainActivity)getActivity()).setAddToBackStack(false);
                 // TODO: add the applicant to S3 Database with api call
                 ((MainActivity)getActivity()).displayView("ViewApplicants");
+            }
+        });
+
+        UpdateApplicant.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Applicant_Profile temp = new Applicant_Profile();
+                temp.setUserName(applicantName.toString());
+                temp.setEmail(applicantEmail.toString());
+                temp.setPhoneNumber(applicantPhone.toString());
+                temp.setNotes(applicantNotes.toString());
+                temp.setStars(ratingBar.getNumStars());
+                ((MainActivity)getActivity()).updateCache(ap, temp);
             }
         });
         // Inflate the layout for this fragment

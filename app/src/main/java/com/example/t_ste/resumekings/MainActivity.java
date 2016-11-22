@@ -1,5 +1,7 @@
 package com.example.t_ste.resumekings;
 
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -13,9 +15,12 @@ import android.support.v7.widget.Toolbar;
 import android.telecom.Call;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     /*
@@ -31,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ArrayList<Applicant_Profile> cachedApplicantProfiles = new ArrayList<>();
     FragmentManager fm = getSupportFragmentManager();
     Applicant_Profile tempProfile = new Applicant_Profile();
-    Call_Web_API CWA;
+    // Call_Web_API CWA;
 
     public boolean addToBackStack = true; // Set up TAGs to be allowed or not allowed to add to the backstack
 
@@ -40,8 +45,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         // The standard on create items and initializing the toolbars
         super.onCreate(savedInstanceState);
-        CWA = new Call_Web_API();
-        getCache();
+        // CWA = new Call_Web_API();
+        // getCache();
         setContentView(R.layout.main_activity_drawer);
 
         // Set the initial fragment in that container
@@ -54,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
 
         // Testing Derpage
-      /*  String[] Names = new String[] {"Bob", "Jill", "Paul", "Brother morgan", "Spidey", "Ronald Cross", "Derpina", "humm", "Trevor Stephens", "Greg Wilkinson"};
+        String[] Names = new String[] {"Bob", "Jill", "Paul", "Brother morgan", "Spidey", "Ronald Cross", "Derpina", "humm", "Trevor Stephens", "Greg Wilkinson"};
         String[] Email = new String[] {"Bob@yahoo.whynot", "jill@weirdo.net", "PaulBiggers@gmail.com", "psychward@where.fired",
                 "Spidey@web.net", "kissme.com", "derpina@yuno.net", "yayitworked!", "Trevor.Stevens@HI", "Greg.Wilkinson@IBREAKEVERYTHING"};
 
@@ -66,17 +71,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             ap.setNotes("We're all bad!");
             ap.setStars(3);
             addToCache(ap);
-        }*/
+        }
 
         // Floating action bar that we may turn into a hotswap to something else if we think we need it...
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
 
         // The drawer on the left side of the home screen
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -134,8 +139,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             displayView("CreateNewApplicant");
         } else if (id == R.id.Tutorial) {
             displayView("Tutorial");
-        } else if (id == R.id.View_Recent_Applicants) {
-            displayView("ViewRecentApplicants");
+        } else if (id == R.id.View_Applicants) {
+            displayView("ViewApplicants");
         } else if (id == R.id.Favorite_Applicants) {
             displayView("FavoriteApplicants");
         } else if (id == R.id.Something) {
@@ -193,12 +198,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
         }
 
+        // TODO: fix this to check if current fragment is the same as the one to start
         // If the new fragment is not null then have the fragment manager commit the swap.
         if (newFragment != null) {
-            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.replace(R.id.Container, newFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            transaction.addToBackStack(TAG);
+            if(addToBackStack) transaction.addToBackStack(TAG);
             transaction.commit();
         }
     }
@@ -230,7 +236,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         addToBackStack = input;
     }
 
-    public void getCache() {
-        cachedApplicantProfiles = CWA.doInBackground("","Get");
+    // TODO: FINISH THIS THING
+    public void updateCache(Applicant_Profile old, Applicant_Profile updated) {
+        int i = cachedApplicantProfiles.indexOf(old);
+        Applicant_Profile temp = cachedApplicantProfiles.get(i);
+
+        if(!(temp.getUserName()).equals(updated.getUserName()) && updated.getUserName() != null)
+            temp.setUserName(updated.getUserName());
+
+        if(!(temp.getEmail()).equals(updated.getEmail()) && updated.getEmail() != null)
+            temp.setEmail(updated.getEmail());
+
+        if(!(temp.getPhoneNumber()).equals(updated.getPhoneNumber()) && updated.getPhoneNumber() != null)
+            temp.setPhoneNumber(updated.getPhoneNumber());
+
+        if(!(temp.getNotes()).equals(updated.getNotes()) && updated.getNotes() != null)
+            temp.setNotes(updated.getNotes());
     }
+
+//    public void getCache() {
+//        cachedApplicantProfiles = CWA.doInBackground("","Get");
+//    }
 }

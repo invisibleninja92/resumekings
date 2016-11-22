@@ -12,7 +12,7 @@
     <string name="favorites">Favorites</string>
     <string name="settings">Settings</string>
     <string name="tutorial">Tutorial</string>
-    <string name="view_recent_applicants">View Recent Applicants</string>
+    <string name="view_applicants">View Applicants</string>
     <string name="something">Something...</string>
     <string name="resume_kings">Resume Kings</string>
 </resources>
