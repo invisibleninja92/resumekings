@@ -38,16 +38,11 @@ public class Fragment_View_Applicants extends Fragment {
     // THE STANDARD BLOCK FOR A FRAGMENT DONT EDIT IN HERE ///////////
 
 
-
-
     // INITIALIZERS //////////
 
     ListView ApplicantCacheList;
     ArrayList<Applicant_Profile> cachedApplicantProfiles;
     // INITIALIZERS //////////
-
-
-
 
 
     @Override
