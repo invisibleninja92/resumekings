@@ -23,20 +23,13 @@ import java.util.List;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    /*
-    FUUUUUUUUUUUUUUCCCCCCCCCCCCCKKKKKKKKKKKKKKKKKKK YYYYYYYYYYYOOOOOOOOOOOOOUUUUUUUUUUUUUUUUU
-    GGGGGGGRRRRRRRRRRREEEEEEEEEEEGGGGGGGGGGGGGGGGGGGGGGG
-    FFFFFFFFFFUUUUUUUUUUUUUUCCCCCCCCCCCCCCKKKKKKKKKKKKK YYYYYYYYYYYYOOOOOOOOOOUUUUUUUUUUU
-     */
 
-// I SWEAR I FUCKING HATE YOU
-    // LOVE YOU TOO!
 
     // Temporary (possibly permanent) list of applicants to keep locally
     ArrayList<Applicant_Profile> cachedApplicantProfiles = new ArrayList<>();
     FragmentManager fm = getSupportFragmentManager();
     Applicant_Profile tempProfile = new Applicant_Profile();
-    // Call_Web_API CWA;
+    Call_Web_API CWA;
 
     public boolean addToBackStack = true; // Set up TAGs to be allowed or not allowed to add to the backstack
 
@@ -45,8 +38,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         // The standard on create items and initializing the toolbars
         super.onCreate(savedInstanceState);
-        // CWA = new Call_Web_API();
-        // getCache();
+         CWA = new Call_Web_API();
+         getCache();
         setContentView(R.layout.main_activity_drawer);
 
         // Set the initial fragment in that container
@@ -59,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
 
         // Testing Derpage
-        String[] Names = new String[] {"Bob", "Jill", "Paul", "Brother morgan", "Spidey", "Ronald Cross", "Derpina", "humm", "Trevor Stephens", "Greg Wilkinson"};
+        /*String[] Names = new String[] {"Bob", "Jill", "Paul", "Brother morgan", "Spidey", "Ronald Cross", "Derpina", "humm", "Trevor Stephens", "Greg Wilkinson"};
         String[] Email = new String[] {"Bob@yahoo.whynot", "jill@weirdo.net", "PaulBiggers@gmail.com", "psychward@where.fired",
                 "Spidey@web.net", "kissme.com", "derpina@yuno.net", "yayitworked!", "Trevor.Stevens@HI", "Greg.Wilkinson@IBREAKEVERYTHING"};
 
@@ -71,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             ap.setNotes("We're all bad!");
             ap.setStars(3);
             addToCache(ap);
-        }
+        }*/
 
         // Floating action bar that we may turn into a hotswap to something else if we think we need it...
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -254,7 +247,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             temp.setNotes(updated.getNotes());
     }
 
-//    public void getCache() {
-//        cachedApplicantProfiles = CWA.doInBackground("","Get");
-//    }
+    public void getCache() {
+        cachedApplicantProfiles = CWA.doInBackground("","Get");
+    }
 }

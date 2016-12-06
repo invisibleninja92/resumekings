@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -30,8 +31,10 @@ public class Call_Web_API extends AsyncTask<String,Void ,ArrayList<Applicant_Pro
                     //tw.PutNewResume(AP); //we need to send an ID to update here in the URL
             }}catch (JSONException e){
                 e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            return null;
+        return null;
         }
     //Here is the Get and Delete Get returns an ARRAYLIST DELETE doesnt GET can return 1 person or a full array of people
     @Override

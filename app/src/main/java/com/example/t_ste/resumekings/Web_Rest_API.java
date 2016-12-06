@@ -1,15 +1,17 @@
 package com.example.t_ste.resumekings;
 
-import android.content.Context;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
-import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.client.HttpClient;
+import cz.msebera.android.httpclient.HttpEntity;
 import cz.msebera.android.httpclient.entity.StringEntity;
+
 
 /**
  * Created by t_ste on 11/19/2016.
  */
-import com.loopj.android.http.*;
+
 
 public class Web_Rest_API {
 
@@ -21,7 +23,7 @@ public class Web_Rest_API {
     }
 
 
-    public static void post(String url, StringEntity entity , AsyncHttpResponseHandler responseHandler) {
+    public static void post(String url, HttpEntity entity , AsyncHttpResponseHandler responseHandler) {
         client.post(null,getAbsoluteUrl(url), entity,"application/json", responseHandler);
     }
 

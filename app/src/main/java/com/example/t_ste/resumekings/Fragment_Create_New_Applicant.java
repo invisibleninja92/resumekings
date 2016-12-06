@@ -61,7 +61,6 @@ public class Fragment_Create_New_Applicant extends Fragment {
     Bitmap ProfilePicBit;
     Bitmap ResumePicBit;
 
-    static final int REQUEST_IMAGE_CAPTURE = 1;
     // INITIALIZERS //////////
 
 
@@ -121,6 +120,7 @@ public class Fragment_Create_New_Applicant extends Fragment {
             }
         });
         return view; // This returns the view(Fragment) with all the initializers
+
     }
 
     @Override
