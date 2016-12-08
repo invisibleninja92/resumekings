@@ -1,8 +1,10 @@
 package com.example.t_ste.resumekings;
 
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Environment;
 
 import com.loopj.android.http.Base64;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -15,11 +17,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.HttpEntity;
+import cz.msebera.android.httpclient.entity.FileEntity;
 import cz.msebera.android.httpclient.entity.StringEntity;
 import cz.msebera.android.httpclient.entity.mime.HttpMultipartMode;
 import cz.msebera.android.httpclient.entity.mime.MultipartEntityBuilder;
@@ -31,10 +35,13 @@ import cz.msebera.android.httpclient.entity.mime.MultipartEntityBuilder;
 public class UseWebAPI {
     public void PostNewResume(Applicant_Profile AP) throws JSONException, IOException {
         JSONObject JO= new JSONObject();
-        //StringEntity entity = null; //OLD Way of sending data to API
-        MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+        StringEntity entity = null;
 
-        builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+        File ProfilePic = File.createTempFile("TempProfile","png");
+        File ResumePic= File.createTempFile("TempResume","png");
+
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ByteArrayOutputStream bos2 = new ByteArrayOutputStream();
 
         JO.put("Name",AP.getUserName());
         JO.put("Email",AP.getEmail());
@@ -43,13 +50,10 @@ public class UseWebAPI {
         JO.put("Resume","");
         JO.put("Picture","");
         JO.put("Rating",AP.getStars());
-        builder.addTextBody("Applicant_Info",JO.toString());
         //create a file to write bitmap data
-        File ProfilePic = new File("Profile_"+AP.getUserName()+"_"+AP.getPhoneNumber());
-        ProfilePic.createNewFile();
+
 
 //Convert bitmap to byte array
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
         AP.getProfilePicture().compress(Bitmap.CompressFormat.PNG, 0 , bos);
         byte[] bitmapdata = bos.toByteArray();
 
@@ -58,33 +62,58 @@ public class UseWebAPI {
         fos.write(bitmapdata);
         fos.flush();
         fos.close();
-        builder.addBinaryBody("Profile_Picture",ProfilePic);
-
-        File ResumePic = new File("Resume_"+AP.getUserName()+"_"+AP.getPhoneNumber());
-        ResumePic.createNewFile();
 
 //Convert bitmap to byte array
-        ByteArrayOutputStream bos2 = new ByteArrayOutputStream();
         AP.getResumePicture().compress(Bitmap.CompressFormat.PNG, 0 , bos2);
-        byte[] bitmapdata2 = bos.toByteArray();
+        byte[] bitmapdata2 = bos2.toByteArray();
 
 //write the bytes in file
         FileOutputStream fos2 = new FileOutputStream(ResumePic);
         fos2.write(bitmapdata2);
         fos2.flush();
         fos2.close();
-        builder.addBinaryBody("Resume_Picture",ResumePic);
-        HttpEntity entity2 = builder.build();
 
 
-/*       try {
+
+        FileEntity ProfilePicEntity = new FileEntity(ProfilePic);
+        FileEntity ResumePicEntity = new FileEntity(ResumePic);
+
+
+
+      try {
              entity = new StringEntity(JO.toString());
-        } catch (UnsupportedEncodingException e) {  //old way to send data to API
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-        }*/
+        }
 
+        //upload JSON
+        Web_Rest_API.post("" , entity,  new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                // If the response is JSONObject instead of expected JSONArray
+                try {
+                    System.out.println(response.getString("Id"));//Returns the ID WE dont need a return though
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
 
-        Web_Rest_API.post("" , entity2,  new JsonHttpResponseHandler() {
+        });
+        //upload Resume
+        Web_Rest_API.post("/upload/resume" , ResumePicEntity ,  new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                // If the response is JSONObject instead of expected JSONArray
+                try {
+                    System.out.println(response.getString("Id"));//Returns the ID WE dont need a return though
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        });
+        //upload Profile
+        Web_Rest_API.post("/upload/profile" , ProfilePicEntity ,  new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 // If the response is JSONObject instead of expected JSONArray
@@ -144,8 +173,8 @@ public class UseWebAPI {
                             AP.setEmail(Applicant.getString("Email"));
                             AP.setPhoneNumber(Applicant.getString("Number"));
                             AP.setNotes(Applicant.getString("Notes"));
-                            AP.setProfilePicture(StringToBitMap(Applicant.getString("Picture")));
-                            AP.setResumePicture(StringToBitMap(Applicant.getString("Resume")));
+//                            AP.setProfilePicture(StringToBitMap(Applicant.getString("Picture")));
+//                            AP.setResumePicture(StringToBitMap(Applicant.getString("Resume")));
                             AP.setStars(Integer.parseInt(Applicant.getString("Rating")));
                             cachedApplicantProfiles.add(AP);
 
@@ -170,21 +199,4 @@ public class UseWebAPI {
             });
         }}
 
-    public String BitMapToString(Bitmap bitmap){
-        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
-        byte [] b=baos.toByteArray();
-        String temp=Base64.encodeToString(b, Base64.DEFAULT);
-        return temp;
-    }
-    public Bitmap StringToBitMap(String encodedString){
-        try {
-            byte [] encodeByte=Base64.decode(encodedString,Base64.DEFAULT);
-            Bitmap bitmap=BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-            return bitmap;
-        } catch(Exception e) {
-            e.getMessage();
-            return null;
-        }
-    }
 }

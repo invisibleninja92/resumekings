@@ -5,6 +5,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import cz.msebera.android.httpclient.HttpEntity;
+import cz.msebera.android.httpclient.entity.FileEntity;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
 
@@ -15,6 +16,8 @@ import cz.msebera.android.httpclient.entity.StringEntity;
 
 public class Web_Rest_API {
 
+
+
     private static final String BASE_URL = "";
     private static AsyncHttpClient client = new AsyncHttpClient();
 
@@ -23,8 +26,12 @@ public class Web_Rest_API {
     }
 
 
-    public static void post(String url, HttpEntity entity , AsyncHttpResponseHandler responseHandler) {
-        client.post(null,getAbsoluteUrl(url), entity,"application/json", responseHandler);
+    public static void post(String url, StringEntity entity , AsyncHttpResponseHandler responseHandler) {
+        client.post(null,getAbsoluteUrl(url), entity, "application/json", responseHandler);
+    }
+
+    public static void post(String url, FileEntity entity , AsyncHttpResponseHandler responseHandler) {
+        client.post(null,getAbsoluteUrl(url), entity, "application/json", responseHandler);
     }
 
     public static void delete(String url, AsyncHttpResponseHandler responseHandler) {
