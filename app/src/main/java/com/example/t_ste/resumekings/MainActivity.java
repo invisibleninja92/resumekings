@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean horizontal = false;          // standard user will open the app from a vertical position so open vertically first.
     public boolean addToBackStack = false;      // Set up TAGs to be allowed or not allowed to add to the backstack
     public boolean deleteApplicant = false;
-    boolean API_Mode = false;                   // Toggle this to true if you want to use the cloud
+    boolean API_Mode = true;                   // Toggle this to true if you want to use the cloud
 
 
     @Override
