@@ -109,8 +109,11 @@ public class Fragment_Create_New_Applicant extends Fragment {
                 ap.setStars((int) RatingBar.getRating());
                 ap.setProfilePicture(ProfilePicBit);
                 ap.setResumePicture(ResumePicBit);
-                Call_Web_API CWA = new Call_Web_API();
-                CWA.doInBackground(ap,"Post");
+
+                if(((MainActivity) getActivity()).API_Mode) {
+                    Call_Web_API CWA = new Call_Web_API();
+                    CWA.doInBackground(ap, "Post");
+                }
 
                 // We want to send it back to the mainActivity to do this we get the main activity and
                 // call the setTaskListFunction then call the displayView to go back to the main screen.
@@ -140,7 +143,6 @@ public class Fragment_Create_New_Applicant extends Fragment {
                 return false;
             }
         });
-
     }
 
     // Since we start a camera activity we need to get the results of that this function
@@ -149,8 +151,6 @@ public class Fragment_Create_New_Applicant extends Fragment {
 
         super.onActivityResult(requestCode, resultCode, data);
         bitmap = (Bitmap) data.getExtras().get("data");
-
-        if (bitmap == null) return;
 
         switch(requestCode){
             case 0: //if the requestCode was 0 the user took a profile picture

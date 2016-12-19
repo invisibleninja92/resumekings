@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="2dp"
+    android:layout_marginBottom="2dp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
+        android:text="Applicant's Name"
         android:id="@+id/UserName"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"/>
 
     <RatingBar
         style = "?android:attr/ratingBarStyleSmall"
@@ -24,6 +28,16 @@
         android:contextClickable="false"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="4dp" />
+
+    <TextView
+        android:text="Applicant's Email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/UserEmail"
+        android:layout_below="@+id/UserName"
+        android:layout_alignLeft="@+id/UserName"
+        android:layout_alignStart="@+id/UserName" />
 
 </RelativeLayout>

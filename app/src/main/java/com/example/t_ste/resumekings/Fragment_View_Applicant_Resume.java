@@ -24,7 +24,7 @@ public class Fragment_View_Applicant_Resume extends android.support.v4.app.Fragm
 
 
     // INITIALIZERS //////////
-
+    Applicant_Profile ap;
 
 
 
@@ -37,7 +37,10 @@ public class Fragment_View_Applicant_Resume extends android.support.v4.app.Fragm
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_view_applicant_resume, container, false);//Creates the view(Fragment)
 
-        ((MainActivity)getActivity()).setAddToBackStack(true);
+        ((MainActivity)getActivity()).setAddToBackStack(false);
+        ap = ((MainActivity)getActivity()).getTempProfile();
+        //TODO: Trevor halp...idk how to get photos out of the applicant profile. this will show the reusme
+
 
 
 

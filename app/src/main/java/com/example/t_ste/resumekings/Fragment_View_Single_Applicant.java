@@ -2,6 +2,7 @@ package com.example.t_ste.resumekings;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,12 +43,14 @@ public class Fragment_View_Single_Applicant extends Fragment {
     Button SaveApplicant;
     Button DeleteApplicant;
     Button UpdateApplicant;
+    Button ShowResume;
     Applicant_Profile ap;
     EditText applicantName;
     EditText applicantEmail;
     EditText applicantNotes;
     EditText applicantPhone;
     RatingBar ratingBar;
+    Boolean Update = false;
     // INITIALIZERS //////////
 
 
@@ -59,6 +62,7 @@ public class Fragment_View_Single_Applicant extends Fragment {
         SaveApplicant = (Button) view.findViewById(R.id.save_applicant);
         DeleteApplicant = (Button) view.findViewById(R.id.delete_applicant);
         UpdateApplicant = (Button) view.findViewById(R.id.update_applicant);
+        ShowResume = (Button) view.findViewById(R.id.show_resume);
         ratingBar = (RatingBar) view.findViewById(R.id.ratingBar);
 
         applicantName = (EditText) view.findViewById(R.id.applicantName);
@@ -78,7 +82,8 @@ public class Fragment_View_Single_Applicant extends Fragment {
                 ((MainActivity)getActivity()).removeFromCache(ap);
                 // TODO: remove the applicant from the database with api call
                 ((MainActivity)getActivity()).setAddToBackStack(false);
-                ((MainActivity)getActivity()).displayView("ViewApplicants");
+                ((MainActivity)getActivity()).deleteApplicant = true;
+                ((MainActivity)getActivity()).viewApplicant(((MainActivity)getActivity()).cachedApplicantProfiles.get(0));
             }
         });
 
@@ -94,15 +99,42 @@ public class Fragment_View_Single_Applicant extends Fragment {
         UpdateApplicant.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Applicant_Profile temp = new Applicant_Profile();
-                temp.setUserName(applicantName.toString());
-                temp.setEmail(applicantEmail.toString());
-                temp.setPhoneNumber(applicantPhone.toString());
-                temp.setNotes(applicantNotes.toString());
-                temp.setStars(ratingBar.getNumStars());
-                ((MainActivity)getActivity()).updateCache(ap, temp);
+                if(!Update){
+                    applicantName.setInputType(InputType.TYPE_CLASS_TEXT);
+                    applicantName.setFocusable(true);
+                    applicantPhone.setInputType(InputType.TYPE_CLASS_TEXT);
+                    applicantPhone.setFocusable(true);
+                    applicantEmail.setInputType(InputType.TYPE_CLASS_TEXT);
+                    applicantEmail.setFocusable(true);
+                    applicantNotes.setInputType(InputType.TYPE_CLASS_TEXT);
+                    applicantNotes.setFocusable(true);
+                    ratingBar.setIsIndicator(false);
+                    Update = true;
+                    UpdateApplicant.setText("Update Applicant");
+                }
+                else {
+                    Applicant_Profile temp = new Applicant_Profile();
+                    temp.setUserName(applicantName.getText().toString());
+                    temp.setEmail(applicantEmail.getText().toString());
+                    temp.setPhoneNumber(applicantPhone.getText().toString());
+                    temp.setNotes(applicantNotes.getText().toString());
+                    temp.setStars((int)ratingBar.getRating());
+
+                    ((MainActivity)getActivity()).updateCache(ap, temp);
+                    ((MainActivity)getActivity()).setAddToBackStack(false);
+                    ((MainActivity)getActivity()).viewApplicant(temp);
+                }
             }
         });
+
+        ShowResume.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View V){
+                ((MainActivity)getActivity()).setAddToBackStack(false);
+                ((MainActivity)getActivity()).displayView("ViewApplicantResume");
+            }
+        });
+
         // Inflate the layout for this fragment
         return view;
     }

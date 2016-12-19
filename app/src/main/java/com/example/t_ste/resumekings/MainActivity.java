@@ -13,58 +13,70 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.telecom.Call;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
-
-    // Temporary (possibly permanent) list of applicants to keep locally
-    ArrayList<Applicant_Profile> cachedApplicantProfiles = new ArrayList<>();
-    FragmentManager fm = getSupportFragmentManager();
-    Applicant_Profile tempProfile = new Applicant_Profile();
+    ArrayList<Applicant_Profile> cachedApplicantProfiles = new ArrayList<>();   // Local cache of applicants to pass to the other fragments
+    FragmentManager fm = getSupportFragmentManager();                           // Fragment manager that transitions all fragments in the app
+    Applicant_Profile tempProfile = new Applicant_Profile();                    // Temporary profile that allows fragments to talk to each other or pass data
     Call_Web_API CWA;
 
-    public boolean addToBackStack = true; // Set up TAGs to be allowed or not allowed to add to the backstack
+    public boolean tablet_mode = false;         // Determined at startup. Don't mess with this
+    public boolean horizontal = false;          // standard user will open the app from a vertical position so open vertically first.
+    public boolean addToBackStack = false;      // Set up TAGs to be allowed or not allowed to add to the backstack
+    public boolean deleteApplicant = false;
+    boolean API_Mode = false;                   // Toggle this to true if you want to use the cloud
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // The standard on create items and initializing the toolbars
         super.onCreate(savedInstanceState);
-         CWA = new Call_Web_API();
-         getCache();
+        if(!API_Mode) {
+            // Testing Derpage
+            String[] Names = new String[] {"Bob", "Jill", "Paul", "Brother morgan", "Spidey", "Ronald Cross", "Derpina", "humm", "Trevor Stephens", "Greg Wilkinson"};
+            String[] Email = new String[] {"Bob@yahoo.whynot", "jill@weirdo.net", "PaulBiggers@gmail.com", "psychward@where.fired",
+                    "Spidey@web.net", "kissme.com", "derpina@yuno.net", "yayitworked!", "Trevor.Stevens@HI", "Greg.Wilkinson@IBREAKEVERYTHING"};
+
+            for (int i = 0; i < Names.length; i++) {
+                Applicant_Profile ap = new Applicant_Profile();
+                ap.setUserName(Names[i]);
+                ap.setPhoneNumber("8765309");
+                ap.setEmail(Email[i]);
+                ap.setNotes("We're all bad!");
+                ap.setStars(3);
+                addToCache(ap);
+            }
+        }
+        if(API_Mode) {
+            CWA = new Call_Web_API();
+            getCache();
+        }
+
+        // Determine whether or not the device is large enough to support multiple fragments if yes this will be true.
+        get_device_size();
+
+        // Set the drawer and all of its contents.
         setContentView(R.layout.main_activity_drawer);
 
-        // Set the initial fragment in that container
+        // Set the initial fragment in the Container_left in the section_user xml layout
         FragmentTransaction ft = fm.beginTransaction();
-
         Fragment_View_Applicants newFragment = new Fragment_View_Applicants();
-        ft.add(R.id.Container, newFragment).commit();
+        ft.add(R.id.Container_left, newFragment).commit();
 
+        // Start up the toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Testing Derpage
-        /*String[] Names = new String[] {"Bob", "Jill", "Paul", "Brother morgan", "Spidey", "Ronald Cross", "Derpina", "humm", "Trevor Stephens", "Greg Wilkinson"};
-        String[] Email = new String[] {"Bob@yahoo.whynot", "jill@weirdo.net", "PaulBiggers@gmail.com", "psychward@where.fired",
-                "Spidey@web.net", "kissme.com", "derpina@yuno.net", "yayitworked!", "Trevor.Stevens@HI", "Greg.Wilkinson@IBREAKEVERYTHING"};
-
-        for (int i = 0; i < Names.length; i++) {
-            Applicant_Profile ap = new Applicant_Profile();
-            ap.setUserName(Names[i]);
-            ap.setPhoneNumber("8765309");
-            ap.setEmail(Email[i]);
-            ap.setNotes("We're all bad!");
-            ap.setStars(3);
-            addToCache(ap);
-        }*/
+        // If tablet mode is activated then the Container_right needs to be populated by the first cached applicant profile
+        if(tablet_mode && cachedApplicantProfiles != null){
+            viewApplicant(cachedApplicantProfiles.get(0));
+        }
 
         // Floating action bar that we may turn into a hotswap to something else if we think we need it...
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -151,55 +163,114 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // This is a fragment by service  publisher/subscriber framework for the app. Any string passed into
         // here will initialize the swap to one of the other accepted fragments. Some temporary variables in
         // MainActivity will allow for passage of needed items to and from other fragments.
+        Toast.makeText(this, "count is " + fm.getBackStackEntryCount(), Toast.LENGTH_SHORT).show();
 
-        Fragment newFragment = null;
+        Fragment newFragmentLeft = null;
+        Fragment newFragmentRight = null;
+        FragmentTransaction transaction1 = fm.beginTransaction();
+        FragmentTransaction transaction2 = fm.beginTransaction();
 
-        switch(TAG) {
-            case "CreateNewApplicant":
-                // Initialize the create new applicant fragment
-                newFragment = new Fragment_Create_New_Applicant();
-                break;
+        // Phone mode. This will keep only one fragment viewable at a time and d
+        if(!tablet_mode) {
+            switch (TAG) {
+                case "CreateNewApplicant":
+                    // Initialize the create new applicant fragment
+                    newFragmentLeft = new Fragment_Create_New_Applicant();
+                    break;
 
-            case "ViewApplicants":
-                // Initialize the view applicants fragment
-                newFragment = new Fragment_View_Applicants();
-                break;
+                case "ViewApplicants":
+                    // Initialize the view applicants fragment
+                    newFragmentLeft = new Fragment_View_Applicants();
+                    break;
 
-            case "ViewSingleApplicant":
-                // Initialize the view single applicant fragment
-                newFragment = new Fragment_View_Single_Applicant();
-                break;
+                case "ViewSingleApplicant":
+                    // Initialize the view single applicant fragment
+                    newFragmentLeft = new Fragment_View_Single_Applicant();
+                    break;
 
-            case "ViewApplicantResume":
-                // Initialize the view applicant resume fragment
-                newFragment = new Fragment_View_Applicant_Resume();
-                break;
+                case "ViewApplicantResume":
+                    // Initialize the view applicant resume fragment
+                    newFragmentLeft = new Fragment_View_Applicant_Resume();
+                    break;
 
-            case "FavoriteApplicants":
-                // Initialize the favorite applicants fragment
-                newFragment = new Fragment_Favorite_Applicants();
-                break;
+                case "FavoriteApplicants":
+                    // Initialize the favorite applicants fragment
+                    newFragmentLeft = new Fragment_Favorite_Applicants();
+                    break;
 
-            case "Tutorial":
-                // fragment to show the tutorial
-                newFragment = new Fragment_Tutorial();
-                break;
+                case "Tutorial":
+                    // fragment to show the tutorial
+                    newFragmentLeft = new Fragment_Tutorial();
+                    break;
 
-            case "Settings":
-                // Initialize the Settings fragment
-                newFragment = new Fragment_Settings();
-                break;
+                case "Settings":
+                    // Initialize the Settings fragment
+                    newFragmentLeft = new Fragment_Settings();
+                    break;
+            }
+        }
+
+        // Tablet only mode. This will allow the second fragment to be set and utilized depending on the fragment
+        // combos that we decide to use.
+        if(tablet_mode) {
+            switch (TAG) {
+                case "CreateNewApplicant":
+                    // Initialize the create new applicant fragment
+                    newFragmentLeft = new Fragment_Create_New_Applicant();
+                    transaction2.remove(fm.findFragmentById(R.id.Container_right));
+                    break;
+
+                case "ViewApplicants":
+                    // Initialize the view applicants fragment
+                    newFragmentLeft = new Fragment_View_Applicants();
+                    newFragmentRight = new Fragment_View_Single_Applicant();
+                    break;
+
+                case "ViewSingleApplicant":
+                    // Initialize the view single applicant fragment
+                    newFragmentLeft = new Fragment_View_Applicants();
+                    newFragmentRight = new Fragment_View_Single_Applicant();
+                    break;
+
+                case "ViewApplicantResume":
+                    // Initialize the view applicant resume fragment
+                    newFragmentLeft = new Fragment_View_Single_Applicant();
+                    newFragmentRight = new Fragment_View_Applicant_Resume();
+                    break;
+
+                case "FavoriteApplicants":
+                    // Initialize the favorite applicants fragment
+                    newFragmentLeft = new Fragment_Favorite_Applicants();
+                    break;
+
+                case "Tutorial":
+                    // fragment to show the tutorial
+                    newFragmentLeft = new Fragment_Tutorial();
+                    break;
+
+                case "Settings":
+                    // Initialize the Settings fragment
+                    newFragmentLeft = new Fragment_Settings();
+                    break;
+            }
         }
 
         // TODO: fix this to check if current fragment is the same as the one to start
         // If the new fragment is not null then have the fragment manager commit the swap.
-        if (newFragment != null) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.replace(R.id.Container, newFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            if(addToBackStack) transaction.addToBackStack(TAG);
-            transaction.commit();
+        if (newFragmentLeft != null) {
+            transaction1.replace(R.id.Container_left, newFragmentLeft, TAG).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         }
+        if (newFragmentRight != null) {
+            transaction2.replace(R.id.Container_right, newFragmentRight, TAG).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        }
+
+
+        // TODO: if tablet mode is true then have certain fragments be added to the second container rather than phone mode.
+        if(addToBackStack) transaction1.addToBackStack(TAG);
+
+        transaction1.commit();
+        if (transaction2 != null)
+            transaction2.commit();
     }
 
     // Takes in a profile from create new applicant or view applicants to then save the profile in the mainactivity
@@ -229,25 +300,41 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         addToBackStack = input;
     }
 
-    // TODO: FINISH THIS THING
     public void updateCache(Applicant_Profile old, Applicant_Profile updated) {
         int i = cachedApplicantProfiles.indexOf(old);
-        Applicant_Profile temp = cachedApplicantProfiles.get(i);
 
-        if(!(temp.getUserName()).equals(updated.getUserName()) && updated.getUserName() != null)
-            temp.setUserName(updated.getUserName());
+        if(!(cachedApplicantProfiles.get(i).getUserName()).equals(updated.getUserName()) && updated.getUserName() != null)
+            cachedApplicantProfiles.get(i).setUserName(updated.getUserName());
+        else cachedApplicantProfiles.get(i).setUserName(old.getUserName());
 
-        if(!(temp.getEmail()).equals(updated.getEmail()) && updated.getEmail() != null)
-            temp.setEmail(updated.getEmail());
+        if(!(cachedApplicantProfiles.get(i).getEmail()).equals(updated.getEmail()) && updated.getEmail() != null)
+            cachedApplicantProfiles.get(i).setEmail(updated.getEmail());
+        else cachedApplicantProfiles.get(i).setEmail(old.getEmail());
 
-        if(!(temp.getPhoneNumber()).equals(updated.getPhoneNumber()) && updated.getPhoneNumber() != null)
-            temp.setPhoneNumber(updated.getPhoneNumber());
+        if(!(cachedApplicantProfiles.get(i).getPhoneNumber()).equals(updated.getPhoneNumber()) && updated.getPhoneNumber() != null)
+            cachedApplicantProfiles.get(i).setPhoneNumber(updated.getPhoneNumber());
+        else cachedApplicantProfiles.get(i).setPhoneNumber(old.getPhoneNumber());
 
-        if(!(temp.getNotes()).equals(updated.getNotes()) && updated.getNotes() != null)
-            temp.setNotes(updated.getNotes());
+        if(!(cachedApplicantProfiles.get(i).getNotes()).equals(updated.getNotes()) && updated.getNotes() != null)
+            cachedApplicantProfiles.get(i).setNotes(updated.getNotes());
+        else cachedApplicantProfiles.get(i).setNotes(old.getNotes());
+
+        if(!(cachedApplicantProfiles.get(i).getStars() == updated.getStars()))
+            cachedApplicantProfiles.get(i).setStars(updated.getStars());
+        else cachedApplicantProfiles.get(i).setStars(old.getStars());
     }
 
     public void getCache() {
         cachedApplicantProfiles = CWA.doInBackground("","Get");
+    }
+
+    public void get_device_size() {
+        DisplayMetrics metrics = new DisplayMetrics();
+        this.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+        float yInches= metrics.heightPixels/metrics.ydpi;
+        float xInches= metrics.widthPixels/metrics.xdpi;
+        double diagonalInches = Math.sqrt(xInches*xInches + yInches*yInches);
+        tablet_mode = diagonalInches >= 6.5;
     }
 }

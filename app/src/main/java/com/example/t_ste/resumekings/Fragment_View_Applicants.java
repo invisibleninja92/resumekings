@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import static com.example.t_ste.resumekings.R.id.Applicant_ListView;
 
@@ -56,15 +58,15 @@ public class Fragment_View_Applicants extends Fragment {
         ((MainActivity)getActivity()).setAddToBackStack(true);
 
         //we need to create an application adapter to create the elements in the list
-        final Applicant_Adapter adapt = new Applicant_Adapter(view.getContext(),cachedApplicantProfiles);
-        ApplicantCacheList.setAdapter(adapt);//set the adapter of elements to listview
+        if(!(ApplicantCacheList == null)) {
+            final Applicant_Adapter adapt = new Applicant_Adapter(view.getContext(), cachedApplicantProfiles);
+            ApplicantCacheList.setAdapter(adapt);//set the adapter of elements to listview
+        } else { Toast.makeText(getContext(), "Please create a new applicant profile first!", Toast.LENGTH_SHORT).show(); }
 
         //When the ListView Element is clicked we need to change the images
         ApplicantCacheList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-
-               ((MainActivity)getActivity()).setAddToBackStack(true);
+               ((MainActivity)getActivity()).setAddToBackStack(false);
                ((MainActivity)getActivity()).viewApplicant(cachedApplicantProfiles.get(position));
             }
         });

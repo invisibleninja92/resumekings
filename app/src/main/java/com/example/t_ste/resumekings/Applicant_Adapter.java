@@ -21,18 +21,20 @@ public class Applicant_Adapter extends ArrayAdapter<Applicant_Profile> {
     public Applicant_Adapter(Context context, ArrayList<Applicant_Profile> users){
         super(context,0,users);
     }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
-        Applicant_Profile up = getItem(position);
+        Applicant_Profile tempProfile = getItem(position);
         if(convertView==null){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.personitem, parent, false);
         }
-        TextView name = (TextView) convertView.findViewById(R.id.UserName);
+        TextView UserName = (TextView) convertView.findViewById(R.id.UserName);
+        TextView UserEmail = (TextView) convertView.findViewById(R.id.UserEmail);
         RatingBar RatingBar = (RatingBar) convertView.findViewById((R.id.RatingBar));
 
-        name.setText(up.getUserName()+"\n"+up.getEmail());
-        RatingBar.setRating(up.getStars());
+        UserName.setText(tempProfile.getUserName());
+        UserEmail.setText(tempProfile.getEmail());
+        RatingBar.setRating(tempProfile.getStars());
         return convertView;
     }
-
 }
