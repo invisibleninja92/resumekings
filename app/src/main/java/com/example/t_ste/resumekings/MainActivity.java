@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean horizontal = false;          // standard user will open the app from a vertical position so open vertically first.
     public boolean addToBackStack = false;      // Set up TAGs to be allowed or not allowed to add to the backstack
     public boolean deleteApplicant = false;
-    boolean API_Mode = true;                   // Toggle this to true if you want to use the cloud
+    boolean API_Mode = false;                   // Toggle this to true if you want to use the cloud
 
 
     @Override
@@ -79,14 +79,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         // Floating action bar that we may turn into a hotswap to something else if we think we need it...
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
 
         // The drawer on the left side of the home screen
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -163,11 +163,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // This is a fragment by service  publisher/subscriber framework for the app. Any string passed into
         // here will initialize the swap to one of the other accepted fragments. Some temporary variables in
         // MainActivity will allow for passage of needed items to and from other fragments.
-        Toast.makeText(this, "count is " + fm.getBackStackEntryCount(), Toast.LENGTH_SHORT).show();
 
+        // Standard phone sized view and shows the left container only so all fragments rotate in/out to show the flow to the user
         Fragment newFragmentLeft = null;
-        Fragment newFragmentRight = null;
         FragmentTransaction transaction1 = fm.beginTransaction();
+
+        //specifically for tablet mode. Left container and right container hold the fragments to support the tablet view
+        Fragment newFragmentRight = null;
         FragmentTransaction transaction2 = fm.beginTransaction();
 
         // Phone mode. This will keep only one fragment viewable at a time and d
@@ -255,7 +257,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }
 
-        // TODO: fix this to check if current fragment is the same as the one to start
         // If the new fragment is not null then have the fragment manager commit the swap.
         if (newFragmentLeft != null) {
             transaction1.replace(R.id.Container_left, newFragmentLeft, TAG).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
@@ -263,9 +264,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (newFragmentRight != null) {
             transaction2.replace(R.id.Container_right, newFragmentRight, TAG).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         }
-
-
-        // TODO: if tablet mode is true then have certain fragments be added to the second container rather than phone mode.
         if(addToBackStack) transaction1.addToBackStack(TAG);
 
         transaction1.commit();
