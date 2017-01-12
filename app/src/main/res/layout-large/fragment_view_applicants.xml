@@ -1,0 +1,42 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.t_ste.resumekings.Fragment_View_Applicants"
+    android:orientation="horizontal"
+    android:scrollbars="vertical"
+    app:layout_scrollFlags="scroll">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content">
+
+        <SearchView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/search"
+            android:orientation="horizontal"
+            android:hint="Search"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:fadingEdge="horizontal|vertical"
+            app:queryHint="Searcch" />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/Applicant_ListView"
+            android:dividerHeight="2dp"
+            android:elevation="1dp" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/Container_right">
+
+    </FrameLayout>
+
+</LinearLayout>

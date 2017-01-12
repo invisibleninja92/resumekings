@@ -1,0 +1,129 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    tools:context="com.example.t_ste.resumekings.Fragment_Create_New_Applicant"
+    android:orientation="horizontal"
+    android:scrollbars="vertical"
+    android:layout_width="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="300dp"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:id="@+id/EditProfilePic"
+            android:src="@drawable/person"
+            android:layout_alignTop="@+id/saveButton"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="center_horizontal" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical"
+                android:weightSum="1">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:hint="Name"
+                    android:ems="10"
+                    android:id="@+id/EditName"
+                    android:layout_marginTop="8dp"
+                    android:capitalize="words"
+                    android:background="@android:drawable/editbox_background" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:hint="Email"
+                    android:ems="10"
+                    android:id="@+id/EditEmail"
+                    android:layout_marginTop="8dp"
+                    android:background="@android:drawable/editbox_background" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"
+                    android:ems="10"
+                    android:hint="Phone"
+                    android:id="@+id/EditPhone"
+                    android:layout_marginTop="8dp"
+                    android:background="@android:drawable/editbox_background" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/EditNotes"
+                    android:hint="Notes"
+                    android:layout_marginTop="8dp"
+                    android:background="@android:drawable/editbox_background"
+                    android:minLines="4" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="Rating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rating_textview"
+                        android:textSize="18sp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:paddingLeft="8dp" />
+
+                    <RatingBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/EditRating"
+                        android:stepSize="1"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@+id/rating_textview"
+                        android:layout_toEndOf="@+id/rating_textview" />
+                </RelativeLayout>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Save"
+                    android:id="@+id/saveButton"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="false"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/EditResumePic"
+                    android:src="@drawable/person" />
+
+            </LinearLayout>
+
+        </ScrollView>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/Container_right">
+
+    </FrameLayout>
+
+</LinearLayout>
