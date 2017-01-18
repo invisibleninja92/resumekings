@@ -1,15 +1,27 @@
 package com.example.t_ste.resumekings;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.Toast;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,7 +33,8 @@ import android.widget.RatingBar;
  */
 public class Fragment_View_Single_Applicant extends Fragment {
     // THE STANDARD BLOCK FOR A FRAGMENT DONT EDIT IN HERE ///////////
-    public Fragment_View_Single_Applicant() {}
+    public Fragment_View_Single_Applicant() {
+    }
 
     public static Fragment_View_Single_Applicant newInstance() {
         return new Fragment_View_Single_Applicant();
@@ -51,6 +64,8 @@ public class Fragment_View_Single_Applicant extends Fragment {
     EditText applicantPhone;
     RatingBar ratingBar;
     Boolean Update = false;
+    ImageView ResumeImage;
+    ImageView ProfileImage;
     // INITIALIZERS //////////
 
 
@@ -58,7 +73,6 @@ public class Fragment_View_Single_Applicant extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_view_single_applicant, container, false);
         ap = ((MainActivity)getActivity()).getTempProfile();
-
         SaveApplicant = (Button) view.findViewById(R.id.save_applicant);
         DeleteApplicant = (Button) view.findViewById(R.id.delete_applicant);
         UpdateApplicant = (Button) view.findViewById(R.id.update_applicant);
@@ -70,11 +84,20 @@ public class Fragment_View_Single_Applicant extends Fragment {
         applicantEmail = (EditText) view.findViewById(R.id.applicantEmail);
         applicantNotes = (EditText) view.findViewById(R.id.applicantNotes);
 
+        ResumeImage = (ImageView) view.findViewById(R.id.ResumePicture);
+        ProfileImage = (ImageView) view.findViewById(R.id.ProfilePicture);
+
+
+        new DownloadImageFromInternet(ProfileImage).execute(ap.getProfilePictureURL());
+        new DownloadImageFromInternet(ResumeImage).execute(ap.getResumePictureURL());
+
+
         ratingBar.setRating(ap.getStars());
         applicantName.setText(ap.getUserName());
         applicantPhone.setText(ap.getPhoneNumber());
         applicantEmail.setText(ap.getEmail());
         applicantNotes.setText(ap.getNotes());
+
 
         DeleteApplicant.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -156,5 +179,32 @@ public class Fragment_View_Single_Applicant extends Fragment {
                 return false;
             }
         });
+    }
+
+
+    private class DownloadImageFromInternet extends AsyncTask<String, Void, Bitmap> {
+        ImageView imageView;
+
+        public DownloadImageFromInternet(ImageView imageView) {
+            this.imageView = imageView;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String imageURL = urls[0];
+            Bitmap bimage = null;
+            try {
+                InputStream in = new java.net.URL(imageURL).openStream();
+                bimage = BitmapFactory.decodeStream(in);
+
+            } catch (Exception e) {
+                Log.e("Error Message", e.getMessage());
+                e.printStackTrace();
+            }
+            return bimage;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            imageView.setImageBitmap(result);
+        }
     }
 }

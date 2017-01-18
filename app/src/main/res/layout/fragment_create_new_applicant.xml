@@ -6,15 +6,26 @@
     android:orientation="vertical"
     android:scrollbars="vertical">
 
-    <ImageView
-        android:layout_width="90dp"
-        android:layout_height="90dp"
-        android:id="@+id/EditProfilePic"
-        android:src="@drawable/person"
-        android:layout_alignTop="@+id/saveButton"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_gravity="center_horizontal" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:id="@+id/EditResumePic"
+            android:src="@drawable/person"
+            android:layout_weight="4.55" />
+
+        <ImageView
+            android:layout_width="135dp"
+            android:layout_height="90dp"
+            android:id="@+id/EditProfilePic"
+            android:src="@drawable/person"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -67,9 +78,7 @@
                 android:background="@android:drawable/editbox_background"
                 android:minLines="4" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+
 
                 <TextView
                     android:text="Rating"
@@ -82,15 +91,11 @@
                     android:layout_alignParentStart="true"
                     android:paddingLeft="8dp" />
 
-                <RatingBar
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/EditRating"
-                    android:stepSize="1"
-                    android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@+id/rating_textview"
-                    android:layout_toEndOf="@+id/rating_textview" />
-            </RelativeLayout>
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/EditRating"
+                android:stepSize="1" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -102,13 +107,6 @@
                 android:layout_alignParentEnd="false"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp" />
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/EditResumePic"
-                android:src="@drawable/person"
-                android:layout_weight="4.55" />
 
         </LinearLayout>
 

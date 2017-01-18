@@ -7,6 +7,8 @@ import com.loopj.android.http.RequestParams;
 import cz.msebera.android.httpclient.HttpEntity;
 import cz.msebera.android.httpclient.entity.FileEntity;
 import cz.msebera.android.httpclient.entity.StringEntity;
+import cz.msebera.android.httpclient.entity.mime.MultipartEntityBuilder;
+import cz.msebera.android.httpclient.protocol.HTTP;
 
 
 /**
@@ -30,7 +32,7 @@ public class Web_Rest_API {
         client.post(null,getAbsoluteUrl(url), entity, "application/json", responseHandler);
     }
 
-    public static void post(String url, FileEntity entity , AsyncHttpResponseHandler responseHandler) {
+    public static void post(String url, HttpEntity entity , AsyncHttpResponseHandler responseHandler) {
         client.post(null,getAbsoluteUrl(url), entity, "application/json", responseHandler);
     }
 

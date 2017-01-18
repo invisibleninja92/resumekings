@@ -1,7 +1,9 @@
 package com.example.t_ste.resumekings;
 
+import android.Manifest;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -49,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 ap.setPhoneNumber("8765309");
                 ap.setEmail(Email[i]);
                 ap.setNotes("We're all bad!");
+                ap.setProfilePictureURL("http://www.freshdesignpedia.com/wp-content/uploads/what-is-cat-s-education/cat-educate-tips-small-katzenbaby.jpg");
+                ap.setResumePictureURL("http://www.freshdesignpedia.com/wp-content/uploads/what-is-cat-s-education/cat-educate-tips-small-katzenbaby.jpg");
                 ap.setStars(3);
                 addToCache(ap);
             }
@@ -75,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // If tablet mode is activated then the Container_right needs to be populated by the first cached applicant profile
         if(tablet_mode && cachedApplicantProfiles != null){
-            viewApplicant(cachedApplicantProfiles.get(0));
+//            viewApplicant(cachedApplicantProfiles.get(0));
         }
 
         // Floating action bar that we may turn into a hotswap to something else if we think we need it...

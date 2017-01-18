@@ -18,9 +18,10 @@ public class Applicant_Profile {
     private String Email;
     private String PhoneNumber;
     private String Notes;
+    private String ProfilePictureURL;
+    private String ResumePictureURL;
+
     private int Stars;
-    private String ResumeBLOB;
-    private String ProfileBLOB;
 
     public int getStars() {
         return Stars;
@@ -81,23 +82,23 @@ public class Applicant_Profile {
 
     @Override
     public String toString() {
-        return "Name:"+UserName+" Email:"+Email+" PhoneNumber: "+PhoneNumber+" Picture: "+ProfilePicture +" BLOB: "+ ProfileBLOB;
+        return "Name:"+UserName+" Email:"+Email+" PhoneNumber: "+PhoneNumber+" Picture: "+ProfilePicture;
     }
 
-
-    public String getResumeBLOB() {
-        return ResumeBLOB;
+    public String getProfilePictureURL() {
+        return ProfilePictureURL;
     }
 
-    public void setResumeBLOB(String resumeBLOB) {
-        ResumeBLOB = resumeBLOB;
+    public void setProfilePictureURL(String profilePictureURL) {
+        ProfilePictureURL = profilePictureURL;
     }
 
-    public String getProfileBLOB() {
-        return ProfileBLOB;
+    public String getResumePictureURL() {
+        return ResumePictureURL;
     }
 
-    public void setProfileBLOB(String profileBLOB) {
-        ProfileBLOB = profileBLOB;
+    public void setResumePictureURL(String resumePictureURL) {
+        ResumePictureURL = resumePictureURL;
     }
 }
+
