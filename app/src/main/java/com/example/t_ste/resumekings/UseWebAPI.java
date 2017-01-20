@@ -24,6 +24,8 @@ import cz.msebera.android.httpclient.entity.StringEntity;
  */
 
 public class UseWebAPI {
+
+
     public void PostNewResume(Applicant_Profile AP) throws JSONException, IOException {
         JSONObject JO= new JSONObject();
         StringEntity entity = null;
@@ -64,38 +66,10 @@ public class UseWebAPI {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public ArrayList<Applicant_Profile> getNewResume(String ID) throws JSONException {
+    public ArrayList<Applicant_Profile> getResumes() throws JSONException {
         final ArrayList<Applicant_Profile> cachedApplicantProfiles = new ArrayList<>();
 
-        if (ID != "") { //if its not null we are getting just 1
-            Web_Rest_API.get(ID, null, new JsonHttpResponseHandler() {
-
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    // If the response is JSONObject instead of expected JSONArray
-
-                    try {
-                        Applicant_Profile AP = new Applicant_Profile();
-                        AP.setUserName(response.getString("Name"));
-                        AP.setEmail(response.getString("Email"));
-                        AP.setPhoneNumber(response.getString("Number"));
-                        AP.setNotes(response.getString("Notes"));
-                        AP.setStars(Integer.parseInt(response.getString("Rating")));
-                        AP.setProfilePictureURL(response.getString("Profile"));
-                        AP.setResumePictureURL(response.getString("Resume"));
-
-                        cachedApplicantProfiles.add(AP);
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            });
-            return cachedApplicantProfiles; //return the array of size 1 else do below
-        } else { //if it is null we are getting all of them
             Web_Rest_API.get("", null, new JsonHttpResponseHandler() {
-
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                     for (int i = 0; i < response.length(); i++) {
@@ -111,6 +85,7 @@ public class UseWebAPI {
                             AP.setStars(Integer.parseInt(Applicant.getString("Rating")));
                             AP.setProfilePictureURL(Applicant.getString("Profile"));
                             AP.setResumePictureURL(Applicant.getString("Resume"));
+                            AP.setID(Applicant.getString("Id"));
                             cachedApplicantProfiles.add(AP);
 
                         } catch (JSONException e) {
@@ -121,7 +96,7 @@ public class UseWebAPI {
                 }
             });
             return cachedApplicantProfiles; //return big array of a lot of the items.
-        }
+
 
     }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -134,6 +109,9 @@ public class UseWebAPI {
             });
         }}
 
+    public void updateResume(String ID) {
+
+    }
 
 
     public String BitMapToString(Bitmap bitmap){

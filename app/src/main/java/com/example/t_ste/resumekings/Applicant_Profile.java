@@ -20,6 +20,7 @@ public class Applicant_Profile {
     private String Notes;
     private String ProfilePictureURL;
     private String ResumePictureURL;
+    private String ID;
 
     private int Stars;
 
@@ -99,6 +100,14 @@ public class Applicant_Profile {
 
     public void setResumePictureURL(String resumePictureURL) {
         ResumePictureURL = resumePictureURL;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
     }
 }
 

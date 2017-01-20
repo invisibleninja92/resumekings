@@ -87,10 +87,11 @@ public class Fragment_View_Single_Applicant extends Fragment {
         ResumeImage = (ImageView) view.findViewById(R.id.ResumePicture);
         ProfileImage = (ImageView) view.findViewById(R.id.ProfilePicture);
 
+        final Call_Web_API CWA = new Call_Web_API();
+
 
         new DownloadImageFromInternet(ProfileImage).execute(ap.getProfilePictureURL());
         new DownloadImageFromInternet(ResumeImage).execute(ap.getResumePictureURL());
-
 
         ratingBar.setRating(ap.getStars());
         applicantName.setText(ap.getUserName());
@@ -103,7 +104,7 @@ public class Fragment_View_Single_Applicant extends Fragment {
             @Override
             public void onClick(View V){
                 ((MainActivity)getActivity()).removeFromCache(ap);
-                // TODO: remove the applicant from the database with api call
+                CWA.doInBackground(ap,"Delete"); //Passes the SQL ID and calls the "Delete function
                 ((MainActivity)getActivity()).setAddToBackStack(false);
                 ((MainActivity)getActivity()).deleteApplicant = true;
                 ((MainActivity)getActivity()).viewApplicant(((MainActivity)getActivity()).cachedApplicantProfiles.get(0));
@@ -146,6 +147,7 @@ public class Fragment_View_Single_Applicant extends Fragment {
                     ((MainActivity)getActivity()).updateCache(ap, temp);
                     ((MainActivity)getActivity()).setAddToBackStack(false);
                     ((MainActivity)getActivity()).viewApplicant(temp);
+                    CWA.doInBackground(ap,"Put");//this needs to do something
                 }
             }
         });
@@ -197,8 +199,8 @@ public class Fragment_View_Single_Applicant extends Fragment {
                 bimage = BitmapFactory.decodeStream(in);
 
             } catch (Exception e) {
-                Log.e("Error Message", e.getMessage());
-                e.printStackTrace();
+//                Log.e("Error Message", e.getMessage());
+  //              e.printStackTrace();
             }
             return bimage;
         }
