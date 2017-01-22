@@ -40,7 +40,6 @@ public class Fragment_View_Single_Applicant extends Fragment {
 
     // INITIALIZERS //////////
     View view;
-    Button SaveApplicant;
     Button DeleteApplicant;
     Button UpdateApplicant;
     Button ShowResume;
@@ -59,7 +58,6 @@ public class Fragment_View_Single_Applicant extends Fragment {
         view = inflater.inflate(R.layout.fragment_view_single_applicant, container, false);
         ap = ((MainActivity)getActivity()).getTempProfile();
 
-        SaveApplicant = (Button) view.findViewById(R.id.save_applicant);
         DeleteApplicant = (Button) view.findViewById(R.id.delete_applicant);
         UpdateApplicant = (Button) view.findViewById(R.id.update_applicant);
         ShowResume = (Button) view.findViewById(R.id.show_resume);
@@ -69,6 +67,11 @@ public class Fragment_View_Single_Applicant extends Fragment {
         applicantPhone = (EditText) view.findViewById(R.id.applicantPhone);
         applicantEmail = (EditText) view.findViewById(R.id.applicantEmail);
         applicantNotes = (EditText) view.findViewById(R.id.applicantNotes);
+
+        disableEditText(applicantEmail);
+        disableEditText(applicantName);
+        disableEditText(applicantNotes);
+        disableEditText(applicantPhone);
 
         ratingBar.setRating(ap.getStars());
         applicantName.setText(ap.getUserName());
@@ -84,15 +87,6 @@ public class Fragment_View_Single_Applicant extends Fragment {
                 ((MainActivity)getActivity()).setAddToBackStack(false);
                 ((MainActivity)getActivity()).deleteApplicant = true;
                 ((MainActivity)getActivity()).viewApplicant(((MainActivity)getActivity()).cachedApplicantProfiles.get(0));
-            }
-        });
-
-        SaveApplicant.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View V){
-                ((MainActivity)getActivity()).setAddToBackStack(false);
-                // TODO: add the applicant to S3 Database with api call
-                ((MainActivity)getActivity()).displayView("ViewApplicants");
             }
         });
 
@@ -137,6 +131,13 @@ public class Fragment_View_Single_Applicant extends Fragment {
 
         // Inflate the layout for this fragment
         return view;
+    }
+
+    private void disableEditText(EditText editText) {
+        editText.setFocusable(false);
+        //editText.setEnabled(false);
+        editText.setCursorVisible(false);
+        editText.setKeyListener(null);
     }
 
     @Override

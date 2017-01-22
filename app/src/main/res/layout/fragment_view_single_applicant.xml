@@ -82,19 +82,11 @@
                 android:layout_height="match_parent">
 
                 <Button
-                    android:text="Save Applicant"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/save_applicant"
-                    android:layout_width="150dp" />
-
-                <Button
                     android:text="Edit Applicant"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/update_applicant"
-                    android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@+id/save_applicant"
-                    android:layout_toEndOf="@+id/save_applicant" />
+                    android:layout_alignParentTop="true"/>
             </RelativeLayout>
 
             <RelativeLayout
