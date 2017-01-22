@@ -17,18 +17,27 @@ import java.util.ArrayList;
                                     //AsyncTask<Param, something, return>
     //aditional changes
 public class Call_Web_API extends AsyncTask<String,Void ,ArrayList<Applicant_Profile>> {
-    final ArrayList<Applicant_Profile> cachedApplicantProfiles = new ArrayList<>();
 
-//PUT and POST dont return any value so there is no reason to return
-    protected Void doInBackground(Applicant_Profile AP, String... strings) {
-            UseWebAPI tw = new UseWebAPI();
-            try {
+
+     ArrayList<Applicant_Profile> cachedApplicantProfiles = new ArrayList<>();
+
+
+    protected ArrayList<Applicant_Profile> doInBackground(Applicant_Profile AP, String... strings) {
+            UseWebAPI UseAPI = new UseWebAPI();
+        try {
             switch (strings[0]) {
+                case "Get": //this get function works perfectly :)
+                    cachedApplicantProfiles=UseAPI.getResumes();
+                    return cachedApplicantProfiles;
                 case "Post":
-                        tw.PostNewResume(AP);
-                        break;
+                    UseAPI.PostNewResume(AP); //this post (Or create new) Function works perfectly :)
+                    break;
                 case "PUT":
-                    //tw.PutNewResume(AP); //we need to send an ID to update here in the URL
+                   // UseAPI.UpdateResume(AP.getID()); //we need to send an ID to update here in the URL
+                    break;
+                case "Delete": //this delete function works perfectly :)
+                    UseAPI.deleteResume(AP.getID());
+                    break;
             }}catch (JSONException e){
                 e.printStackTrace();
             } catch (IOException e) {
@@ -36,21 +45,9 @@ public class Call_Web_API extends AsyncTask<String,Void ,ArrayList<Applicant_Pro
             }
         return null;
         }
-    //Here is the Get and Delete Get returns an ARRAYLIST DELETE doesnt GET can return 1 person or a full array of people
+//Not sure why we have to have this interface below but its here..... oh well :)
     @Override
-    protected ArrayList<Applicant_Profile>  doInBackground(String... strings) {
-        UseWebAPI tw = new UseWebAPI();
-         ArrayList<Applicant_Profile> cachedApplicantProfiles = new ArrayList<>();
-        try {
-            switch (strings[1]) {
-                case "Get":
-                    cachedApplicantProfiles=tw.getNewResume(strings[0]);
-                    break;
-                case "Delete":
-                    tw.deleteResume(strings[0]);
-
-            }}catch (JSONException e){
-            e.printStackTrace();
-        }
-        return cachedApplicantProfiles;    }
+    protected ArrayList<Applicant_Profile> doInBackground(String... strings) {
+        return null;
+    }
 }

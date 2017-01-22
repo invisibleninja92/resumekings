@@ -1,15 +1,27 @@
 package com.example.t_ste.resumekings;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.Toast;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -50,6 +62,8 @@ public class Fragment_View_Single_Applicant extends Fragment {
     EditText applicantPhone;
     RatingBar ratingBar;
     Boolean Update = false;
+    ImageView ResumeImage;
+    ImageView ProfileImage;
     // INITIALIZERS //////////
 
 
@@ -73,17 +87,27 @@ public class Fragment_View_Single_Applicant extends Fragment {
         disableEditText(applicantNotes);
         disableEditText(applicantPhone);
 
+        ResumeImage = (ImageView) view.findViewById(R.id.ResumePicture);
+        ProfileImage = (ImageView) view.findViewById(R.id.ProfilePicture);
+
+        final Call_Web_API CWA = new Call_Web_API();
+
+
+        new DownloadImageFromInternet(ProfileImage).execute(ap.getProfilePictureURL());
+        new DownloadImageFromInternet(ResumeImage).execute(ap.getResumePictureURL());
+
         ratingBar.setRating(ap.getStars());
         applicantName.setText(ap.getUserName());
         applicantPhone.setText(ap.getPhoneNumber());
         applicantEmail.setText(ap.getEmail());
         applicantNotes.setText(ap.getNotes());
 
+
         DeleteApplicant.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View V){
                 ((MainActivity)getActivity()).removeFromCache(ap);
-                // TODO: remove the applicant from the database with api call
+                CWA.doInBackground(ap,"Delete"); //Passes the SQL ID and calls the "Delete function
                 ((MainActivity)getActivity()).setAddToBackStack(false);
                 ((MainActivity)getActivity()).deleteApplicant = true;
                 ((MainActivity)getActivity()).viewApplicant(((MainActivity)getActivity()).cachedApplicantProfiles.get(0));
@@ -117,6 +141,7 @@ public class Fragment_View_Single_Applicant extends Fragment {
                     ((MainActivity)getActivity()).updateCache(ap, temp);
                     ((MainActivity)getActivity()).setAddToBackStack(false);
                     ((MainActivity)getActivity()).viewApplicant(temp);
+                    CWA.doInBackground(ap,"Put");//this needs to do something
                 }
             }
         });
@@ -157,5 +182,32 @@ public class Fragment_View_Single_Applicant extends Fragment {
                 return false;
             }
         });
+    }
+
+
+    private class DownloadImageFromInternet extends AsyncTask<String, Void, Bitmap> {
+        ImageView imageView;
+
+        public DownloadImageFromInternet(ImageView imageView) {
+            this.imageView = imageView;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String imageURL = urls[0];
+            Bitmap bimage = null;
+            try {
+                InputStream in = new java.net.URL(imageURL).openStream();
+                bimage = BitmapFactory.decodeStream(in);
+
+            } catch (Exception e) {
+//                Log.e("Error Message", e.getMessage());
+  //              e.printStackTrace();
+            }
+            return bimage;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            imageView.setImageBitmap(result);
+        }
     }
 }

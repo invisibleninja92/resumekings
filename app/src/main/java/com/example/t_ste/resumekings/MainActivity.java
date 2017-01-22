@@ -1,7 +1,9 @@
 package com.example.t_ste.resumekings;
 
+import android.Manifest;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -30,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean horizontal = false;          // standard user will open the app from a vertical position so open vertically first.
     public boolean addToBackStack = false;      // Set up TAGs to be allowed or not allowed to add to the backstack
     public boolean deleteApplicant = false;
-    boolean API_Mode = false;                   // Toggle this to true if you want to use the cloud
+    boolean API_Mode = true;                   // Toggle this to true if you want to use the cloud
 
 
     @Override
@@ -41,14 +43,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             // Testing Derpage
             String[] Names = new String[] {"Bob", "Jill", "Paul", "Brother morgan", "Spidey", "Ronald Cross", "Derpina", "humm", "Trevor Stephens", "Greg Wilkinson"};
             String[] Email = new String[] {"Bob@yahoo.whynot", "jill@weirdo.net", "PaulBiggers@gmail.com", "psychward@where.fired",
-                    "Spidey@web.net", "kissme.com", "derpina@yuno.net", "yayitworked!", "Trevor.Stevens@HI", "Greg.Wilkinson@IBREAKEVERYTHING"};
+                    "Spidey@web.net", "RIP.com", "derpina@yuno.net", "yayitworked!", "Trevor.Stevens@HI", "Greg.Wilkinson@IBREAKEVERYTHING"};
 
             for (int i = 0; i < Names.length; i++) {
                 Applicant_Profile ap = new Applicant_Profile();
                 ap.setUserName(Names[i]);
                 ap.setPhoneNumber("8765309");
                 ap.setEmail(Email[i]);
-                ap.setNotes("We're all bad!");
+                ap.setNotes("We're all OK!");
+                ap.setProfilePictureURL("http://www.freshdesignpedia.com/wp-content/uploads/what-is-cat-s-education/cat-educate-tips-small-katzenbaby.jpg");
+                ap.setResumePictureURL("https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Resume.pdf/page1-220px-Resume.pdf.jpg");
                 ap.setStars(3);
                 addToCache(ap);
             }
@@ -75,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // If tablet mode is activated then the Container_right needs to be populated by the first cached applicant profile
         if(tablet_mode && cachedApplicantProfiles != null){
-            viewApplicant(cachedApplicantProfiles.get(0));
+//            viewApplicant(cachedApplicantProfiles.get(0));
         }
 
         // Floating action bar that we may turn into a hotswap to something else if we think we need it...
@@ -323,7 +327,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void getCache() {
-        cachedApplicantProfiles = CWA.doInBackground("","Get");
+        Applicant_Profile dummyProfile=new Applicant_Profile(); //need this to call the switch function its dumb I know
+        cachedApplicantProfiles = CWA.doInBackground(dummyProfile,"Get");
     }
 
     public void get_device_size() {
