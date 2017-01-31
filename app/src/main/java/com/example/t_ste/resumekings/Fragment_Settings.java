@@ -6,6 +6,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 /**
  * Created by gregorywilkinson on 11/10/16.
@@ -30,9 +31,9 @@ public class Fragment_Settings extends Fragment {
 
 
     // INITIALIZERS //////////
-
-
-
+    EditText userID = null;
+    EditText password = null;
+    String hashedPass = null;
 
     // INITIALIZERS //////////
 
@@ -43,7 +44,8 @@ public class Fragment_Settings extends Fragment {
         // the next lines are finding the elements that are inside the fragment to then set the listeners and things
 
         ((MainActivity)getActivity()).setAddToBackStack(true);
-
+        // TODO: add in two EditTexts to take in both a username and password
+        // this can be used for mysql access and user authentication either in IAM or in mysql
 
         return view; //Return the fragment with all the functionality
     }
@@ -65,5 +67,14 @@ public class Fragment_Settings extends Fragment {
                 return false;
             }
         });
+    }
+
+    private String passHash(String userToPass){
+        // change this to something else
+        String hashedPass = userToPass;
+        // TODO: create hash processor to pass to main
+
+        ((MainActivity)getActivity()).setUserandPass(userToPass, hashedPass);
+        return hashedPass;
     }
 }

@@ -52,9 +52,9 @@ public class Fragment_View_Single_Applicant extends Fragment {
 
     // INITIALIZERS //////////
     View view;
-    Button DeleteApplicant;
-    Button UpdateApplicant;
-    Button ShowResume;
+    Button deleteApplicant;
+    Button updateApplicant;
+    Button showResume;
     Applicant_Profile ap;
     EditText applicantName;
     EditText applicantEmail;
@@ -72,25 +72,30 @@ public class Fragment_View_Single_Applicant extends Fragment {
         view = inflater.inflate(R.layout.fragment_view_single_applicant, container, false);
         ap = ((MainActivity)getActivity()).getTempProfile();
 
-        DeleteApplicant = (Button) view.findViewById(R.id.delete_applicant);
-        UpdateApplicant = (Button) view.findViewById(R.id.update_applicant);
-        ShowResume = (Button) view.findViewById(R.id.show_resume);
-        ratingBar = (RatingBar) view.findViewById(R.id.ratingBar);
+        if(ap == null){
+            return view;
+        }
 
-        applicantName = (EditText) view.findViewById(R.id.applicantName);
+        deleteApplicant = (Button) view.findViewById(R.id.delete_applicant);
+        updateApplicant = (Button) view.findViewById(R.id.update_applicant);
+        showResume      = (Button) view.findViewById(R.id.show_resume);
+        ratingBar       = (RatingBar) view.findViewById(R.id.ratingBar);
+
+        applicantName  = (EditText) view.findViewById(R.id.applicantName);
         applicantPhone = (EditText) view.findViewById(R.id.applicantPhone);
         applicantEmail = (EditText) view.findViewById(R.id.applicantEmail);
         applicantNotes = (EditText) view.findViewById(R.id.applicantNotes);
 
-        disableEditText(applicantEmail);
-        disableEditText(applicantName);
-        disableEditText(applicantNotes);
-        disableEditText(applicantPhone);
+        applicantEmail.setEnabled(false);
+        applicantName.setEnabled(false);
+        applicantNotes.setEnabled(false);
+        applicantPhone.setEnabled(false);
 
         ResumeImage = (ImageView) view.findViewById(R.id.ResumePicture);
         ProfileImage = (ImageView) view.findViewById(R.id.ProfilePicture);
 
-        final Call_Web_API CWA = new Call_Web_API();
+        // TODO: WAT...ask Trevor
+        // final Call_Web_API CWA = new Call_Web_API();
 
 
         new DownloadImageFromInternet(ProfileImage).execute(ap.getProfilePictureURL());
@@ -102,33 +107,40 @@ public class Fragment_View_Single_Applicant extends Fragment {
         applicantEmail.setText(ap.getEmail());
         applicantNotes.setText(ap.getNotes());
 
-
-        DeleteApplicant.setOnClickListener(new View.OnClickListener(){
+        deleteApplicant.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View V){
                 ((MainActivity)getActivity()).removeFromCache(ap);
-                CWA.doInBackground(ap,"Delete"); //Passes the SQL ID and calls the "Delete function
+                // TODO: WAT...Ask trevor
+                // CWA.doInBackground(ap,"Delete"); //Passes the SQL ID and calls the "Delete function
                 ((MainActivity)getActivity()).setAddToBackStack(false);
                 ((MainActivity)getActivity()).deleteApplicant = true;
-                ((MainActivity)getActivity()).viewApplicant(((MainActivity)getActivity()).cachedApplicantProfiles.get(0));
+                if(((MainActivity)getActivity()).cachedApplicantProfiles.size() != 0) {
+                    ((MainActivity) getActivity()).viewApplicant(((MainActivity) getActivity()).cachedApplicantProfiles.get(0));
+                }
+                else {
+                    Toast.makeText(getContext(), "create an applicant!", Toast.LENGTH_SHORT).show();
+                    ((MainActivity) getActivity()).setAddToBackStack(false);
+                    ((MainActivity) getActivity()).displayView("CreateNewApplicant");
+                }
             }
         });
 
-        UpdateApplicant.setOnClickListener(new View.OnClickListener(){
+        updateApplicant.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 if(!Update){
                     applicantName.setInputType(InputType.TYPE_CLASS_TEXT);
-                    applicantName.setFocusable(true);
+                    applicantName.setEnabled(true);
                     applicantPhone.setInputType(InputType.TYPE_CLASS_TEXT);
-                    applicantPhone.setFocusable(true);
+                    applicantPhone.setEnabled(true);
                     applicantEmail.setInputType(InputType.TYPE_CLASS_TEXT);
-                    applicantEmail.setFocusable(true);
+                    applicantEmail.setEnabled(true);
                     applicantNotes.setInputType(InputType.TYPE_CLASS_TEXT);
-                    applicantNotes.setFocusable(true);
+                    applicantNotes.setEnabled(true);
                     ratingBar.setIsIndicator(false);
                     Update = true;
-                    UpdateApplicant.setText("Update Applicant");
+                    updateApplicant.setText("Update Applicant");
                 }
                 else {
                     Applicant_Profile temp = new Applicant_Profile();
@@ -141,28 +153,21 @@ public class Fragment_View_Single_Applicant extends Fragment {
                     ((MainActivity)getActivity()).updateCache(ap, temp);
                     ((MainActivity)getActivity()).setAddToBackStack(false);
                     ((MainActivity)getActivity()).viewApplicant(temp);
-                    CWA.doInBackground(ap,"Put");//this needs to do something
+                    // TODO: MOAR WAT.
+                    //CWA.doInBackground(ap,"Put");//this needs to do something
                 }
             }
         });
 
-        ShowResume.setOnClickListener(new View.OnClickListener(){
+        showResume.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View V){
                 ((MainActivity)getActivity()).setAddToBackStack(false);
                 ((MainActivity)getActivity()).displayView("ViewApplicantResume");
             }
         });
-
         // Inflate the layout for this fragment
         return view;
-    }
-
-    private void disableEditText(EditText editText) {
-        editText.setFocusable(false);
-        //editText.setEnabled(false);
-        editText.setCursorVisible(false);
-        editText.setKeyListener(null);
     }
 
     @Override
@@ -192,6 +197,7 @@ public class Fragment_View_Single_Applicant extends Fragment {
             this.imageView = imageView;
         }
 
+        //TODO: clean this up
         protected Bitmap doInBackground(String... urls) {
             String imageURL = urls[0];
             Bitmap bimage = null;
@@ -200,8 +206,6 @@ public class Fragment_View_Single_Applicant extends Fragment {
                 bimage = BitmapFactory.decodeStream(in);
 
             } catch (Exception e) {
-//                Log.e("Error Message", e.getMessage());
-  //              e.printStackTrace();
             }
             return bimage;
         }

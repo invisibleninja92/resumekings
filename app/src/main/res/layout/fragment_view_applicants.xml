@@ -12,12 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/search"
-        android:orientation="horizontal"
-        android:hint="Search"
+        android:hint="Name/Email/Phone"
         android:imeOptions="actionSearch"
         android:inputType="text"
-        android:fadingEdge="horizontal|vertical"
-        app:queryHint="Searcch" />
+        android:fadingEdge="horizontal|vertical" />
 
     <ListView
         android:layout_width="match_parent"

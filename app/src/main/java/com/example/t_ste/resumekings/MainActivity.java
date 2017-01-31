@@ -20,36 +20,89 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.jar.Attributes;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    ArrayList<Applicant_Profile> cachedApplicantProfiles = new ArrayList<>();   // Local cache of applicants to pass to the other fragments
-    FragmentManager fm = getSupportFragmentManager();                           // Fragment manager that transitions all fragments in the app
-    Applicant_Profile tempProfile = new Applicant_Profile();                    // Temporary profile that allows fragments to talk to each other or pass data
+    ArrayList<Applicant_Profile> cachedApplicantProfiles = new ArrayList<>();           // Local cache of applicants to pass to the other fragments
+    FragmentManager fm                                   = getSupportFragmentManager(); // Fragment manager that transitions all fragments in the app
+    Applicant_Profile tempProfile                        = new Applicant_Profile();     // Temporary profile that allows fragments to talk to each other or pass data
     Call_Web_API CWA;
 
-    public boolean tablet_mode = false;         // Determined at startup. Don't mess with this
-    public boolean horizontal = false;          // standard user will open the app from a vertical position so open vertically first.
-    public boolean addToBackStack = false;      // Set up TAGs to be allowed or not allowed to add to the backstack
+    public boolean tabletMode     = false;  // Determined at startup. Don't mess with this
+    public boolean addToBackStack  = false;  // Set up TAGs to be allowed or not allowed to add to the backstack
     public boolean deleteApplicant = false;
-    boolean API_Mode = true;                   // Toggle this to true if you want to use the cloud
+    public boolean API_Mode        = false;  // Toggle this to true if you want to use the cloud
+    private String username = null;
+    private String password = null;
 
+    //TODO: remove this eventually and make api calls
+    public List<String> Names;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // The standard on create items and initializing the toolbars
         super.onCreate(savedInstanceState);
+
+        // This runs if API mode is disabled. It will auto load some default testing applicants
         if(!API_Mode) {
             // Testing Derpage
-            String[] Names = new String[] {"Bob", "Jill", "Paul", "Brother morgan", "Spidey", "Ronald Cross", "Derpina", "humm", "Trevor Stephens", "Greg Wilkinson"};
-            String[] Email = new String[] {"Bob@yahoo.whynot", "jill@weirdo.net", "PaulBiggers@gmail.com", "psychward@where.fired",
-                    "Spidey@web.net", "RIP.com", "derpina@yuno.net", "yayitworked!", "Trevor.Stevens@HI", "Greg.Wilkinson@IBREAKEVERYTHING"};
+            Names = new ArrayList<>();
+            List<String> Email = new ArrayList<>();
+            List<String> Phone = new ArrayList<>();
+            BufferedReader reader;
 
-            for (int i = 0; i < Names.length; i++) {
+            // These three text files are in the assets folder and access 100 applicants so the list is bigger
+            try {
+                final InputStream fpNames = getAssets().open("names.txt");
+                reader = new BufferedReader(new InputStreamReader(fpNames));
+                String line = reader.readLine();
+                while (line != null) {
+                    Names.add(line);
+                    line = reader.readLine();
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                final InputStream fpEmails = getAssets().open("email.txt");
+                reader = new BufferedReader(new InputStreamReader(fpEmails));
+                String line = reader.readLine();
+                while (line != null) {
+                    Email.add(line);
+                    line = reader.readLine();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                final InputStream fpPhone = getAssets().open("phone.txt");
+                reader = new BufferedReader(new InputStreamReader(fpPhone));
+                String line = reader.readLine();
+                while (line != null) {
+                    Phone.add(line);
+                    line = reader.readLine();
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            for (int i = 0; i < Names.size(); i++) {
                 Applicant_Profile ap = new Applicant_Profile();
-                ap.setUserName(Names[i]);
-                ap.setPhoneNumber("8765309");
-                ap.setEmail(Email[i]);
+                ap.setUserName(Names.get(i));
+                ap.setPhoneNumber(Phone.get(i));
+                ap.setEmail(Email.get(i));
                 ap.setNotes("We're all OK!");
                 ap.setProfilePictureURL("http://www.freshdesignpedia.com/wp-content/uploads/what-is-cat-s-education/cat-educate-tips-small-katzenbaby.jpg");
                 ap.setResumePictureURL("https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Resume.pdf/page1-220px-Resume.pdf.jpg");
@@ -57,40 +110,49 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 addToCache(ap);
             }
         }
+
+        // App Startup
+        // Regular API mode which will pull everything from the server(s).
         if(API_Mode) {
             CWA = new Call_Web_API();
             getCache();
         }
 
-        // Determine whether or not the device is large enough to support multiple fragments if yes this will be true.
+        // Determine whether or not the device is large enough to support multiple fragments. Returns true or false.
         get_device_size();
 
         // Set the drawer and all of its contents.
         setContentView(R.layout.main_activity_drawer);
 
         // Set the initial fragment in the Container_left in the section_user xml layout
-        FragmentTransaction ft = fm.beginTransaction();
-        Fragment_View_Applicants newFragment = new Fragment_View_Applicants();
-        ft.add(R.id.Container_left, newFragment).commit();
+        FragmentTransaction fragTransactionLeft = fm.beginTransaction();
+        FragmentTransaction fragTransactionRight = fm.beginTransaction();
+        Fragment startupFragmentLeft;
+        Fragment startupFragmentRight;
+
+        // First determine whether or not the cache is empty. If empty then show create new applicant
+        if (cachedApplicantProfiles != null) {
+
+            tempProfile = cachedApplicantProfiles.get(0);
+            startupFragmentLeft = new Fragment_View_Applicants();
+            fragTransactionLeft.add(startupFragmentLeft, "ViewApplicants");
+            fragTransactionLeft.addToBackStack("ViewApplicants");
+            // Add in support for the tablet view to show the first applicant in the list
+            if(tabletMode) {
+                startupFragmentRight = new Fragment_View_Single_Applicant();
+                fragTransactionRight.add(startupFragmentRight, "ViewSingleApplicant").commit();
+            }
+        }
+        else {
+            // Both Tablet and phone will only view CreateNewApplicant if the cache is empty
+            startupFragmentLeft = new Fragment_Create_New_Applicant();
+            fragTransactionLeft.add(startupFragmentLeft, "CreateNewApplicant").commit();
+        }
 
         // Start up the toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        // If tablet mode is activated then the Container_right needs to be populated by the first cached applicant profile
-        if(tablet_mode && cachedApplicantProfiles != null){
-//            viewApplicant(cachedApplicantProfiles.get(0));
-        }
-
-        // Floating action bar that we may turn into a hotswap to something else if we think we need it...
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+        // End App Startup
 
         // The drawer on the left side of the home screen
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -140,21 +202,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return super.onOptionsItemSelected(item);
     }
 
+
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if (id == R.id.Create_New_Applicant) {
             displayView("CreateNewApplicant");
-        } else if (id == R.id.Tutorial) {
+        }
+        else if (id == R.id.Tutorial) {
             displayView("Tutorial");
-        } else if (id == R.id.View_Applicants) {
+        }
+        else if (id == R.id.View_Applicants) {
             displayView("ViewApplicants");
-        } else if (id == R.id.Favorite_Applicants) {
+        }
+        else if (id == R.id.Favorite_Applicants) {
             displayView("FavoriteApplicants");
-        } else if (id == R.id.Something) {
+        }
+        else if (id == R.id.Something) {
             displayView("Something");
-        } else if (id == R.id.Settings) {
+        }
+        else if (id == R.id.Settings) {
             displayView("Settings");
         }
 
@@ -177,7 +245,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FragmentTransaction transaction2 = fm.beginTransaction();
 
         // Phone mode. This will keep only one fragment viewable at a time and d
-        if(!tablet_mode) {
+        if(!tabletMode) {
             switch (TAG) {
                 case "CreateNewApplicant":
                     // Initialize the create new applicant fragment
@@ -214,15 +282,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     newFragmentLeft = new Fragment_Settings();
                     break;
             }
-        }
+        } // END Phone view switch
 
         // Tablet only mode. This will allow the second fragment to be set and utilized depending on the fragment
         // combos that we decide to use.
-        if(tablet_mode) {
+        if(tabletMode) {
             switch (TAG) {
                 case "CreateNewApplicant":
                     // Initialize the create new applicant fragment
                     newFragmentLeft = new Fragment_Create_New_Applicant();
+                    // TODO: swap this out to be able to add a resume and also edit with the paint app
                     transaction2.remove(fm.findFragmentById(R.id.Container_right));
                     break;
 
@@ -259,7 +328,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     newFragmentLeft = new Fragment_Settings();
                     break;
             }
-        }
+        } // END Tablet view switch
 
         // If the new fragment is not null then have the fragment manager commit the swap.
         if (newFragmentLeft != null) {
@@ -268,8 +337,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (newFragmentRight != null) {
             transaction2.replace(R.id.Container_right, newFragmentRight, TAG).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         }
+        // Backstack handles whether or not that fragment will reappear if the back button is pressed
         if(addToBackStack) transaction1.addToBackStack(TAG);
 
+        // This handles whether or not the tablet view mode is displayed. Currently if the device is small enough the
+        // tablet view will never be used since the first switch is the only one used.
         transaction1.commit();
         if (transaction2 != null)
             transaction2.commit();
@@ -278,6 +350,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // Takes in a profile from create new applicant or view applicants to then save the profile in the mainactivity
     // The getTempProfile call then allows the fragment to apply it and display to the user
     public void viewApplicant(Applicant_Profile ap) {
+        if (ap == null){
+            return;
+        }
         tempProfile = ap;
         displayView("ViewSingleApplicant");
     }
@@ -292,6 +367,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public ArrayList <Applicant_Profile> getCachedApplicantProfiles(){
         return cachedApplicantProfiles;
+    }
+
+    public List<String> getNameList() {
+        return Names;
     }
 
     public void removeFromCache(Applicant_Profile ap) {
@@ -324,6 +403,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(!(cachedApplicantProfiles.get(i).getStars() == updated.getStars()))
             cachedApplicantProfiles.get(i).setStars(updated.getStars());
         else cachedApplicantProfiles.get(i).setStars(old.getStars());
+
+        cachedApplicantProfiles.get(i).setResumePicture(old.getResumePicture());
+        cachedApplicantProfiles.get(i).setProfilePicture(old.getProfilePicture());
+
     }
 
     public void getCache() {
@@ -338,6 +421,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         float yInches= metrics.heightPixels/metrics.ydpi;
         float xInches= metrics.widthPixels/metrics.xdpi;
         double diagonalInches = Math.sqrt(xInches*xInches + yInches*yInches);
-        tablet_mode = diagonalInches >= 6.5;
+        tabletMode = diagonalInches >= 6.5;
+    }
+
+    public ArrayList<Applicant_Profile> search(String searchItem){
+        // TODO: create a search function...
+        ArrayList<Applicant_Profile> resultsList = new ArrayList<>();
+
+        // Iterate through all of the applicants information in the cache and return an arraylist of
+        // results that have a matching string to the searchItem
+        for(int i = 0; i < cachedApplicantProfiles.size(); i++){
+            // First search through the usernames
+            if(cachedApplicantProfiles.get(i).getUserName().equals(searchItem)){
+                resultsList.add(cachedApplicantProfiles.get(i));
+            }
+            // Next is to match an email
+            if(cachedApplicantProfiles.get(i).getEmail().equals(searchItem)){
+                resultsList.add(cachedApplicantProfiles.get(i));
+            }
+            // Lastly to check the phone numbers
+            if(cachedApplicantProfiles.get(i).getPhoneNumber().equals(searchItem)){
+                resultsList.add(cachedApplicantProfiles.get(i));
+            }
+        }
+        return resultsList;
+    }
+
+    public void setUserandPass(String user, String hashedPass){
+        username = user;
+        password = hashedPass;
     }
 }
