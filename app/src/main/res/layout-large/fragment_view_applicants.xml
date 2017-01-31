@@ -21,8 +21,7 @@
             android:hint="Search"
             android:imeOptions="actionSearch"
             android:inputType="text"
-            android:fadingEdge="horizontal|vertical"
-            app:queryHint="Searcch" />
+            android:fadingEdge="horizontal|vertical" />
 
         <ListView
             android:layout_width="match_parent"

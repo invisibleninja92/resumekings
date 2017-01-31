@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     FragmentManager fm                                   = getSupportFragmentManager(); // Fragment manager that transitions all fragments in the app
     Applicant_Profile tempProfile                        = new Applicant_Profile();     // Temporary profile that allows fragments to talk to each other or pass data
     Call_Web_API CWA;
-
     public boolean tabletMode     = false;  // Determined at startup. Don't mess with this
     public boolean addToBackStack  = false;  // Set up TAGs to be allowed or not allowed to add to the backstack
     public boolean deleteApplicant = false;
@@ -412,6 +411,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void getCache() {
         Applicant_Profile dummyProfile=new Applicant_Profile(); //need this to call the switch function its dumb I know
         cachedApplicantProfiles = CWA.doInBackground(dummyProfile,"Get");
+
     }
 
     public void get_device_size() {

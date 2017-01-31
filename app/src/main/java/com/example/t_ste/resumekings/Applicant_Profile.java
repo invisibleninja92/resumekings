@@ -21,6 +21,9 @@ public class Applicant_Profile {
     private String ProfilePictureURL;
     private String ResumePictureURL;
     private String ID;
+    private Bitmap transparentOverlay=null;
+    private String transparentOverlayURL;
+
 
     private int Stars;
 
@@ -108,6 +111,22 @@ public class Applicant_Profile {
 
     public void setID(String ID) {
         this.ID = ID;
+    }
+
+    public Bitmap getTransparentOverlay() {
+        return transparentOverlay;
+    }
+
+    public void setTransparentOverlay(Bitmap transparentOverlay) {
+        this.transparentOverlay = transparentOverlay;
+    }
+
+    public String getTransparentOverlayURL() {
+        return transparentOverlayURL;
+    }
+
+    public void setTransparentOverlayURL(String transparentOverlayURL) {
+        this.transparentOverlayURL = transparentOverlayURL;
     }
 }
 

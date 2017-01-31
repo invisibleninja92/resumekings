@@ -94,7 +94,6 @@ public class Fragment_View_Single_Applicant extends Fragment {
         ResumeImage = (ImageView) view.findViewById(R.id.ResumePicture);
         ProfileImage = (ImageView) view.findViewById(R.id.ProfilePicture);
 
-        // TODO: WAT...ask Trevor
         // final Call_Web_API CWA = new Call_Web_API();
 
 
@@ -111,8 +110,7 @@ public class Fragment_View_Single_Applicant extends Fragment {
             @Override
             public void onClick(View V){
                 ((MainActivity)getActivity()).removeFromCache(ap);
-                // TODO: WAT...Ask trevor
-                // CWA.doInBackground(ap,"Delete"); //Passes the SQL ID and calls the "Delete function
+                 //CWA.doInBackground(ap,"Delete"); //Passes the SQL ID and calls the "Delete function
                 ((MainActivity)getActivity()).setAddToBackStack(false);
                 ((MainActivity)getActivity()).deleteApplicant = true;
                 if(((MainActivity)getActivity()).cachedApplicantProfiles.size() != 0) {
@@ -153,8 +151,7 @@ public class Fragment_View_Single_Applicant extends Fragment {
                     ((MainActivity)getActivity()).updateCache(ap, temp);
                     ((MainActivity)getActivity()).setAddToBackStack(false);
                     ((MainActivity)getActivity()).viewApplicant(temp);
-                    // TODO: MOAR WAT.
-                    //CWA.doInBackground(ap,"Put");//this needs to do something
+                    //CWA.doInBackground(ap,"Put"); //Updates the applicant in the web api
                 }
             }
         });
@@ -197,14 +194,15 @@ public class Fragment_View_Single_Applicant extends Fragment {
             this.imageView = imageView;
         }
 
-        //TODO: clean this up
+        //TODO: clean this up UPDATE: NEVER
+        //UPDATE: What needs to be cleaned up here? do you want the class to be placed in a different class file?
+
         protected Bitmap doInBackground(String... urls) {
             String imageURL = urls[0];
             Bitmap bimage = null;
             try {
                 InputStream in = new java.net.URL(imageURL).openStream();
                 bimage = BitmapFactory.decodeStream(in);
-
             } catch (Exception e) {
             }
             return bimage;

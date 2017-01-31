@@ -67,10 +67,8 @@ public class Fragment_View_Applicants extends Fragment {
 
         inputSearch = (SearchView)view.findViewById(R.id.search);
         CharSequence inputSearchQuery = inputSearch.getQuery();
-
         // TODO implement the result list of applicant profiles
         ArrayList<Applicant_Profile> searchResult = ((MainActivity)getActivity()).search(inputSearchQuery.toString());
-
         //we need to create an application adapter to create the elements in the list
         if(cachedApplicantProfiles.size() != 0) {
             final Applicant_Adapter adapt = new Applicant_Adapter(getContext(), cachedApplicantProfiles);
@@ -82,6 +80,7 @@ public class Fragment_View_Applicants extends Fragment {
         }
 
         // TODO WTF IS THIS SHIT -_-
+        //Not sure what this is looks like code that you wrote @greg fucking drunk ass
 //        if(!(ApplicantCacheList == null)) {
 //            final Applicant_Adapter adapt = new Applicant_Adapter(view.getContext(), cachedApplicantProfiles);
 //            ApplicantCacheList.setAdapter(adapt);//set the adapter of elements to listview
