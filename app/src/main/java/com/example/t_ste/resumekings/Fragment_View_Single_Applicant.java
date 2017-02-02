@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.telecom.Call;
 import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -64,6 +65,8 @@ public class Fragment_View_Single_Applicant extends Fragment {
     Boolean Update = false;
     ImageView ResumeImage;
     ImageView ProfileImage;
+    ImageView ResumeOverlay;
+    final Call_Web_API CWA = new Call_Web_API();
     // INITIALIZERS //////////
 
 
@@ -72,19 +75,17 @@ public class Fragment_View_Single_Applicant extends Fragment {
         view = inflater.inflate(R.layout.fragment_view_single_applicant, container, false);
         ap = ((MainActivity)getActivity()).getTempProfile();
 
-        if(ap == null){
-            return view;
-        }
+        if(ap == null) return view;
 
         deleteApplicant = (Button) view.findViewById(R.id.delete_applicant);
         updateApplicant = (Button) view.findViewById(R.id.update_applicant);
         showResume      = (Button) view.findViewById(R.id.show_resume);
         ratingBar       = (RatingBar) view.findViewById(R.id.ratingBar);
 
-        applicantName  = (EditText) view.findViewById(R.id.applicantName);
-        applicantPhone = (EditText) view.findViewById(R.id.applicantPhone);
-        applicantEmail = (EditText) view.findViewById(R.id.applicantEmail);
-        applicantNotes = (EditText) view.findViewById(R.id.applicantNotes);
+        applicantName   = (EditText) view.findViewById(R.id.applicantName);
+        applicantPhone  = (EditText) view.findViewById(R.id.applicantPhone);
+        applicantEmail  = (EditText) view.findViewById(R.id.applicantEmail);
+        applicantNotes  = (EditText) view.findViewById(R.id.applicantNotes);
 
         applicantEmail.setEnabled(false);
         applicantName.setEnabled(false);
@@ -93,13 +94,12 @@ public class Fragment_View_Single_Applicant extends Fragment {
 
         ResumeImage = (ImageView) view.findViewById(R.id.ResumePicture);
         ProfileImage = (ImageView) view.findViewById(R.id.ProfilePicture);
-
-        // TODO: WAT...ask Trevor
-        // final Call_Web_API CWA = new Call_Web_API();
-
+        // TODO: add the resume overlay to the xml and then uncomment the few lines here to implement it
+        //ResumeOverlay = (ImageView) view.findViewById(R.id.ResumeOverlay);
 
         new DownloadImageFromInternet(ProfileImage).execute(ap.getProfilePictureURL());
         new DownloadImageFromInternet(ResumeImage).execute(ap.getResumePictureURL());
+        //new DownloadImageFromInternet(ResumeOverlay).execute(ap.getResumeOverlayURL());
 
         ratingBar.setRating(ap.getStars());
         applicantName.setText(ap.getUserName());
@@ -111,10 +111,10 @@ public class Fragment_View_Single_Applicant extends Fragment {
             @Override
             public void onClick(View V){
                 ((MainActivity)getActivity()).removeFromCache(ap);
-                // TODO: WAT...Ask trevor
-                // CWA.doInBackground(ap,"Delete"); //Passes the SQL ID and calls the "Delete function
+
+                if (((MainActivity) getActivity()).API_Mode)
+                    CWA.doInBackground(ap,"Delete"); //Passes the SQL ID and calls the "Delete function
                 ((MainActivity)getActivity()).setAddToBackStack(false);
-                ((MainActivity)getActivity()).deleteApplicant = true;
                 if(((MainActivity)getActivity()).cachedApplicantProfiles.size() != 0) {
                     ((MainActivity) getActivity()).viewApplicant(((MainActivity) getActivity()).cachedApplicantProfiles.get(0));
                 }
@@ -149,12 +149,15 @@ public class Fragment_View_Single_Applicant extends Fragment {
                     temp.setPhoneNumber(applicantPhone.getText().toString());
                     temp.setNotes(applicantNotes.getText().toString());
                     temp.setStars((int)ratingBar.getRating());
+                    // TODO: add in the 3 photos and follow that they get switched out properly and added to s3
 
                     ((MainActivity)getActivity()).updateCache(ap, temp);
                     ((MainActivity)getActivity()).setAddToBackStack(false);
                     ((MainActivity)getActivity()).viewApplicant(temp);
-                    // TODO: MOAR WAT.
-                    //CWA.doInBackground(ap,"Put");//this needs to do something
+                    // TODO: MOAR WAT. should update the DB with the newer version of the AP
+//                    if (((MainActivity) getActivity()).API_Mode) {
+//                       CWA.doInBackground(ap,"Put");//this needs to do something
+//                    }
                 }
             }
         });
@@ -209,7 +212,6 @@ public class Fragment_View_Single_Applicant extends Fragment {
             }
             return bimage;
         }
-
         protected void onPostExecute(Bitmap result) {
             imageView.setImageBitmap(result);
         }

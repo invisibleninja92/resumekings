@@ -52,14 +52,16 @@ public class Fragment_Create_New_Applicant extends Fragment {
     Button SaveButton;
     ImageView ProfilePic;
     ImageView ResumePic;
+    ImageView ResumeOverlayPic;
     EditText Name;
     EditText Email;
     EditText Phone;
     EditText Notes;
     RatingBar RatingBar;
     Bitmap bitmap;
-    Bitmap ProfilePicBit;
-    Bitmap ResumePicBit;
+    Bitmap ProfilePicBitmap;
+    Bitmap ResumePicBitmap;
+    Bitmap ResumeOverlayPicBitmap;
 
     // INITIALIZERS //////////
 
@@ -74,6 +76,8 @@ public class Fragment_Create_New_Applicant extends Fragment {
 
         ProfilePic = (ImageView)view.findViewById(R.id.EditProfilePic);
         ResumePic = (ImageView)view.findViewById(R.id.EditResumePic);
+        //TODO: add this to the xml
+        //ResumeOverlayPic = (ImageView)view.findViewById(R.id.EditResumeOverlay);
         SaveButton = (Button) view.findViewById(R.id.saveButton);
         Name = (EditText)view.findViewById(R.id.EditName);
         Email = (EditText)view.findViewById(R.id.EditEmail);
@@ -107,8 +111,9 @@ public class Fragment_Create_New_Applicant extends Fragment {
                 ap.setEmail(Email.getText().toString());
                 ap.setNotes(Notes.getText().toString());
                 ap.setStars((int) RatingBar.getRating());
-                ap.setProfilePicture(ProfilePicBit);
-                ap.setResumePicture(ResumePicBit);
+                ap.setProfilePicture(ProfilePicBitmap);
+                ap.setResumePicture(ResumePicBitmap);
+                // ap.setResumeOverlay(ResumeOverlayBitmap);
 
                 if(((MainActivity) getActivity()).API_Mode) {
                     Call_Web_API CWA = new Call_Web_API();
@@ -155,12 +160,12 @@ public class Fragment_Create_New_Applicant extends Fragment {
         switch(requestCode){
             case 0: //if the requestCode was 0 the user took a profile picture
                 ProfilePic.setImageBitmap(bitmap);
-                ProfilePicBit = bitmap;
+                ProfilePicBitmap = bitmap;
                 break;
 
             case 1: //if the requestCode was 1 the user took a Resume picture
                 ResumePic.setImageBitmap(bitmap);
-                ResumePicBit = bitmap;
+                ResumePicBitmap = bitmap;
                 break;
         }
     }

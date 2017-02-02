@@ -11,4 +11,13 @@
     <string name="view_applicants">View Applicants</string>
     <string name="something">Something...</string>
     <string name="resume_kings">Resume Kings</string>
+    <string name="paint">paint</string>
+    <string name="start_new">New</string>
+    <string name="brush">Brush</string>
+    <string name="erase">Erase</string>
+    <string name="save">Save</string>
+    <string name="sml">Small</string>
+    <string name="med">Medium</string>
+    <string name="lrg">Large</string>
+
 </resources>

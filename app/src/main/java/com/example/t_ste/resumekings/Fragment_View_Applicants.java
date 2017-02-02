@@ -81,7 +81,7 @@ public class Fragment_View_Applicants extends Fragment {
             ((MainActivity)getActivity()).displayView("CreateNewApplicant");
         }
 
-        // TODO WTF IS THIS SHIT -_-
+        // TODO WTF IS THIS SHIT
 //        if(!(ApplicantCacheList == null)) {
 //            final Applicant_Adapter adapt = new Applicant_Adapter(view.getContext(), cachedApplicantProfiles);
 //            ApplicantCacheList.setAdapter(adapt);//set the adapter of elements to listview

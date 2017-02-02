@@ -36,12 +36,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Applicant_Profile tempProfile                        = new Applicant_Profile();     // Temporary profile that allows fragments to talk to each other or pass data
     Call_Web_API CWA;
 
-    public boolean tabletMode     = false;  // Determined at startup. Don't mess with this
+    public boolean tabletMode      = false;  // Determined at startup. Don't mess with this
     public boolean addToBackStack  = false;  // Set up TAGs to be allowed or not allowed to add to the backstack
-    public boolean deleteApplicant = false;
     public boolean API_Mode        = false;  // Toggle this to true if you want to use the cloud
-    private String username = null;
-    private String password = null;
+    private String username        = null;
+    private String password        = null;
 
     //TODO: remove this eventually and make api calls
     public List<String> Names;
@@ -99,13 +98,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
 
             for (int i = 0; i < Names.size(); i++) {
+                // TODO:
                 Applicant_Profile ap = new Applicant_Profile();
                 ap.setUserName(Names.get(i));
                 ap.setPhoneNumber(Phone.get(i));
                 ap.setEmail(Email.get(i));
                 ap.setNotes("We're all OK!");
                 ap.setProfilePictureURL("http://www.freshdesignpedia.com/wp-content/uploads/what-is-cat-s-education/cat-educate-tips-small-katzenbaby.jpg");
-                ap.setResumePictureURL("https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Resume.pdf/page1-220px-Resume.pdf.jpg");
+                ap.setResumePictureURL("https://i.ytimg.com/vi/tntOCGkgt98/maxresdefault.jpg");//"https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Resume.pdf/page1-220px-Resume.pdf.jpg");
+                ap.setResumeOverlayURL("https://i.ytimg.com/vi/tntOCGkgt98/maxresdefault.jpg");
                 ap.setStars(3);
                 addToCache(ap);
             }
@@ -131,22 +132,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Fragment startupFragmentRight;
 
         // First determine whether or not the cache is empty. If empty then show create new applicant
-        if (cachedApplicantProfiles != null) {
-
+        if (cachedApplicantProfiles.size() != 0) {
             tempProfile = cachedApplicantProfiles.get(0);
             startupFragmentLeft = new Fragment_View_Applicants();
-            fragTransactionLeft.add(startupFragmentLeft, "ViewApplicants");
+            fragTransactionLeft.add(R.id.Container_left, startupFragmentLeft, "ViewApplicants");
             fragTransactionLeft.addToBackStack("ViewApplicants");
             // Add in support for the tablet view to show the first applicant in the list
             if(tabletMode) {
                 startupFragmentRight = new Fragment_View_Single_Applicant();
-                fragTransactionRight.add(startupFragmentRight, "ViewSingleApplicant").commit();
+                fragTransactionRight.add(R.id.Container_right, startupFragmentRight, "ViewSingleApplicant");
             }
+            fragTransactionLeft.commit();
+            if(tabletMode) fragTransactionRight.commit();
         }
         else {
             // Both Tablet and phone will only view CreateNewApplicant if the cache is empty
             startupFragmentLeft = new Fragment_Create_New_Applicant();
-            fragTransactionLeft.add(startupFragmentLeft, "CreateNewApplicant").commit();
+            fragTransactionLeft.add(startupFragmentLeft, "CreateNewApplicant");
+            fragTransactionLeft.commit();
         }
 
         // Start up the toolbar
@@ -421,11 +424,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         float yInches= metrics.heightPixels/metrics.ydpi;
         float xInches= metrics.widthPixels/metrics.xdpi;
         double diagonalInches = Math.sqrt(xInches*xInches + yInches*yInches);
+
+        // Depending on the size of the screen tabletMode will be true or false
         tabletMode = diagonalInches >= 6.5;
     }
 
     public ArrayList<Applicant_Profile> search(String searchItem){
-        // TODO: create a search function...
         ArrayList<Applicant_Profile> resultsList = new ArrayList<>();
 
         // Iterate through all of the applicants information in the cache and return an arraylist of
@@ -444,6 +448,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 resultsList.add(cachedApplicantProfiles.get(i));
             }
         }
+        // Return the list of matching results in the form of an arraylist of applicant profiles
         return resultsList;
     }
 

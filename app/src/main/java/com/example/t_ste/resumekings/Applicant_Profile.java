@@ -14,12 +14,14 @@ public class Applicant_Profile {
 
     private Bitmap ProfilePicture;
     private Bitmap ResumePicture;
-    public String UserName;
+    private Bitmap ResumeOverlay;
+    public  String UserName;
     private String Email;
     private String PhoneNumber;
     private String Notes;
     private String ProfilePictureURL;
     private String ResumePictureURL;
+    private String ResumeOverlayURL;
     private String ID;
 
     private int Stars;
@@ -31,7 +33,6 @@ public class Applicant_Profile {
     public void setStars(int stars) {
         Stars = stars;
     }
-
 
     public Bitmap getProfilePicture() {
         return ProfilePicture;
@@ -108,6 +109,21 @@ public class Applicant_Profile {
 
     public void setID(String ID) {
         this.ID = ID;
+    }
+
+    public String getResumeOverlayURL() {
+        return ResumeOverlayURL;
+    }
+    public void setResumeOverlayURL(String resumeOverlayURL) {
+        ResumeOverlayURL = resumeOverlayURL;
+    }
+
+    public Bitmap getResumeOverlay() {
+        return ResumeOverlay;
+    }
+
+    public void setResumeOverlay(Bitmap resumeOverlay) {
+        ResumeOverlay = resumeOverlay;
     }
 }
 
