@@ -9,7 +9,6 @@ import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -99,9 +98,7 @@ public class DrawingView extends View{
 
     public void setBrushSize(float newSize){
         //update size
-        float pixelAmount = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, newSize, getResources().getDisplayMetrics());
-        brushSize=pixelAmount;
-        drawPaint.setStrokeWidth(brushSize);
+        drawPaint.setStrokeWidth(newSize);
     }
 
     public void setLastBrushSize(float lastSize){

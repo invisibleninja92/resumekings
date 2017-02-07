@@ -14,7 +14,8 @@ public class Applicant_Profile {
 
     private Bitmap ProfilePicture;
     private Bitmap ResumePicture;
-    public String UserName;
+    private Bitmap ResumeOverlay;
+    public  String UserName;
     private String Email;
     private String PhoneNumber;
     private String Notes;
@@ -22,7 +23,6 @@ public class Applicant_Profile {
     private String ResumePictureURL;
     private String ResumeOverlayURL;
     private String ID;
-
     private int Stars;
 
     public int getStars() {
@@ -113,6 +113,7 @@ public class Applicant_Profile {
     public String getResumeOverlayURL() {
         return ResumeOverlayURL;
     }
+
     public void setResumeOverlayURL(String resumeOverlayURL) {
         ResumeOverlayURL = resumeOverlayURL;
     }

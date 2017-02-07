@@ -3,23 +3,11 @@ package com.example.t_ste.resumekings;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -60,7 +48,6 @@ public class Fragment_View_Applicant_Resume extends Fragment {
     private float largeBrush = 30;
     LinearLayout paintColors;
     DrawingView drawView;
-
     // INITIALIZERS //////////
 
 
@@ -69,12 +56,10 @@ public class Fragment_View_Applicant_Resume extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_view_applicant_resume, container, false); //Creates the view(Fragment)
         ((MainActivity)getActivity()).setAddToBackStack(false);
-
         ap = ((MainActivity)getActivity()).getTempProfile();
 
         drawView = (DrawingView)view.findViewById(R.id.drawing);
         drawView.setBrushSize(smallBrush);
-
         drawView.setupDrawing();
 
         ImageButton drawButton = (ImageButton) view.findViewById(R.id.drawButton);
@@ -235,6 +220,7 @@ public class Fragment_View_Applicant_Resume extends Fragment {
                 final Dialog brushDialog = new Dialog(getContext());
                 brushDialog.setTitle("Eraser size:");
                 brushDialog.setContentView(R.layout.brush_chooser);
+
                 //eraser sizes
                 ImageButton smallBtn = (ImageButton)brushDialog.findViewById(R.id.small_brush);
                 smallBtn.setOnClickListener(new View.OnClickListener(){
@@ -245,6 +231,7 @@ public class Fragment_View_Applicant_Resume extends Fragment {
                         brushDialog.dismiss();
                     }
                 });
+
                 ImageButton mediumBtn = (ImageButton)brushDialog.findViewById(R.id.medium_brush);
                 mediumBtn.setOnClickListener(new View.OnClickListener(){
                     @Override
@@ -254,6 +241,7 @@ public class Fragment_View_Applicant_Resume extends Fragment {
                         brushDialog.dismiss();
                     }
                 });
+
                 ImageButton largeBtn = (ImageButton)brushDialog.findViewById(R.id.large_brush);
                 largeBtn.setOnClickListener(new View.OnClickListener(){
                     @Override
@@ -280,9 +268,14 @@ public class Fragment_View_Applicant_Resume extends Fragment {
                      dialog.dismiss();
                  }
              });
-             
+             newDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                 @Override
+                 public void onClick(DialogInterface dialog, int which) {
+                     dialog.dismiss();
+                 }
+             });
+             newDialog.show();
          }
-
         });
         return view; //Return the fragment with all the functionality
     }
