@@ -98,7 +98,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
 
             for (int i = 0; i < Names.size(); i++) {
-                // TODO:
                 Applicant_Profile ap = new Applicant_Profile();
                 ap.setUserName(Names.get(i));
                 ap.setPhoneNumber(Phone.get(i));

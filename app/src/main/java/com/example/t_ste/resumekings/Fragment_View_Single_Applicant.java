@@ -153,12 +153,7 @@ public class Fragment_View_Single_Applicant extends Fragment {
 
                     ((MainActivity)getActivity()).updateCache(ap, temp);
                     ((MainActivity)getActivity()).setAddToBackStack(false);
-                    ((MainActivity)getActivity()).viewApplicant(temp);
-                    // TODO: MOAR WAT. should update the DB with the newer version of the AP
-//                    if (((MainActivity) getActivity()).API_Mode) {
-//                       CWA.doInBackground(ap,"Put");//this needs to do something
-//                    }
-                }
+                    ((MainActivity)getActivity()).viewApplicant(temp);}
             }
         });
 
@@ -200,14 +195,12 @@ public class Fragment_View_Single_Applicant extends Fragment {
             this.imageView = imageView;
         }
 
-        //TODO: clean this up
         protected Bitmap doInBackground(String... urls) {
             String imageURL = urls[0];
             Bitmap bimage = null;
             try {
                 InputStream in = new java.net.URL(imageURL).openStream();
                 bimage = BitmapFactory.decodeStream(in);
-
             } catch (Exception e) {
             }
             return bimage;

@@ -14,8 +14,7 @@ public class Applicant_Profile {
 
     private Bitmap ProfilePicture;
     private Bitmap ResumePicture;
-    private Bitmap ResumeOverlay;
-    public  String UserName;
+    public String UserName;
     private String Email;
     private String PhoneNumber;
     private String Notes;
