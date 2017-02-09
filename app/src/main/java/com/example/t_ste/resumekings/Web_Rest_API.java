@@ -20,7 +20,7 @@ public class Web_Rest_API {
 
 
 
-    private static final String BASE_URL = "";
+    private static final String BASE_URL = "RIP";
     private static AsyncHttpClient client = new AsyncHttpClient();
 
     public static void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {

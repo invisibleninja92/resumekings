@@ -50,8 +50,8 @@ public class UseWebAPI {
                 // If the response is JSONObject instead of expected JSONArray
                 try {
                     AP.setID(response.getString("Id"));
-                    AP.setResumePictureURL("http://s3.amazonaws.com/testbucketsource11/"+response.getString("Id")+"Resume.png");
-                    AP.setProfilePictureURL("http://s3.amazonaws.com/testbucketsource11/"+response.getString("Id")+"Profile.png");
+                    AP.setResumePictureURL("http://s3.amazonaws.com/testbucketsource11/"+response.getString("Name")+response.getString("Number")+"Resume.png");
+                    AP.setProfilePictureURL("http://s3.amazonaws.com/testbucketsource11/"+response.getString("Name")+response.getString("Number")+"Profile.png");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
