@@ -3,25 +3,25 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFCCCCCC">
 
     <com.example.t_ste.resumekings.DrawingView
         android:id="@+id/drawing"
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
+        android:layout_width="0dp"
         android:layout_marginBottom="3dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginTop="3dp"
         android:layout_weight="1"
         android:visibility="visible"
-        android:background="@android:color/transparent" />
+        android:background="@android:color/transparent"
+        android:layout_height="fill_parent" />
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal">
@@ -30,35 +30,51 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:orientation="horizontal" >
+            android:orientation="vertical" >
 
-            <ImageButton
-                android:id="@+id/newDrawing"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:contentDescription="@string/start_new"
-                android:src="@drawable/new_pic" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <ImageButton
-                android:id="@+id/drawButton"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:contentDescription="@string/brush"
-                android:src="@drawable/brush" />
+                <ImageButton
+                    android:id="@+id/newDrawing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:contentDescription="@string/start_new"
+                    android:src="@drawable/new_pic"
+                    android:layout_weight="1" />
 
-            <ImageButton
-                android:id="@+id/eraseButton"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:contentDescription="@string/erase"
-                android:src="@drawable/eraser" />
+                <ImageButton
+                    android:id="@+id/drawButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:contentDescription="@string/brush"
+                    android:src="@drawable/brush"
+                    android:layout_weight="1" />
+            </LinearLayout>
 
-            <ImageButton
-                android:id="@+id/saveButton"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:contentDescription="@string/save"
-                android:src="@drawable/save" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/eraseButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:contentDescription="@string/erase"
+                    android:src="@drawable/eraser"
+                    android:layout_weight="1" />
+
+                <ImageButton
+                    android:id="@+id/saveButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:contentDescription="@string/save"
+                    android:src="@drawable/save"
+                    android:layout_weight="1" />
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -66,14 +82,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:id="@+id/paintColors">
 
             <!-- Top Row -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:id="@+id/paintTopColors">
 
                 <ImageButton
@@ -142,7 +158,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:id="@+id/paintBottomColors">
 
                 <ImageButton

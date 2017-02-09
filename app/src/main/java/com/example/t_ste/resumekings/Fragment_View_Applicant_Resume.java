@@ -3,8 +3,11 @@ package com.example.t_ste.resumekings;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,15 +35,6 @@ public class Fragment_View_Applicant_Resume extends Fragment {
 
     // INITIALIZERS //////////
     Applicant_Profile ap;
-    private ImageButton maroon;
-    private ImageButton red;
-    private ImageButton orange;
-    private ImageButton yellow;
-    private ImageButton green;
-    private ImageButton cyan;
-    private ImageButton blue;
-    private ImageButton purple;
-    private ImageButton pink;
     private ImageButton currentPaint;
 
     private float smallBrush = 10;
@@ -62,9 +56,9 @@ public class Fragment_View_Applicant_Resume extends Fragment {
         drawView.setBrushSize(smallBrush);
         drawView.setupDrawing();
 
-        ImageButton drawButton = (ImageButton) view.findViewById(R.id.drawButton);
+        ImageButton drawButton  = (ImageButton) view.findViewById(R.id.drawButton);
         ImageButton eraseButton = (ImageButton) view.findViewById(R.id.eraseButton);
-        ImageButton newButton = (ImageButton) view.findViewById(R.id.newDrawing);
+        ImageButton newButton   = (ImageButton) view.findViewById(R.id.newDrawing);
 
         paintColors = (LinearLayout)view.findViewById(R.id.paintTopColors);
 
@@ -293,5 +287,25 @@ public class Fragment_View_Applicant_Resume extends Fragment {
             currentPaint=(ImageButton)view;
         }
         drawView.setBrushSize(drawView.getLastBrushSize());
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                    // handle back button's click listener
+                    getActivity().onBackPressed();
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 }
