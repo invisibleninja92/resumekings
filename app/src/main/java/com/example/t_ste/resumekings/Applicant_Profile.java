@@ -87,14 +87,17 @@ public class Applicant_Profile {
     }
 
     public String getProfilePictureURL() {
+
         return ProfilePictureURL;
     }
 
     public void setProfilePictureURL(String profilePictureURL) {
+
         ProfilePictureURL = profilePictureURL;
     }
 
     public String getResumePictureURL() {
+
         return ResumePictureURL;
     }
 

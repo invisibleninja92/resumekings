@@ -40,8 +40,8 @@ public class Web_Rest_API {
         client.delete(getAbsoluteUrl(url), responseHandler);
     }
 
-    public static void update(String url, AsyncHttpResponseHandler responseHandler){
-        //place update here
+    public static void update(String url, StringEntity entity, AsyncHttpResponseHandler responseHandler){
+        client.put(null,getAbsoluteUrl(url), entity, "application/json", responseHandler);
     }
 
     private static String getAbsoluteUrl(String relativeUrl) {

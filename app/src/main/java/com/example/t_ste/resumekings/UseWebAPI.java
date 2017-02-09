@@ -26,12 +26,9 @@ import cz.msebera.android.httpclient.entity.StringEntity;
 public class UseWebAPI {
 
 
-    public void PostNewResume(Applicant_Profile AP) throws JSONException, IOException {
+    public void PostNewResume(final Applicant_Profile AP) throws JSONException, IOException {
         JSONObject JO= new JSONObject();
         StringEntity entity = null;
-        System.out.println(BitMapToString(AP.getProfilePicture()));
-        System.out.println(BitMapToString(AP.getResumePicture()));
-
         JO.put("Name",AP.getUserName());
         JO.put("Email",AP.getEmail());
         JO.put("Number",AP.getPhoneNumber());
@@ -39,7 +36,6 @@ public class UseWebAPI {
         JO.put("Resume", BitMapToString(AP.getResumePicture()));
         JO.put("Profile", BitMapToString(AP.getProfilePicture()));
         JO.put("Rating",AP.getStars());
-        //create a file to write bitmap data
 
       try {
              entity = new StringEntity(JO.toString());
@@ -53,7 +49,9 @@ public class UseWebAPI {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 // If the response is JSONObject instead of expected JSONArray
                 try {
-                    System.out.println(response.getString("Id"));//Returns the ID WE dont need a return though
+                    AP.setID(response.getString("Id"));
+                    AP.setResumePictureURL("http://s3.amazonaws.com/testbucketsource11/"+response.getString("Id")+"Resume.png");
+                    AP.setProfilePictureURL("http://s3.amazonaws.com/testbucketsource11/"+response.getString("Id")+"Profile.png");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -109,10 +107,33 @@ public class UseWebAPI {
             });
         }}
 
-    public void updateResume(String ID) {
+    public void UpdateResume(Applicant_Profile AP) throws JSONException{
+        JSONObject JO= new JSONObject();
+        StringEntity entity = null;
+        JO.put("Id",AP.getID());
+        JO.put("Name",AP.getUserName());
+        JO.put("Email",AP.getEmail());
+        JO.put("Number",AP.getPhoneNumber());
+        JO.put("Notes",AP.getNotes());
+        JO.put("Rating",AP.getStars());
+
+        if(AP.getProfilePicture()!=null) {
+            JO.put("Resume", BitMapToString(AP.getResumePicture()));
+            JO.put("Profile", BitMapToString(AP.getProfilePicture()));
+            JO.put("ResumeOverlay", BitMapToString(AP.getResumeOverlay())); //need to add this in the update
+        }
+
+        try {
+            entity = new StringEntity(JO.toString());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        Web_Rest_API.update(AP.getID(),entity, new JsonHttpResponseHandler(){
+
+
+        });
 
     }
-
 
     public String BitMapToString(Bitmap bitmap){
                 ByteArrayOutputStream baos=new  ByteArrayOutputStream();

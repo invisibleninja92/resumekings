@@ -101,6 +101,12 @@ public class Fragment_View_Single_Applicant extends Fragment {
         new DownloadImageFromInternet(ResumeImage).execute(ap.getResumePictureURL());
         //new DownloadImageFromInternet(ResumeOverlay).execute(ap.getResumeOverlayURL());
 
+        final Call_Web_API CWA = new Call_Web_API();
+
+        if(ap.getProfilePictureURL()!=null){
+        new DownloadImageFromInternet(ProfileImage).execute(ap.getProfilePictureURL());
+        new DownloadImageFromInternet(ResumeImage).execute(ap.getResumePictureURL());}
+
         ratingBar.setRating(ap.getStars());
         applicantName.setText(ap.getUserName());
         applicantPhone.setText(ap.getPhoneNumber());
@@ -140,10 +146,12 @@ public class Fragment_View_Single_Applicant extends Fragment {
                     applicantNotes.setEnabled(true);
                     ratingBar.setIsIndicator(false);
                     Update = true;
+                    System.out.println(ap.getResumePictureURL());
                     updateApplicant.setText("Update Applicant");
                 }
                 else {
                     Applicant_Profile temp = new Applicant_Profile();
+                    temp.setID(ap.getID());
                     temp.setUserName(applicantName.getText().toString());
                     temp.setEmail(applicantEmail.getText().toString());
                     temp.setPhoneNumber(applicantPhone.getText().toString());
@@ -156,7 +164,10 @@ public class Fragment_View_Single_Applicant extends Fragment {
 
                     ((MainActivity)getActivity()).updateCache(ap, temp);
                     ((MainActivity)getActivity()).setAddToBackStack(false);
-                    ((MainActivity)getActivity()).viewApplicant(temp);}
+                    ((MainActivity)getActivity()).viewApplicant(temp);
+                    CWA.doInBackground(temp,"Put"); //Updates the applicant in the web api
+
+                }
             }
         });
 

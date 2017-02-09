@@ -32,8 +32,8 @@ public class Call_Web_API extends AsyncTask<String,Void ,ArrayList<Applicant_Pro
                 case "Post":
                     UseAPI.PostNewResume(AP); //this post (Or create new) Function works perfectly :)
                     break;
-                case "PUT":
-                   // UseAPI.UpdateResume(AP.getID()); //we need to send an ID to update here in the URL
+                case "Put":
+                    UseAPI.UpdateResume(AP); //we need to send an ID to update here in the URL
                     break;
                 case "Delete": //this delete function works perfectly :)
                     UseAPI.deleteResume(AP.getID());

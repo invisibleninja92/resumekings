@@ -288,18 +288,19 @@ public class Fragment_View_Applicant_Resume extends Fragment {
                         Applicant_Profile temp = new Applicant_Profile();
 
                         temp.setResumeOverlay(drawView.getResumeBitmap());
-                        // TODO: Trevor add in api call here to push the bitmap to S3 and then remove the bitmap and add in the url
-
+                        temp.setID(ap.getID());
                         temp.setUserName(ap.getUserName());
                         temp.setEmail(ap.getEmail());
                         temp.setPhoneNumber(ap.getPhoneNumber());
                         temp.setNotes(ap.getNotes());
                         temp.setStars(ap.getStars());
                         temp.setProfilePicture(ap.getProfilePicture());
-                        temp.setResumePictureURL(ap.getResumePictureURL());
+                        temp.setProfilePictureURL(ap.getProfilePictureURL());//will be the same
+                        temp.setResumePictureURL(ap.getResumePictureURL()); //will be the same
+                        temp.setResumeOverlayURL("http://s3.amazonaws.com/testbucketsource11/"+ap.getID()+"ResumeOverlay.png");//we know this will be the url so we can go ahead and set it
 
-
-                        temp.setResumeOverlayURL(ap.getResumeOverlayURL());
+                        Call_Web_API CWA = new Call_Web_API();
+                        CWA.doInBackground(temp,"Put");
 
                         ((MainActivity)getActivity()).updateCache(ap, temp);
                         ((MainActivity)getActivity()).setAddToBackStack(false);
