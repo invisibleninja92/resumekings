@@ -59,6 +59,7 @@ public class Fragment_View_Applicant_Resume extends Fragment {
         ImageButton drawButton  = (ImageButton) view.findViewById(R.id.drawButton);
         ImageButton eraseButton = (ImageButton) view.findViewById(R.id.eraseButton);
         ImageButton newButton   = (ImageButton) view.findViewById(R.id.newDrawing);
+        ImageButton saveButton  = (ImageButton) view.findViewById(R.id.saveButton);
 
         paintColors = (LinearLayout)view.findViewById(R.id.paintTopColors);
 
@@ -254,7 +255,8 @@ public class Fragment_View_Applicant_Resume extends Fragment {
          public void onClick(View v){
              AlertDialog.Builder newDialog = new AlertDialog.Builder(getContext());
              newDialog.setTitle("New drawing");
-             newDialog.setMessage("Start new drawing (you will lose the current drawing)?");
+             newDialog.setMessage("Start new drawing (The current drawing will be lost)?");
+
              newDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                  @Override
                  public void onClick(DialogInterface dialog, int which) {
@@ -262,6 +264,7 @@ public class Fragment_View_Applicant_Resume extends Fragment {
                      dialog.dismiss();
                  }
              });
+
              newDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                  @Override
                  public void onClick(DialogInterface dialog, int which) {
@@ -271,6 +274,49 @@ public class Fragment_View_Applicant_Resume extends Fragment {
              newDialog.show();
          }
         });
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder newDialog = new AlertDialog.Builder(getContext());
+                newDialog.setTitle("Save Drawing");
+                newDialog.setMessage("Save the current drawing?");
+
+                newDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Applicant_Profile temp = new Applicant_Profile();
+
+                        temp.setResumeOverlay(drawView.getResumeBitmap());
+                        // TODO: Trevor add in api call here to push the bitmap to S3 and then remove the bitmap and add in the url
+
+                        temp.setUserName(ap.getUserName());
+                        temp.setEmail(ap.getEmail());
+                        temp.setPhoneNumber(ap.getPhoneNumber());
+                        temp.setNotes(ap.getNotes());
+                        temp.setStars(ap.getStars());
+                        temp.setProfilePicture(ap.getProfilePicture());
+                        temp.setResumePictureURL(ap.getResumePictureURL());
+
+
+                        temp.setResumeOverlayURL(ap.getResumeOverlayURL());
+
+                        ((MainActivity)getActivity()).updateCache(ap, temp);
+                        ((MainActivity)getActivity()).setAddToBackStack(false);
+                        ((MainActivity)getActivity()).viewApplicant(temp);
+                    }
+                });
+
+                newDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                newDialog.show();
+            }
+        });
+
         return view; //Return the fragment with all the functionality
     }
 
@@ -288,7 +334,6 @@ public class Fragment_View_Applicant_Resume extends Fragment {
         }
         drawView.setBrushSize(drawView.getLastBrushSize());
     }
-
 
     @Override
     public void onResume() {

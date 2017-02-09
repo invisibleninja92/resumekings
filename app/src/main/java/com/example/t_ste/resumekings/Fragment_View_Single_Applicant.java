@@ -149,7 +149,10 @@ public class Fragment_View_Single_Applicant extends Fragment {
                     temp.setPhoneNumber(applicantPhone.getText().toString());
                     temp.setNotes(applicantNotes.getText().toString());
                     temp.setStars((int)ratingBar.getRating());
-                    // TODO: add in the 3 photos and follow that they get switched out properly and added to s3
+                    temp.setProfilePicture(ap.getProfilePicture());
+                    temp.setResumePictureURL(ap.getResumePictureURL());
+                    temp.setResumeOverlayURL(ap.getResumeOverlayURL());
+                    // TODO: add in the 3 photos and follow that they get switched out properly and added to s3...Done?
 
                     ((MainActivity)getActivity()).updateCache(ap, temp);
                     ((MainActivity)getActivity()).setAddToBackStack(false);
