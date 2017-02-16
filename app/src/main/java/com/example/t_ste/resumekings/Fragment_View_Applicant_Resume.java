@@ -297,10 +297,11 @@ public class Fragment_View_Applicant_Resume extends Fragment {
                         temp.setProfilePicture(ap.getProfilePicture());
                         temp.setProfilePictureURL(ap.getProfilePictureURL());//will be the same
                         temp.setResumePictureURL(ap.getResumePictureURL()); //will be the same
-                   //If brendan figures his life out>>>> temp.setResumeOverlayURL("http://s3.amazonaws.com/testbucketsource11/"+ap.getID()+"ResumeOverlay.png");//we know this will be the url so we can go ahead and set it
-                        temp.setResumeOverlayURL("http://s3.amazonaws.com/testbucketsource11/"+ap.getUserName()+ap.getPhoneNumber()+"ResumeOverlay.png");
+                        temp.setResumeOverlayURL("http://s3.amazonaws.com/testbucketsource11/"+ap.getID()+"ResumeOverlay.png");//we know this will be the url so we can go ahead and set it
+                        //temp.setResumeOverlayURL("http://s3.amazonaws.com/testbucketsource11/"+ap.getUserName()+ap.getPhoneNumber()+"ResumeOverlay.png");
+                        if(((MainActivity) getActivity()).API_Mode==true){
                         Call_Web_API CWA = new Call_Web_API();
-                        CWA.doInBackground(temp,"Put");
+                        CWA.doInBackground(temp,"Put");}
 
                         ((MainActivity)getActivity()).updateCache(ap, temp);
                         ((MainActivity)getActivity()).setAddToBackStack(false);

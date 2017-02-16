@@ -50,8 +50,9 @@ public class UseWebAPI {
                 // If the response is JSONObject instead of expected JSONArray
                 try {
                     AP.setID(response.getString("Id"));
-                    AP.setResumePictureURL("http://s3.amazonaws.com/testbucketsource11/"+response.getString("Name")+response.getString("Number")+"Resume.png");
-                    AP.setProfilePictureURL("http://s3.amazonaws.com/testbucketsource11/"+response.getString("Name")+response.getString("Number")+"Profile.png");
+                    AP.setResumePictureURL("http://s3.amazonaws.com/testbucketsource11/"+response.getString("Id")+"Resume.png");
+                    AP.setProfilePictureURL("http://s3.amazonaws.com/testbucketsource11/"+response.getString("Id")+"Profile.png");
+                    AP.setResumeOverlayURL("http://s3.amazonaws.com/testbucketsource11/"+response.getString("Id")+"ResumeOverlay.png");//TODO this might not be right
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -83,6 +84,7 @@ public class UseWebAPI {
                             AP.setStars(Integer.parseInt(Applicant.getString("Rating")));
                             AP.setProfilePictureURL(Applicant.getString("Profile"));
                             AP.setResumePictureURL(Applicant.getString("Resume"));
+                            AP.setResumeOverlayURL(Applicant.getString("ResumeOverlay")); //TODO this might not be right
                             AP.setID(Applicant.getString("Id"));
                             cachedApplicantProfiles.add(AP);
 
@@ -120,9 +122,11 @@ public class UseWebAPI {
         if(AP.getProfilePicture()!=null) {
             JO.put("Resume", BitMapToString(AP.getResumePicture()));
             JO.put("Profile", BitMapToString(AP.getProfilePicture()));
+        }
+        if(AP.getResumeOverlay()!=null){
             JO.put("ResumeOverlay", BitMapToString(AP.getResumeOverlay())); //need to add this in the update
         }
-
+            //TODO Resume thing as seen above.
         try {
             entity = new StringEntity(JO.toString());
         } catch (UnsupportedEncodingException e) {

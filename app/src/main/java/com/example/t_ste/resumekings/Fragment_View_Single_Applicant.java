@@ -100,6 +100,8 @@ public class Fragment_View_Single_Applicant extends Fragment {
         new DownloadImageFromInternet(ProfileImage).execute(ap.getProfilePictureURL());
         new DownloadImageFromInternet(ResumeImage).execute(ap.getResumePictureURL());
         //new DownloadImageFromInternet(ResumeOverlay).execute(ap.getResumeOverlayURL());
+        System.out.println(ap.getProfilePictureURL());
+        System.out.println(ap.getResumePictureURL());
 
         final Call_Web_API CWA = new Call_Web_API();
 

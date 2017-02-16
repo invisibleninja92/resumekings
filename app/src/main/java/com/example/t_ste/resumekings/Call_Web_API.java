@@ -33,7 +33,7 @@ public class Call_Web_API extends AsyncTask<String,Void ,ArrayList<Applicant_Pro
                     UseAPI.PostNewResume(AP); //this post (Or create new) Function works perfectly :)
                     break;
                 case "Put":
-                    UseAPI.UpdateResume(AP); //we need to send an ID to update here in the URL
+                    UseAPI.UpdateResume(AP); //Update works perfectly for a normal update. Still needs testing for overlay
                     break;
                 case "Delete": //this delete function works perfectly :)
                     UseAPI.deleteResume(AP.getID());
@@ -45,7 +45,7 @@ public class Call_Web_API extends AsyncTask<String,Void ,ArrayList<Applicant_Pro
             }
         return null;
         }
-//Not sure why we have to have this interface below but its here..... oh well :)
+//Not sure why we have to have this interface below but its here..... oh well :) We have to have it or it gets all mad
     @Override
     protected ArrayList<Applicant_Profile> doInBackground(String... strings) {
         return null;
