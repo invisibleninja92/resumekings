@@ -18,6 +18,9 @@ import android.view.View;
 import android.widget.ImageView;
 
 import java.io.InputStream;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * Created by Greg Wilkinson on 2/1/2017.
@@ -41,7 +44,7 @@ public class DrawingView extends View{
 
     private Applicant_Profile tempAP;
 
-    private ImageView ResumeImage;
+    public ImageView ResumeImage;// = (ImageView) findViewById(R.id.ResPic);
     BitmapDrawable drawable;
 
     public DrawingView(Context context, AttributeSet attrs) {
@@ -51,6 +54,7 @@ public class DrawingView extends View{
 
     public void setupDrawing(){
         //get drawing area setup for interaction
+
         brushSize = getResources().getInteger(R.integer.small_size);
         lastBrushSize = brushSize;
         drawPath = new Path();
@@ -62,18 +66,17 @@ public class DrawingView extends View{
         drawPaint.setStrokeJoin(Paint.Join.ROUND);
         drawPaint.setStrokeCap(Paint.Cap.ROUND);
         canvasPaint = new Paint(Paint.DITHER_FLAG);
-
-//        new DrawingView.DownloadImageFromInternet(ResumeImage).execute(tempAP.getResumePictureURL());
-//        drawable = (BitmapDrawable) ResumeImage.getDrawable();
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         //view given size
         super.onSizeChanged(w, h, oldw, oldh);
+
+        //drawable = (BitmapDrawable) ResumeImage.getDrawable();
         resumeBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         //resumeBitmap = drawable.getBitmap();
-        drawCanvas = new Canvas();
+        drawCanvas = new Canvas(resumeBitmap);
     }
 
     @Override
@@ -146,25 +149,4 @@ public class DrawingView extends View{
         tempAP = ap;
     }
 
-    private class DownloadImageFromInternet extends AsyncTask<String, Void, Bitmap> {
-        ImageView imageView;
-
-        public DownloadImageFromInternet(ImageView imageView) {
-            this.imageView = imageView;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String imageURL = urls[0];
-            Bitmap bimage = null;
-            try {
-                InputStream in = new java.net.URL(imageURL).openStream();
-                bimage = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-            }
-            return bimage;
-        }
-        protected void onPostExecute(Bitmap result) {
-            imageView.setImageBitmap(result);
-        }
-    }
 }

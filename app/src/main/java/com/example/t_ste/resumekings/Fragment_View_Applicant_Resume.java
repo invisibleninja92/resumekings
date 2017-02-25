@@ -5,7 +5,13 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -15,6 +21,17 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
+import static com.example.t_ste.resumekings.R.id.time;
+import static java.util.concurrent.TimeUnit.*;
 
 /**
  * Created by Greg Wilkinson on 11/10/16.
@@ -41,12 +58,14 @@ public class Fragment_View_Applicant_Resume extends Fragment {
     private float smallBrush = 10;
     private float mediumBrush = 20;
     private float largeBrush = 30;
+    public ImageView resumepic;
     LinearLayout paintColors;
     DrawingView drawView;
     Bitmap resume;
     // INITIALIZERS //////////
 
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -58,6 +77,12 @@ public class Fragment_View_Applicant_Resume extends Fragment {
         drawView.setBrushSize(smallBrush);
         drawView.setTempAP(ap);
         drawView.setupDrawing();
+
+
+        resumepic = (ImageView) view.findViewById(R.id.ResPic);
+        if(ap.getResumePictureURL() != null) {
+                new DownloadImageFromInternet(resumepic).execute(ap.getResumePictureURL());
+        }
 
         ImageButton drawButton  = (ImageButton) view.findViewById(R.id.drawButton);
         ImageButton eraseButton = (ImageButton) view.findViewById(R.id.eraseButton);
@@ -320,6 +345,7 @@ public class Fragment_View_Applicant_Resume extends Fragment {
                 newDialog.show();
             }
         });
+
         return view; //Return the fragment with all the functionality
     }
 
@@ -356,4 +382,29 @@ public class Fragment_View_Applicant_Resume extends Fragment {
             }
         });
     }
+    private class DownloadImageFromInternet extends AsyncTask<String, Void, Bitmap> {
+        ImageView imageView;
+
+        public DownloadImageFromInternet(ImageView imageView) {
+            this.imageView = imageView;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String imageURL = urls[0];
+            Bitmap bimage = null;
+            try {
+                InputStream in = new java.net.URL(imageURL).openStream();
+                bimage = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+            }
+            return bimage;
+        }
+        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+        protected void onPostExecute(Bitmap result) {
+            imageView.setImageBitmap(result);
+            drawView.setBackground(resumepic.getDrawable());
+
+        }
+    }
+
 }

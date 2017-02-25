@@ -114,6 +114,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_toRightOf="@+id/show_resume"
                     android:layout_toEndOf="@+id/show_resume" />
+
             </RelativeLayout>
 
         </LinearLayout>
@@ -129,6 +130,14 @@
             android:layout_height="match_parent"
             app:srcCompat="@drawable/person"
             android:id="@+id/ResumePicture" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:drawable/picture_frame"
+            android:id="@+id/ResumeOverlay"
+            android:layout_weight="1"
+            android:forceHasOverlappingRendering="true" />
     </FrameLayout>
 
 </LinearLayout>

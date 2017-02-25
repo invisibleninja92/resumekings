@@ -81,11 +81,6 @@ public class Fragment_View_Applicants extends Fragment {
             ((MainActivity)getActivity()).displayView("CreateNewApplicant");
         }
 
-        // TODO ?
-//        if(!(ApplicantCacheList == null)) {
-//            final Applicant_Adapter adapt = new Applicant_Adapter(view.getContext(), cachedApplicantProfiles);
-//            ApplicantCacheList.setAdapter(adapt);//set the adapter of elements to listview
-//        } else { Toast.makeText(getContext(), "Please create a new applicant profile first!", Toast.LENGTH_SHORT).show(); }
 
         //When the ListView Element is clicked we need to change the images
         ApplicantCacheList.setOnItemClickListener(new AdapterView.OnItemClickListener() {

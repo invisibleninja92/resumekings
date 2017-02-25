@@ -18,8 +18,6 @@ import cz.msebera.android.httpclient.protocol.HTTP;
 
 public class Web_Rest_API {
 
-
-
     private static final String BASE_URL = "RIP";
     private static AsyncHttpClient client = new AsyncHttpClient();
 

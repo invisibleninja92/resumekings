@@ -2,6 +2,7 @@ package com.example.t_ste.resumekings;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -106,6 +107,24 @@ public class Fragment_Create_New_Applicant extends Fragment {
         SaveButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View V){
+
+                if(isEmpty(Name)){
+                    Name.setBackgroundResource(R.drawable.backtext);
+                    Name.setHintTextColor(Color.RED);
+                }
+                else if(isEmpty(Phone)){
+                    Phone.setBackgroundResource(R.drawable.backtext);
+                    Phone.setHintTextColor(Color.RED);
+                }
+                else if(isEmpty(Email)){
+                    Email.setBackgroundResource(R.drawable.backtext);
+                    Email.setHintTextColor(Color.RED);
+                }
+                else if(isEmpty(Notes)){
+                    Notes.setBackgroundResource(R.drawable.backtext);
+                    Notes.setHintTextColor(Color.RED);
+                }
+                else{
                 Applicant_Profile ap = new Applicant_Profile();
                 ap.setUserName(Name.getText().toString());
                 ap.setPhoneNumber(Phone.getText().toString());
@@ -125,7 +144,7 @@ public class Fragment_Create_New_Applicant extends Fragment {
                 // call the setTaskListFunction then call the displayView to go back to the main screen.
                 ((MainActivity)getActivity()).addToCache(ap);
                 ((MainActivity)getActivity()).setAddToBackStack(false);
-                ((MainActivity)getActivity()).viewApplicant(ap);
+                ((MainActivity)getActivity()).viewApplicant(ap);}
             }
         });
         return view; // This returns the view(Fragment) with all the initializers
@@ -174,5 +193,8 @@ public class Fragment_Create_New_Applicant extends Fragment {
                 ResumePicBitmap = bitmap;
                 break;
         }
+    }
+    private boolean isEmpty(EditText etText) {
+        return etText.getText().toString().trim().length() == 0;
     }
 }

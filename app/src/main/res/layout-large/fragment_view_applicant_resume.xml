@@ -8,6 +8,13 @@
     android:layout_height="match_parent"
     android:background="#FFCCCCCC">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/person"
+        android:id="@+id/ResPic"
+        android:visibility="gone" />
+
     <com.example.t_ste.resumekings.DrawingView
         android:id="@+id/drawing"
         android:layout_width="fill_parent"
@@ -18,7 +25,8 @@
         android:layout_marginTop="3dp"
         android:layout_weight="1"
         android:visibility="visible"
-        android:background="@android:color/transparent" />
+        android:background="@android:color/transparent"
+        android:forceHasOverlappingRendering="true" />
 
     <LinearLayout
         android:orientation="horizontal"

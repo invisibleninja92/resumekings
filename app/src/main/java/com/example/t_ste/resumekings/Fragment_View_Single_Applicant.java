@@ -85,8 +85,6 @@ public class Fragment_View_Single_Applicant extends Fragment {
         ratingBar       = (RatingBar) view.findViewById(R.id.ratingBar);
         ResumeImage     = (ImageView) view.findViewById(R.id.ResumePicture);
         ProfileImage    = (ImageView) view.findViewById(R.id.ProfilePicture);
-        // TODO: add the resume overlay to the xml and then uncomment the few lines here to implement it
-        // ResumeOverlay = (ImageView) view.findViewById(R.id.ResumeOverlay);
 
         applicantName   = (EditText) view.findViewById(R.id.applicantName);
         applicantPhone  = (EditText) view.findViewById(R.id.applicantPhone);
@@ -98,6 +96,15 @@ public class Fragment_View_Single_Applicant extends Fragment {
         applicantNotes.setEnabled(false);
         applicantPhone.setEnabled(false);
 
+        ResumeImage = (ImageView) view.findViewById(R.id.ResumePicture);
+        ProfileImage = (ImageView) view.findViewById(R.id.ProfilePicture);
+        ResumeOverlay = (ImageView) view.findViewById(R.id.ResumeOverlay);
+
+
+        System.out.println(ap.getProfilePictureURL());
+        System.out.println(ap.getResumePictureURL());
+
+        final Call_Web_API CWA = new Call_Web_API();
         applicantName.setBackgroundColor(0);
         applicantEmail.setBackgroundColor(0);
         applicantNotes.setBackgroundColor(0);
@@ -110,7 +117,7 @@ public class Fragment_View_Single_Applicant extends Fragment {
             new DownloadImageFromInternet(ResumeImage).execute(ap.getResumePictureURL());
         }
         if(ap.getResumeOverlayURL() != null) {
-            new DownloadImageFromInternet(ResumeImage).execute(ap.getResumeOverlayURL());
+            new DownloadImageFromInternet(ResumeOverlay).execute(ap.getResumeOverlayURL());
         }
 
         ratingBar.setRating(ap.getStars());
@@ -123,7 +130,6 @@ public class Fragment_View_Single_Applicant extends Fragment {
             @Override
             public void onClick(View V){
                 ((MainActivity)getActivity()).removeFromCache(ap);
-                ((MainActivity)getActivity()).setAddToBackStack(false);
 
                 if (((MainActivity)getActivity()).API_Mode) {
                     CWA.doInBackground(ap, "Delete"); //Passes the SQL ID and calls the "Delete function
@@ -132,7 +138,6 @@ public class Fragment_View_Single_Applicant extends Fragment {
                 if(((MainActivity)getActivity()).cachedApplicantProfiles.size() != 0) {
                     ((MainActivity) getActivity()).viewApplicant(((MainActivity) getActivity()).cachedApplicantProfiles.get(0));
                 }
-
                 else {
                     Toast.makeText(getContext(), "create an applicant!", Toast.LENGTH_SHORT).show();
                     ((MainActivity) getActivity()).setAddToBackStack(false);
@@ -170,10 +175,9 @@ public class Fragment_View_Single_Applicant extends Fragment {
                     temp.setPhoneNumber(applicantPhone.getText().toString());
                     temp.setNotes(applicantNotes.getText().toString());
                     temp.setStars((int)ratingBar.getRating());
-                    temp.setProfilePicture(ap.getProfilePicture());
+                    temp.setProfilePictureURL(ap.getProfilePictureURL());
                     temp.setResumePictureURL(ap.getResumePictureURL());
                     temp.setResumeOverlayURL(ap.getResumeOverlayURL());
-                    // TODO: add in the 3 photos and follow that they get switched out properly and added to s3...Done?
 
                     ((MainActivity)getActivity()).updateCache(ap, temp);
                     ((MainActivity)getActivity()).setAddToBackStack(false);
@@ -191,21 +195,6 @@ public class Fragment_View_Single_Applicant extends Fragment {
             }
         });
 
-        ProfileImage.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(takePictureIntent,0); // 0 specifies the requestCode so the on activity result know what to do
-            }
-        });
-
-        ResumeImage.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(takePictureIntent, 1);
-            }
-        });
         // Inflate the layout for this fragment
         return view;
     }
@@ -228,6 +217,7 @@ public class Fragment_View_Single_Applicant extends Fragment {
             }
         });
     }
+
 
     private class DownloadImageFromInternet extends AsyncTask<String, Void, Bitmap> {
         ImageView imageView;

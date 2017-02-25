@@ -52,7 +52,7 @@ public class UseWebAPI {
                     AP.setID(response.getString("Id"));
                     AP.setResumePictureURL("http://s3.amazonaws.com/testbucketsource11/"+response.getString("Id")+"Resume.png");
                     AP.setProfilePictureURL("http://s3.amazonaws.com/testbucketsource11/"+response.getString("Id")+"Profile.png");
-                    AP.setResumeOverlayURL("http://s3.amazonaws.com/testbucketsource11/"+response.getString("Id")+"ResumeOverlay.png");//TODO this might not be right
+                    AP.setResumeOverlayURL("http://s3.amazonaws.com/testbucketsource11/"+response.getString("Id")+"ResumeOverlay.png");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -84,7 +84,7 @@ public class UseWebAPI {
                             AP.setStars(Integer.parseInt(Applicant.getString("Rating")));
                             AP.setProfilePictureURL(Applicant.getString("Profile"));
                             AP.setResumePictureURL(Applicant.getString("Resume"));
-                            AP.setResumeOverlayURL(Applicant.getString("ResumeOverlay")); //TODO this might not be right
+                            AP.setResumeOverlayURL(Applicant.getString("ResumeOverlay"));
                             AP.setID(Applicant.getString("Id"));
                             cachedApplicantProfiles.add(AP);
 
@@ -119,14 +119,9 @@ public class UseWebAPI {
         JO.put("Notes",AP.getNotes());
         JO.put("Rating",AP.getStars());
 
-        if(AP.getProfilePicture()!=null) {
-            JO.put("Resume", BitMapToString(AP.getResumePicture()));
-            JO.put("Profile", BitMapToString(AP.getProfilePicture()));
-        }
         if(AP.getResumeOverlay()!=null){
             JO.put("ResumeOverlay", BitMapToString(AP.getResumeOverlay())); //need to add this in the update
         }
-            //TODO Resume thing as seen above.
         try {
             entity = new StringEntity(JO.toString());
         } catch (UnsupportedEncodingException e) {
