@@ -18,7 +18,9 @@ import cz.msebera.android.httpclient.protocol.HTTP;
 
 public class Web_Rest_API {
 
-    private static final String BASE_URL = "RIP";
+
+
+    private static final String BASE_URL = "http://138.197.85.203:3002/resume/";
     private static AsyncHttpClient client = new AsyncHttpClient();
 
     public static void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
