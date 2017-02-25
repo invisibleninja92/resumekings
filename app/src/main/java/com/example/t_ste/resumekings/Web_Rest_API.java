@@ -31,10 +31,7 @@ public class Web_Rest_API {
     public static void post(String url, StringEntity entity , AsyncHttpResponseHandler responseHandler) {
         client.post(null,getAbsoluteUrl(url), entity, "application/json", responseHandler);
     }
-//I dont think we need this post below I have commented it out for now if it doesnt break then we can trash it :) CLEAN UP OUR CODE
-   /* public static void post(String url, HttpEntity entity , AsyncHttpResponseHandler responseHandler) {
-        client.post(null,getAbsoluteUrl(url), entity, "application/json", responseHandler);
-    }*/
+
 
     public static void delete(String url, AsyncHttpResponseHandler responseHandler) {
         client.delete(getAbsoluteUrl(url), responseHandler);

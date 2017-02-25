@@ -1,5 +1,6 @@
 package com.example.t_ste.resumekings;
 
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -59,6 +60,7 @@ public class Fragment_View_Applicant_Resume extends Fragment {
     private float mediumBrush = 20;
     private float largeBrush = 30;
     public ImageView resumepic;
+    public ImageView overlaypic;
     LinearLayout paintColors;
     DrawingView drawView;
     Bitmap resume;
@@ -80,8 +82,12 @@ public class Fragment_View_Applicant_Resume extends Fragment {
 
 
         resumepic = (ImageView) view.findViewById(R.id.ResPic);
+        overlaypic= (ImageView) view.findViewById(R.id.OvePic);
         if(ap.getResumePictureURL() != null) {
                 new DownloadImageFromInternet(resumepic).execute(ap.getResumePictureURL());
+        }
+        if(ap.getResumeOverlayURL() != null) {
+            new DownloadImageFromInternet(overlaypic).execute(ap.getResumeOverlayURL());
         }
 
         ImageButton drawButton  = (ImageButton) view.findViewById(R.id.drawButton);
@@ -399,11 +405,12 @@ public class Fragment_View_Applicant_Resume extends Fragment {
             }
             return bimage;
         }
+        @TargetApi(Build.VERSION_CODES.M)
         @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
         protected void onPostExecute(Bitmap result) {
             imageView.setImageBitmap(result);
             drawView.setBackground(resumepic.getDrawable());
-
+            drawView.setForeground(overlaypic.getDrawable());
         }
     }
 

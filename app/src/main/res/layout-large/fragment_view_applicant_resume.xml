@@ -14,6 +14,13 @@
         android:id="@+id/ResPic"
         android:visibility="gone" />
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/large"
+        android:id="@+id/OvePic"
+        android:visibility="gone" />
+
     <com.example.t_ste.resumekings.DrawingView
         android:id="@+id/drawing"
         android:layout_width="fill_parent"
