@@ -1,9 +1,5 @@
 package com.example.t_ste.resumekings;
 
-import android.Manifest;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -14,21 +10,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.telecom.Call;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.jar.Attributes;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     ArrayList<Applicant_Profile> cachedApplicantProfiles = new ArrayList<>();           // Local cache of applicants to pass to the other fragments
@@ -38,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public boolean tabletMode      = false;  // Determined at startup. Don't mess with this
     public boolean addToBackStack  = false;  // Set up TAGs to be allowed or not allowed to add to the backstack
-    public boolean API_Mode        = true;  // Toggle this to true if you want to use the cloud
+    public boolean API_Mode        = false;  // Toggle this to true if you want to use the cloud
     private String username        = null;
     private String password        = null;
 

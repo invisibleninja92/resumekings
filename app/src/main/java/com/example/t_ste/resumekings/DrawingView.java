@@ -2,16 +2,22 @@ package com.example.t_ste.resumekings;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
+
+import java.io.InputStream;
 
 /**
  * Created by Greg Wilkinson on 2/1/2017.
@@ -33,6 +39,11 @@ public class DrawingView extends View{
     //erase on or off
     private boolean erase = false;
 
+    private Applicant_Profile tempAP;
+
+    private ImageView ResumeImage;
+    BitmapDrawable drawable;
+
     public DrawingView(Context context, AttributeSet attrs) {
         super(context, attrs);
         setupDrawing();
@@ -52,6 +63,8 @@ public class DrawingView extends View{
         drawPaint.setStrokeCap(Paint.Cap.ROUND);
         canvasPaint = new Paint(Paint.DITHER_FLAG);
 
+//        new DrawingView.DownloadImageFromInternet(ResumeImage).execute(tempAP.getResumePictureURL());
+//        drawable = (BitmapDrawable) ResumeImage.getDrawable();
     }
 
     @Override
@@ -59,7 +72,8 @@ public class DrawingView extends View{
         //view given size
         super.onSizeChanged(w, h, oldw, oldh);
         resumeBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-        drawCanvas = new Canvas(resumeBitmap);
+        //resumeBitmap = drawable.getBitmap();
+        drawCanvas = new Canvas();
     }
 
     @Override
@@ -126,5 +140,31 @@ public class DrawingView extends View{
 
     public Bitmap getResumeBitmap() {
         return resumeBitmap;
+    }
+
+    public void setTempAP(Applicant_Profile ap) {
+        tempAP = ap;
+    }
+
+    private class DownloadImageFromInternet extends AsyncTask<String, Void, Bitmap> {
+        ImageView imageView;
+
+        public DownloadImageFromInternet(ImageView imageView) {
+            this.imageView = imageView;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String imageURL = urls[0];
+            Bitmap bimage = null;
+            try {
+                InputStream in = new java.net.URL(imageURL).openStream();
+                bimage = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+            }
+            return bimage;
+        }
+        protected void onPostExecute(Bitmap result) {
+            imageView.setImageBitmap(result);
+        }
     }
 }

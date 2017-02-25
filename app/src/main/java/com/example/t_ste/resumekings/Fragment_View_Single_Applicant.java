@@ -1,14 +1,14 @@
 package com.example.t_ste.resumekings;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.telecom.Call;
 import android.text.InputType;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,11 +18,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Toast;
-
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
+
+import static com.example.t_ste.resumekings.R.attr.editTextBackground;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,7 +53,7 @@ public class Fragment_View_Single_Applicant extends Fragment {
     View view;
     Button deleteApplicant;
     Button updateApplicant;
-    Button showResume;
+    Button viewResume;
     Applicant_Profile ap;
     EditText applicantName;
     EditText applicantEmail;
@@ -65,6 +63,9 @@ public class Fragment_View_Single_Applicant extends Fragment {
     Boolean Update = false;
     ImageView ResumeImage;
     ImageView ProfileImage;
+    Bitmap bitmap;
+    Bitmap ProfilePicBitmap;
+    Bitmap ResumePicBitmap;
     ImageView ResumeOverlay;
     final Call_Web_API CWA = new Call_Web_API();
     // INITIALIZERS //////////
@@ -77,10 +78,15 @@ public class Fragment_View_Single_Applicant extends Fragment {
 
         if(ap == null) return view;
 
-        deleteApplicant = (Button) view.findViewById(R.id.delete_applicant);
-        updateApplicant = (Button) view.findViewById(R.id.update_applicant);
-        showResume      = (Button) view.findViewById(R.id.show_resume);
+        // Attach the buttons and image views of the different parts of the front end to the back end
+        deleteApplicant = (Button)    view.findViewById(R.id.delete_applicant);
+        updateApplicant = (Button)    view.findViewById(R.id.update_applicant);
+        viewResume      = (Button)    view.findViewById(R.id.show_resume);
         ratingBar       = (RatingBar) view.findViewById(R.id.ratingBar);
+        ResumeImage     = (ImageView) view.findViewById(R.id.ResumePicture);
+        ProfileImage    = (ImageView) view.findViewById(R.id.ProfilePicture);
+        // TODO: add the resume overlay to the xml and then uncomment the few lines here to implement it
+        // ResumeOverlay = (ImageView) view.findViewById(R.id.ResumeOverlay);
 
         applicantName   = (EditText) view.findViewById(R.id.applicantName);
         applicantPhone  = (EditText) view.findViewById(R.id.applicantPhone);
@@ -92,22 +98,20 @@ public class Fragment_View_Single_Applicant extends Fragment {
         applicantNotes.setEnabled(false);
         applicantPhone.setEnabled(false);
 
-        ResumeImage = (ImageView) view.findViewById(R.id.ResumePicture);
-        ProfileImage = (ImageView) view.findViewById(R.id.ProfilePicture);
-        // TODO: add the resume overlay to the xml and then uncomment the few lines here to implement it
-        //ResumeOverlay = (ImageView) view.findViewById(R.id.ResumeOverlay);
+        applicantName.setBackgroundColor(0);
+        applicantEmail.setBackgroundColor(0);
+        applicantNotes.setBackgroundColor(0);
+        applicantPhone.setBackgroundColor(0);
 
-        new DownloadImageFromInternet(ProfileImage).execute(ap.getProfilePictureURL());
-        new DownloadImageFromInternet(ResumeImage).execute(ap.getResumePictureURL());
-        //new DownloadImageFromInternet(ResumeOverlay).execute(ap.getResumeOverlayURL());
-        System.out.println(ap.getProfilePictureURL());
-        System.out.println(ap.getResumePictureURL());
-
-        final Call_Web_API CWA = new Call_Web_API();
-
-        if(ap.getProfilePictureURL()!=null){
-        new DownloadImageFromInternet(ProfileImage).execute(ap.getProfilePictureURL());
-        new DownloadImageFromInternet(ResumeImage).execute(ap.getResumePictureURL());}
+        if(ap.getProfilePictureURL() != null) {
+            new DownloadImageFromInternet(ProfileImage).execute(ap.getProfilePictureURL());
+        }
+        if(ap.getResumePictureURL() != null) {
+            new DownloadImageFromInternet(ResumeImage).execute(ap.getResumePictureURL());
+        }
+        if(ap.getResumeOverlayURL() != null) {
+            new DownloadImageFromInternet(ResumeImage).execute(ap.getResumeOverlayURL());
+        }
 
         ratingBar.setRating(ap.getStars());
         applicantName.setText(ap.getUserName());
@@ -119,13 +123,16 @@ public class Fragment_View_Single_Applicant extends Fragment {
             @Override
             public void onClick(View V){
                 ((MainActivity)getActivity()).removeFromCache(ap);
-
-                if (((MainActivity) getActivity()).API_Mode)
-                    CWA.doInBackground(ap,"Delete"); //Passes the SQL ID and calls the "Delete function
                 ((MainActivity)getActivity()).setAddToBackStack(false);
+
+                if (((MainActivity)getActivity()).API_Mode) {
+                    CWA.doInBackground(ap, "Delete"); //Passes the SQL ID and calls the "Delete function
+                }
+
                 if(((MainActivity)getActivity()).cachedApplicantProfiles.size() != 0) {
                     ((MainActivity) getActivity()).viewApplicant(((MainActivity) getActivity()).cachedApplicantProfiles.get(0));
                 }
+
                 else {
                     Toast.makeText(getContext(), "create an applicant!", Toast.LENGTH_SHORT).show();
                     ((MainActivity) getActivity()).setAddToBackStack(false);
@@ -140,12 +147,16 @@ public class Fragment_View_Single_Applicant extends Fragment {
                 if(!Update){
                     applicantName.setInputType(InputType.TYPE_CLASS_TEXT);
                     applicantName.setEnabled(true);
+                    applicantName.setBackgroundDrawable(getResources().getDrawable(android.R.drawable.editbox_background));
                     applicantPhone.setInputType(InputType.TYPE_CLASS_TEXT);
                     applicantPhone.setEnabled(true);
+                    applicantPhone.setBackgroundDrawable(getResources().getDrawable(android.R.drawable.editbox_background));
                     applicantEmail.setInputType(InputType.TYPE_CLASS_TEXT);
                     applicantEmail.setEnabled(true);
+                    applicantEmail.setBackgroundDrawable(getResources().getDrawable(android.R.drawable.editbox_background));
                     applicantNotes.setInputType(InputType.TYPE_CLASS_TEXT);
                     applicantNotes.setEnabled(true);
+                    applicantNotes.setBackgroundDrawable(getResources().getDrawable(android.R.drawable.editbox_background));
                     ratingBar.setIsIndicator(false);
                     Update = true;
                     System.out.println(ap.getResumePictureURL());
@@ -168,16 +179,31 @@ public class Fragment_View_Single_Applicant extends Fragment {
                     ((MainActivity)getActivity()).setAddToBackStack(false);
                     ((MainActivity)getActivity()).viewApplicant(temp);
                     CWA.doInBackground(temp,"Put"); //Updates the applicant in the web api
-
                 }
             }
         });
 
-        showResume.setOnClickListener(new View.OnClickListener(){
+        viewResume.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View V){
                 ((MainActivity)getActivity()).setAddToBackStack(false);
                 ((MainActivity)getActivity()).displayView("ViewApplicantResume");
+            }
+        });
+
+        ProfileImage.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(takePictureIntent,0); // 0 specifies the requestCode so the on activity result know what to do
+            }
+        });
+
+        ResumeImage.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(takePictureIntent, 1);
             }
         });
         // Inflate the layout for this fragment
@@ -203,7 +229,6 @@ public class Fragment_View_Single_Applicant extends Fragment {
         });
     }
 
-
     private class DownloadImageFromInternet extends AsyncTask<String, Void, Bitmap> {
         ImageView imageView;
 
@@ -223,6 +248,31 @@ public class Fragment_View_Single_Applicant extends Fragment {
         }
         protected void onPostExecute(Bitmap result) {
             imageView.setImageBitmap(result);
+        }
+    }
+
+    // Since we start a camera activity we need to get the results of that this function
+    // handles the camera process
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            bitmap = (Bitmap) data.getExtras().get("data");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+        switch(requestCode){
+            case 0: //if the requestCode was 0 the user took a profile picture
+                ProfileImage.setImageBitmap(bitmap);
+                ProfilePicBitmap = bitmap;
+                break;
+
+            case 1: //if the requestCode was 1 the user took a Resume picture
+                ResumeImage.setImageBitmap(bitmap);
+                ResumePicBitmap = bitmap;
+                break;
         }
     }
 }

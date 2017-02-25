@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -42,6 +43,7 @@ public class Fragment_View_Applicant_Resume extends Fragment {
     private float largeBrush = 30;
     LinearLayout paintColors;
     DrawingView drawView;
+    Bitmap resume;
     // INITIALIZERS //////////
 
 
@@ -54,6 +56,7 @@ public class Fragment_View_Applicant_Resume extends Fragment {
 
         drawView = (DrawingView)view.findViewById(R.id.drawing);
         drawView.setBrushSize(smallBrush);
+        drawView.setTempAP(ap);
         drawView.setupDrawing();
 
         ImageButton drawButton  = (ImageButton) view.findViewById(R.id.drawButton);
@@ -300,15 +303,14 @@ public class Fragment_View_Applicant_Resume extends Fragment {
                         temp.setResumeOverlayURL("http://s3.amazonaws.com/testbucketsource11/"+ap.getID()+"ResumeOverlay.png");//we know this will be the url so we can go ahead and set it
                         //temp.setResumeOverlayURL("http://s3.amazonaws.com/testbucketsource11/"+ap.getUserName()+ap.getPhoneNumber()+"ResumeOverlay.png");
                         if(((MainActivity) getActivity()).API_Mode==true){
-                        Call_Web_API CWA = new Call_Web_API();
-                        CWA.doInBackground(temp,"Put");}
-
+                            Call_Web_API CWA = new Call_Web_API();
+                            CWA.doInBackground(temp,"Put");
+                        }
                         ((MainActivity)getActivity()).updateCache(ap, temp);
                         ((MainActivity)getActivity()).setAddToBackStack(false);
                         ((MainActivity)getActivity()).viewApplicant(temp);
                     }
                 });
-
                 newDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -318,7 +320,6 @@ public class Fragment_View_Applicant_Resume extends Fragment {
                 newDialog.show();
             }
         });
-
         return view; //Return the fragment with all the functionality
     }
 

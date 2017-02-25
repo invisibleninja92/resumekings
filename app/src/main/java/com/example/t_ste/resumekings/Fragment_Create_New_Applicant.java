@@ -21,6 +21,7 @@ import android.widget.Toast;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -155,8 +156,13 @@ public class Fragment_Create_New_Applicant extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
-        bitmap = (Bitmap) data.getExtras().get("data");
-
+        try {
+            bitmap = (Bitmap) data.getExtras().get("data");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
         switch(requestCode){
             case 0: //if the requestCode was 0 the user took a profile picture
                 ProfilePic.setImageBitmap(bitmap);
