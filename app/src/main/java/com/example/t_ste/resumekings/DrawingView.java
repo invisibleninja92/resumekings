@@ -58,7 +58,7 @@ public class DrawingView extends View{
         brushSize = getResources().getInteger(R.integer.small_size);
         lastBrushSize = brushSize;
         drawPath = new Path();
-        drawPaint = new Paint();
+        drawPaint = new Paint();//Paint.ANTI_ALIAS_FLAG);
         drawPaint.setColor(paintColor);
         drawPaint.setAntiAlias(true);
         drawPaint.setStrokeWidth(brushSize);
@@ -66,6 +66,9 @@ public class DrawingView extends View{
         drawPaint.setStrokeJoin(Paint.Join.ROUND);
         drawPaint.setStrokeCap(Paint.Cap.ROUND);
         canvasPaint = new Paint(Paint.DITHER_FLAG);
+
+//        new DrawingView.DownloadImageFromInternet(ResumeImage).execute(tempAP.getResumePictureURL());
+//        drawable = (BitmapDrawable) ResumeImage.getDrawable();
     }
 
     @Override

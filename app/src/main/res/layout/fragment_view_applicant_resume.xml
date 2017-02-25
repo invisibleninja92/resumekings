@@ -84,10 +84,10 @@
                 android:layout_width="@dimen/large_brush"
                 android:layout_height="@dimen/large_brush"
                 android:layout_margin="2dp"
-                android:background="#FFFF0000"
+                android:background="#4FFF0000"
                 android:contentDescription="@string/paint"
                 android:src="@drawable/paint"
-                android:tag="#FFFF0000"
+                android:tag="#4FFF0000"
                 android:id="@+id/red" />
 
             <ImageButton

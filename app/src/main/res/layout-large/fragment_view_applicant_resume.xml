@@ -11,7 +11,6 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/person"
         android:id="@+id/ResPic"
         android:visibility="gone" />
 
@@ -98,7 +97,7 @@
                     android:background="#FF660000"
                     android:contentDescription="@string/paint"
                     android:src="@drawable/paint"
-                    android:tag="#FF660000"
+                    android:tag="#80660000"
                     android:id="@+id/maroon" />
 
                 <ImageButton
@@ -108,7 +107,7 @@
                     android:background="#FFFF0000"
                     android:contentDescription="@string/paint"
                     android:src="@drawable/paint"
-                    android:tag="#FFFF0000"
+                    android:tag="#80FF0000"
                     android:id="@+id/red" />
 
                 <ImageButton
@@ -118,7 +117,7 @@
                     android:background="#FFFF6600"
                     android:contentDescription="@string/paint"
                     android:src="@drawable/paint"
-                    android:tag="#FFFF6600"
+                    android:tag="#80FF6600"
                     android:id="@+id/orange" />
 
                 <ImageButton
@@ -128,7 +127,7 @@
                     android:background="#FFFFCC00"
                     android:contentDescription="@string/paint"
                     android:src="@drawable/paint"
-                    android:tag="#FFFFCC00"
+                    android:tag="#80FFCC00"
                     android:id="@+id/yellow" />
 
                 <ImageButton
@@ -138,7 +137,7 @@
                     android:background="#FF009900"
                     android:contentDescription="@string/paint"
                     android:src="@drawable/paint"
-                    android:tag="#FF009900"
+                    android:tag="#80009900"
                     android:id="@+id/green" />
 
                 <ImageButton
@@ -148,7 +147,7 @@
                     android:background="#FF009999"
                     android:contentDescription="@string/paint"
                     android:src="@drawable/paint"
-                    android:tag="#FF009999"
+                    android:tag="#80009999"
                     android:id="@+id/cyan" />
 
             </LinearLayout>
@@ -167,7 +166,7 @@
                     android:background="#FF0000FF"
                     android:contentDescription="@string/paint"
                     android:src="@drawable/paint"
-                    android:tag="#FF0000FF"
+                    android:tag="#800000FF"
                     android:id="@+id/blue" />
 
                 <ImageButton
@@ -177,7 +176,7 @@
                     android:background="#FF990099"
                     android:contentDescription="@string/paint"
                     android:src="@drawable/paint"
-                    android:tag="#FF990099"
+                    android:tag="#80990099"
                     android:id="@+id/purple" />
 
                 <ImageButton
@@ -187,7 +186,7 @@
                     android:background="#FFFF6666"
                     android:contentDescription="@string/paint"
                     android:src="@drawable/paint"
-                    android:tag="#FFFF6666"
+                    android:tag="#80FF6666"
                     android:id="@+id/pink" />
 
                 <ImageButton
@@ -197,7 +196,7 @@
                     android:background="#FFFFFFFF"
                     android:contentDescription="@string/paint"
                     android:src="@drawable/paint"
-                    android:tag="#FFFFFFFF"
+                    android:tag="#80FFFFFF"
                     android:id="@+id/white" />
 
                 <ImageButton
@@ -207,7 +206,7 @@
                     android:background="#FF787878"
                     android:contentDescription="@string/paint"
                     android:src="@drawable/paint"
-                    android:tag="#FF787878"
+                    android:tag="#80787878"
                     android:id="@+id/gray" />
 
                 <ImageButton
@@ -217,7 +216,7 @@
                     android:background="#FF000000"
                     android:contentDescription="@string/paint"
                     android:src="@drawable/paint"
-                    android:tag="#FF000000"
+                    android:tag="#80000000"
                     android:id="@+id/black" />
             </LinearLayout>
         </LinearLayout>
