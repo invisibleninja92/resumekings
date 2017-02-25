@@ -192,6 +192,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.action_settings) {
             return true;
         }
+        else if (id == R.id.Create_New_Applicant) {
+            displayView("CreateNewApplicant");
+        }
         return super.onOptionsItemSelected(item);
     }
 
