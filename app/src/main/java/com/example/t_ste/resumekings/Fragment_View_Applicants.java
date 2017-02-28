@@ -4,6 +4,8 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.t_ste.resumekings.R.id.Applicant_ListView;
+import static com.example.t_ste.resumekings.R.id.SearchText;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,16 +68,39 @@ public class Fragment_View_Applicants extends Fragment {
         ((MainActivity)getActivity()).setAddToBackStack(true);
         Names = ((MainActivity)getActivity()).getNameList();
 
-        inputSearch = (SearchView)view.findViewById(R.id.search);
+  /*      inputSearch = (SearchView)view.findViewById(R.id.search);
         CharSequence inputSearchQuery = inputSearch.getQuery();
-
+        // TODO Get rid of search
         // TODO implement the result list of applicant profiles
         ArrayList<Applicant_Profile> searchResult = ((MainActivity)getActivity()).search(inputSearchQuery.toString());
+        System.out.println(searchResult.toString());*/
+        EditText ST = (EditText)view.findViewById(SearchText);
 
         //we need to create an application adapter to create the elements in the list
         if(cachedApplicantProfiles.size() != 0) {
             final Applicant_Adapter adapt = new Applicant_Adapter(getContext(), cachedApplicantProfiles);
             ApplicantCacheList.setAdapter(adapt); // set the adapter of elements to the list view of applicants
+
+            ST.addTextChangedListener(new TextWatcher() {
+
+                @Override
+                public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+                    // When user changed the Text
+                    adapt.getFilter().filter(cs);
+                }
+
+                @Override
+                public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+                                              int arg3) {
+                    // TODO Auto-generated method stub
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable arg0) {
+                    // TODO Auto-generated method stub
+                }
+            });
         }
         else {Toast.makeText(getContext(), "create an applicant!", Toast.LENGTH_SHORT).show();
             ((MainActivity)getActivity()).setAddToBackStack(false);
@@ -86,7 +112,8 @@ public class Fragment_View_Applicants extends Fragment {
         ApplicantCacheList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                ((MainActivity)getActivity()).setAddToBackStack(false);
-               ((MainActivity)getActivity()).viewApplicant(cachedApplicantProfiles.get(position));
+               ((MainActivity)getActivity()).viewApplicant((Applicant_Profile) ApplicantCacheList.getAdapter().getItem(position));
+          //Changed the code above to work with the search function
             }
         });
         return view; //Return the fragment with all the functionality

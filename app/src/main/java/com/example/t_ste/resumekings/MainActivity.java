@@ -422,7 +422,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tabletMode = diagonalInches >= 6.5;
     }
 
-    public ArrayList<Applicant_Profile> search(String searchItem){
+
+    //TODO remove this search function (maybe)
+ /*   public ArrayList<Applicant_Profile> search(String searchItem){
         ArrayList<Applicant_Profile> resultsList = new ArrayList<>();
 
         // Iterate through all of the applicants information in the cache and return an arraylist of
@@ -443,7 +445,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         // Return the list of matching results in the form of an arraylist of applicant profiles
         return resultsList;
-    }
+    }*/
 
     public void setUserandPass(String user, String hashedPass){
         username = user;

@@ -13,15 +13,17 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content">
 
-        <SearchView
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/search"
+            android:id="@+id/SearchText"
             android:orientation="horizontal"
             android:hint="Search"
             android:imeOptions="actionSearch"
             android:inputType="text"
-            android:fadingEdge="horizontal|vertical" />
+            android:fadingEdge="horizontal|vertical" >
+
+        </EditText>
 
         <ListView
             android:layout_width="match_parent"
@@ -35,6 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/Container_right">
+
 
     </FrameLayout>
 
