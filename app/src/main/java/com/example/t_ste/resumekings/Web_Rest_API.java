@@ -20,7 +20,7 @@ public class Web_Rest_API {
 
 
 
-    private static final String BASE_URL = "RIFP";
+    private static final String BASE_URL = "FMFL";
     private static AsyncHttpClient client = new AsyncHttpClient();
 
     public static void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
