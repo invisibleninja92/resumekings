@@ -99,6 +99,7 @@ public class Fragment_View_Applicants extends Fragment {
                 @Override
                 public void afterTextChanged(Editable arg0) {
                     // TODO Auto-generated method stub
+
                 }
             });
         }

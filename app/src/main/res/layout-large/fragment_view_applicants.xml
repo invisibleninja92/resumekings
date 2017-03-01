@@ -19,7 +19,7 @@
             android:id="@+id/SearchText"
             android:orientation="horizontal"
             android:hint="Search"
-            android:imeOptions="actionSearch"
+            android:imeOptions="actionDone"
             android:inputType="text"
             android:fadingEdge="horizontal|vertical" >
 

@@ -299,7 +299,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 case "ViewSingleApplicant":
                     // Initialize the view single applicant fragment
-                    newFragmentLeft = new Fragment_View_Applicants();
                     newFragmentRight = new Fragment_View_Single_Applicant();
                     break;
 
