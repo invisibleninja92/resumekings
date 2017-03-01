@@ -4,11 +4,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-import cz.msebera.android.httpclient.HttpEntity;
-import cz.msebera.android.httpclient.entity.FileEntity;
 import cz.msebera.android.httpclient.entity.StringEntity;
-import cz.msebera.android.httpclient.entity.mime.MultipartEntityBuilder;
-import cz.msebera.android.httpclient.protocol.HTTP;
 
 
 /**

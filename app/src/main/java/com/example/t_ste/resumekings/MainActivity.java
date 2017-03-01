@@ -422,30 +422,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    //TODO remove this search function (maybe)
- /*   public ArrayList<Applicant_Profile> search(String searchItem){
-        ArrayList<Applicant_Profile> resultsList = new ArrayList<>();
-
-        // Iterate through all of the applicants information in the cache and return an arraylist of
-        // results that have a matching string to the searchItem
-        for(int i = 0; i < cachedApplicantProfiles.size(); i++){
-            // First search through the usernames
-            if(cachedApplicantProfiles.get(i).getUserName().equals(searchItem)){
-                resultsList.add(cachedApplicantProfiles.get(i));
-            }
-            // Next is to match an email
-            if(cachedApplicantProfiles.get(i).getEmail().equals(searchItem)){
-                resultsList.add(cachedApplicantProfiles.get(i));
-            }
-            // Lastly to check the phone numbers
-            if(cachedApplicantProfiles.get(i).getPhoneNumber().equals(searchItem)){
-                resultsList.add(cachedApplicantProfiles.get(i));
-            }
-        }
-        // Return the list of matching results in the form of an arraylist of applicant profiles
-        return resultsList;
-    }*/
-
     public void setUserandPass(String user, String hashedPass){
         username = user;
         password = hashedPass;

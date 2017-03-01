@@ -1,7 +1,5 @@
 package com.example.t_ste.resumekings;
 
-import android.app.SearchManager;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -12,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -68,12 +65,7 @@ public class Fragment_View_Applicants extends Fragment {
         ((MainActivity)getActivity()).setAddToBackStack(true);
         Names = ((MainActivity)getActivity()).getNameList();
 
-  /*      inputSearch = (SearchView)view.findViewById(R.id.search);
-        CharSequence inputSearchQuery = inputSearch.getQuery();
-        // TODO Get rid of search
-        // TODO implement the result list of applicant profiles
-        ArrayList<Applicant_Profile> searchResult = ((MainActivity)getActivity()).search(inputSearchQuery.toString());
-        System.out.println(searchResult.toString());*/
+
         EditText ST = (EditText)view.findViewById(SearchText);
 
         //we need to create an application adapter to create the elements in the list
@@ -84,23 +76,21 @@ public class Fragment_View_Applicants extends Fragment {
             ST.addTextChangedListener(new TextWatcher() {
 
                 @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
                 public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
                     // When user changed the Text
                     adapt.getFilter().filter(cs);
                 }
 
                 @Override
-                public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
-                                              int arg3) {
-                    // TODO Auto-generated method stub
+                public void afterTextChanged(Editable editable) {
 
                 }
 
-                @Override
-                public void afterTextChanged(Editable arg0) {
-                    // TODO Auto-generated method stub
-
-                }
             });
         }
         else {Toast.makeText(getContext(), "create an applicant!", Toast.LENGTH_SHORT).show();

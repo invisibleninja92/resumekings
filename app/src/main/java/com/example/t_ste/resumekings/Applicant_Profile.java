@@ -2,8 +2,6 @@ package com.example.t_ste.resumekings;
 
 import android.graphics.Bitmap;
 
-import java.sql.Blob;
-import java.sql.SQLException;
 
 /**
  * Created by t_ste on 11/1/2016.

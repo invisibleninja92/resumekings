@@ -3,7 +3,6 @@ package com.example.t_ste.resumekings;
 
 import android.graphics.Bitmap;
 
-
 import com.loopj.android.http.Base64;
 import com.loopj.android.http.JsonHttpResponseHandler;
 

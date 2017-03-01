@@ -3,11 +3,8 @@ package com.example.t_ste.resumekings;
 import android.os.AsyncTask;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 /**
