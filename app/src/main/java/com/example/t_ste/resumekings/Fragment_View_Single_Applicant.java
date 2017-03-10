@@ -3,6 +3,7 @@ package com.example.t_ste.resumekings;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,7 +21,7 @@ import java.io.InputStream;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * A simple {@link Fragment_View_Single_Applicant} subclass.
  * Activities that contain this fragment must implement the
  * {@link Fragment_View_Single_Applicant} interface
  * to handle interaction events.
@@ -82,38 +83,45 @@ public class Fragment_View_Single_Applicant extends Fragment {
         ratingBar       = (RatingBar) view.findViewById(R.id.ratingBar);
         ResumeImage     = (ImageView) view.findViewById(R.id.ResumePicture);
         ProfileImage    = (ImageView) view.findViewById(R.id.ProfilePicture);
+        // TODO: add the resume overlay to the xml and then uncomment the few lines here to implement it
+        // ResumeOverlay = (ImageView) view.findViewById(R.id.ResumeOverlay);
 
         applicantName   = (EditText) view.findViewById(R.id.applicantName);
         applicantPhone  = (EditText) view.findViewById(R.id.applicantPhone);
         applicantEmail  = (EditText) view.findViewById(R.id.applicantEmail);
         applicantNotes  = (EditText) view.findViewById(R.id.applicantNotes);
 
-        applicantEmail.setEnabled(false);
+        //applicantEmail.setEnabled(false);
         applicantName.setEnabled(false);
         applicantNotes.setEnabled(false);
-        applicantPhone.setEnabled(false);
+        //applicantPhone.setEnabled(false);
 
         ResumeImage = (ImageView) view.findViewById(R.id.ResumePicture);
         ProfileImage = (ImageView) view.findViewById(R.id.ProfilePicture);
         ResumeOverlay = (ImageView) view.findViewById(R.id.ResumeOverlay);
 
+//        System.out.println(ap.getProfilePictureURL());
+//        System.out.println(ap.getResumePictureURL());
 
-        System.out.println(ap.getProfilePictureURL());
-        System.out.println(ap.getResumePictureURL());
+        if(((MainActivity)getActivity()).API_Mode) {
+            final Call_Web_API CWA = new Call_Web_API();
+        }
 
-        final Call_Web_API CWA = new Call_Web_API();
+        // Set the background of the
         applicantName.setBackgroundColor(0);
         applicantEmail.setBackgroundColor(0);
         applicantNotes.setBackgroundColor(0);
         applicantPhone.setBackgroundColor(0);
 
-        if(ap.getProfilePictureURL() != null) {
+        if(ap.getProfilePictureURL() != null && ((MainActivity)getActivity()).API_Mode) {
             new DownloadImageFromInternet(ProfileImage).execute(ap.getProfilePictureURL());
         }
-        if(ap.getResumePictureURL() != null) {
+
+        if(ap.getResumePictureURL() != null && ((MainActivity)getActivity()).API_Mode) {
             new DownloadImageFromInternet(ResumeImage).execute(ap.getResumePictureURL());
         }
-        if(ap.getResumeOverlayURL() != null) {
+
+        if(ap.getResumeOverlayURL() != null && ((MainActivity)getActivity()).API_Mode) {
             new DownloadImageFromInternet(ResumeOverlay).execute(ap.getResumeOverlayURL());
         }
 
@@ -135,6 +143,7 @@ public class Fragment_View_Single_Applicant extends Fragment {
                 if(((MainActivity)getActivity()).cachedApplicantProfiles.size() != 0) {
                     ((MainActivity) getActivity()).viewApplicant(((MainActivity) getActivity()).cachedApplicantProfiles.get(0));
                 }
+
                 else {
                     Toast.makeText(getContext(), "create an applicant!", Toast.LENGTH_SHORT).show();
                     ((MainActivity) getActivity()).setAddToBackStack(false);
@@ -147,24 +156,35 @@ public class Fragment_View_Single_Applicant extends Fragment {
             @Override
             public void onClick(View v){
                 if(!Update){
+                    // Set the background of the Name field as editable and focusable
                     applicantName.setInputType(InputType.TYPE_CLASS_TEXT);
                     applicantName.setEnabled(true);
                     applicantName.setBackgroundDrawable(getResources().getDrawable(android.R.drawable.editbox_background));
+
+                    // Set the background of the Phone field as editable and focusable
                     applicantPhone.setInputType(InputType.TYPE_CLASS_TEXT);
                     applicantPhone.setEnabled(true);
                     applicantPhone.setBackgroundDrawable(getResources().getDrawable(android.R.drawable.editbox_background));
+
+                    // Set the background of the Email field as editable and focusable
                     applicantEmail.setInputType(InputType.TYPE_CLASS_TEXT);
                     applicantEmail.setEnabled(true);
                     applicantEmail.setBackgroundDrawable(getResources().getDrawable(android.R.drawable.editbox_background));
+
+                    // Set the background of the Notes field as editable and focusable
                     applicantNotes.setInputType(InputType.TYPE_CLASS_TEXT);
                     applicantNotes.setEnabled(true);
                     applicantNotes.setBackgroundDrawable(getResources().getDrawable(android.R.drawable.editbox_background));
+
+                    // Set the rating bar to be changeable
                     ratingBar.setIsIndicator(false);
+
                     Update = true;
-                    System.out.println(ap.getResumePictureURL());
                     updateApplicant.setText("Update Applicant");
                 }
                 else {
+                    // Create a temporary profile to then send back to the main activity to be updated in the local cache and
+                    // then have the CWA doinbackground to send the data back to the server for updating
                     Applicant_Profile temp = new Applicant_Profile();
                     temp.setID(ap.getID());
                     temp.setUserName(applicantName.getText().toString());
@@ -192,6 +212,46 @@ public class Fragment_View_Single_Applicant extends Fragment {
             }
         });
 
+        applicantPhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                if(!Update) {
+                    String phone_number = ap.getPhoneNumber().replaceAll("-", "");
+                    Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                    callIntent.setData(Uri.parse("tel:" + phone_number));
+                    getContext().startActivity(callIntent);
+                }
+            }
+        });
+
+        applicantEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!Update) {
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setType("message/rfc822");
+                    intent.putExtra(Intent.EXTRA_EMAIL, ap.getEmail());
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "");
+                    intent.putExtra(Intent.EXTRA_TEXT, "");
+                    startActivity(Intent.createChooser(intent, "Send mail..."));
+                }
+            }
+        });
+//        ProfileImage.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+//                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                startActivityForResult(takePictureIntent,0); // 0 specifies the requestCode so the on activity result know what to do
+//            }
+//        });
+//
+//        ResumeImage.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+//                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                startActivityForResult(takePictureIntent, 1);
+//            }
+//        });
         // Inflate the layout for this fragment
         return view;
     }
@@ -206,6 +266,7 @@ public class Fragment_View_Single_Applicant extends Fragment {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+
                     // handle back button's click listener
                     getActivity().onBackPressed();
                     return true;
@@ -215,8 +276,8 @@ public class Fragment_View_Single_Applicant extends Fragment {
         });
     }
 
-
     private class DownloadImageFromInternet extends AsyncTask<String, Void, Bitmap> {
+        // Imageview to hold the picture when fully downloaded and set during the onPostExecute
         ImageView imageView;
 
         public DownloadImageFromInternet(ImageView imageView) {
@@ -225,16 +286,20 @@ public class Fragment_View_Single_Applicant extends Fragment {
 
         protected Bitmap doInBackground(String... urls) {
             String imageURL = urls[0];
-            Bitmap bimage = null;
+            Bitmap downloadedBitmapImage = null;
+
             try {
                 InputStream in = new java.net.URL(imageURL).openStream();
-                bimage = BitmapFactory.decodeStream(in);
+                downloadedBitmapImage = BitmapFactory.decodeStream(in);
             } catch (Exception e) {
             }
-            return bimage;
+            return downloadedBitmapImage;
         }
         protected void onPostExecute(Bitmap result) {
-            imageView.setImageBitmap(result);
+            try {
+                imageView.setImageBitmap(result);
+            } catch (Exception e) {
+            }
         }
     }
 

@@ -49,7 +49,7 @@ public class Fragment_View_Applicants extends Fragment {
     // INITIALIZERS //////////
     ListView ApplicantCacheList;
     ArrayList<Applicant_Profile> cachedApplicantProfiles;
-    SearchView inputSearch;
+    EditText searchText;
     List<String> Names = null;
     // INITIALIZERS //////////
 
@@ -62,33 +62,29 @@ public class Fragment_View_Applicants extends Fragment {
 
         ApplicantCacheList = (ListView)view.findViewById(Applicant_ListView);
         cachedApplicantProfiles = ((MainActivity)getActivity()).getCachedApplicantProfiles(); //Local cache from Main Activity
-        ((MainActivity)getActivity()).setAddToBackStack(true);
         Names = ((MainActivity)getActivity()).getNameList();
-
-
-        EditText ST = (EditText)view.findViewById(SearchText);
+        searchText = (EditText)view.findViewById(SearchText);
+        ((MainActivity)getActivity()).setAddToBackStack(true);
 
         //we need to create an application adapter to create the elements in the list
         if(cachedApplicantProfiles.size() != 0) {
+            //
             final Applicant_Adapter adapt = new Applicant_Adapter(getContext(), cachedApplicantProfiles);
             ApplicantCacheList.setAdapter(adapt); // set the adapter of elements to the list view of applicants
 
-            ST.addTextChangedListener(new TextWatcher() {
-
+            searchText.addTextChangedListener(new TextWatcher() {
                 @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
                 }
 
                 @Override
-                public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+                public void onTextChanged(CharSequence search_sequence, int start, int before, int count) {
                     // When user changed the Text
-                    adapt.getFilter().filter(cs);
+                    adapt.getFilter().filter(search_sequence);
                 }
 
                 @Override
                 public void afterTextChanged(Editable editable) {
-
                 }
 
             });

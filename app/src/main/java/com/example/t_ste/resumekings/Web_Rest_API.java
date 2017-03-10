@@ -6,7 +6,6 @@ import com.loopj.android.http.RequestParams;
 
 import cz.msebera.android.httpclient.entity.StringEntity;
 
-
 /**
  * Created by t_ste on 11/19/2016.
  */
@@ -14,31 +13,51 @@ import cz.msebera.android.httpclient.entity.StringEntity;
 
 public class Web_Rest_API {
 
-
-
-    private static final String BASE_URL = "FMFL";
+    private static final String BASE_URL = "http://138.197.85.203:3003/resume/";
     private static AsyncHttpClient client = new AsyncHttpClient();
 
-    public static void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+    /**
+     *
+     *
+     *
+     */
+    static void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         client.get(getAbsoluteUrl(url), params, responseHandler);
     }
 
-
-    public static void post(String url, StringEntity entity , AsyncHttpResponseHandler responseHandler) {
+    /**
+     *
+     *
+     *
+     */
+    static void post(String url, StringEntity entity , AsyncHttpResponseHandler responseHandler) {
         client.post(null,getAbsoluteUrl(url), entity, "application/json", responseHandler);
     }
 
-
-    public static void delete(String url, AsyncHttpResponseHandler responseHandler) {
+    /**
+     *
+     *
+     *
+     */
+    static void delete(String url, AsyncHttpResponseHandler responseHandler) {
         client.delete(getAbsoluteUrl(url), responseHandler);
     }
 
-    public static void update(String url, StringEntity entity, AsyncHttpResponseHandler responseHandler){
-        client.put(null,getAbsoluteUrl(url), entity, "application/json", responseHandler);
+    /**
+     *
+     *
+     *
+     */
+    static void update(String url, StringEntity entity, AsyncHttpResponseHandler responseHandler){
+        client.put(null, getAbsoluteUrl(url), entity, "application/json", responseHandler);
     }
 
+    /**
+     *
+     *
+     *
+     */
     private static String getAbsoluteUrl(String relativeUrl) {
         return BASE_URL + relativeUrl;
     }
-
 }
