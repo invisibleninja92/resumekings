@@ -8,6 +8,25 @@
     android:layout_height="match_parent"
     android:background="#FFCCCCCC">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/person"
+        android:id="@+id/ResPic"
+        android:visibility="gone" />
+
+    <com.example.t_ste.resumekings.DrawingView
+        android:id="@+id/drawing"
+        android:layout_width="fill_parent"
+        android:layout_marginBottom="3dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="3dp"
+        android:layout_weight="1"
+        android:visibility="visible"
+        android:background="@android:color/transparent"
+        android:layout_height="0dp" />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="50dp"
@@ -44,18 +63,6 @@
 
     </LinearLayout>
 
-    <com.example.t_ste.resumekings.DrawingView
-        android:id="@+id/drawing"
-        android:layout_width="fill_parent"
-        android:layout_marginBottom="3dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="3dp"
-        android:layout_weight="1"
-        android:visibility="visible"
-        android:background="@android:color/transparent"
-        android:layout_height="0dp" />
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -77,7 +84,7 @@
                 android:background="#FF660000"
                 android:contentDescription="@string/paint"
                 android:src="@drawable/paint"
-                android:tag="#FF660000"
+                android:tag="#8F660000"
                 android:id="@+id/maroon" />
 
             <ImageButton

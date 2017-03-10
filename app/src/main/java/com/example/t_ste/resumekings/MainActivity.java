@@ -20,6 +20,11 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+    /**
+     *
+     *
+     *
+     */
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     ArrayList<Applicant_Profile> cachedApplicantProfiles = new ArrayList<>();           // Local cache of applicants to pass to the other fragments
     FragmentManager fm                                   = getSupportFragmentManager(); // Fragment manager that transitions all fragments in the app
@@ -28,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public boolean tabletMode      = false;  // Determined at startup. Don't mess with this
     public boolean addToBackStack  = false;  // Set up TAGs to be allowed or not allowed to add to the backstack
-    public boolean API_Mode        = false;  // Toggle this to true if you want to use the cloud
+    public boolean API_Mode        = true;  // Toggle this to true if you want to use the cloud
     private String username        = null;
     private String password        = null;
 
@@ -94,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 ap.setEmail(Email.get(i));
                 ap.setNotes("We're all OK!");
                 ap.setProfilePictureURL("http://www.freshdesignpedia.com/wp-content/uploads/what-is-cat-s-education/cat-educate-tips-small-katzenbaby.jpg");
-                ap.setResumePictureURL("https://i.ytimg.com/vi/tntOCGkgt98/maxresdefault.jpg");//"https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Resume.pdf/page1-220px-Resume.pdf.jpg");
+                ap.setResumePictureURL("https://i.ytimg.com/vi/tntOCGkgt98/maxresdefault.jpg");
                 ap.setResumeOverlayURL("https://i.ytimg.com/vi/tntOCGkgt98/maxresdefault.jpg");
                 ap.setStars(3);
                 addToCache(ap);
@@ -117,8 +122,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Set the initial fragment in the Container_left in the section_user xml layout
         FragmentTransaction fragTransactionLeft = fm.beginTransaction();
         FragmentTransaction fragTransactionRight = fm.beginTransaction();
-        Fragment startupFragmentLeft;
-        Fragment startupFragmentRight;
+        Fragment startupFragmentLeft = null;
+        Fragment startupFragmentRight = null;
 
         // First determine whether or not the cache is empty. If empty then show create new applicant
         if (cachedApplicantProfiles.size() != 0) {
@@ -127,11 +132,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startupFragmentLeft = new Fragment_View_Applicants();
             fragTransactionLeft.add(R.id.Container_left, startupFragmentLeft, "ViewApplicants");
             fragTransactionLeft.addToBackStack("ViewApplicants");
+
             // Add in support for the tablet view to show the first applicant in the list
             if(tabletMode) {
                 startupFragmentRight = new Fragment_View_Single_Applicant();
                 fragTransactionRight.add(R.id.Container_right, startupFragmentRight, "ViewSingleApplicant");
             }
+
             fragTransactionLeft.commit();
             if(tabletMode) fragTransactionRight.commit();
         }
@@ -147,6 +154,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
         // End App Startup
 
+
         // The drawer on the left side of the home screen
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -161,10 +169,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
             return;
         }
+
         if (fm.getBackStackEntryCount() == 0) {
             this.finish();
         } else {
@@ -299,6 +309,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 case "ViewSingleApplicant":
                     // Initialize the view single applicant fragment
+                    newFragmentLeft = new Fragment_View_Applicants();
                     newFragmentRight = new Fragment_View_Single_Applicant();
                     break;
 

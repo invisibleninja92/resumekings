@@ -4,8 +4,11 @@ import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -64,12 +67,11 @@ public class Fragment_View_Applicant_Resume extends Fragment {
         ap = ((MainActivity)getActivity()).getTempProfile();
 
         drawView = (DrawingView)view.findViewById(R.id.drawing);
-        drawView.setBrushSize(smallBrush);
-        drawView.setTempAP(ap);
+
         drawView.setupDrawing();
 
-
         resumepic = (ImageView) view.findViewById(R.id.ResPic);
+
         overlaypic= (ImageView) view.findViewById(R.id.OvePic);
         if(ap.getResumePictureURL() != null) {
                 new DownloadImageFromInternet(resumepic).execute(ap.getResumePictureURL());
@@ -309,7 +311,7 @@ public class Fragment_View_Applicant_Resume extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         Applicant_Profile temp = new Applicant_Profile();
 
-                        temp.setResumeOverlay(drawView.getResumeBitmap());
+//                        temp.setResumeOverlay(drawView.getResumeBitmap());
                         temp.setID(ap.getID());
                         temp.setUserName(ap.getUserName());
                         temp.setEmail(ap.getEmail());
@@ -321,7 +323,8 @@ public class Fragment_View_Applicant_Resume extends Fragment {
                         temp.setResumePictureURL(ap.getResumePictureURL()); //will be the same
                         temp.setResumeOverlayURL("http://s3.amazonaws.com/testbucketsource11/"+ap.getID()+"ResumeOverlay.png");//we know this will be the url so we can go ahead and set it
                         //temp.setResumeOverlayURL("http://s3.amazonaws.com/testbucketsource11/"+ap.getUserName()+ap.getPhoneNumber()+"ResumeOverlay.png");
-                        if(((MainActivity) getActivity()).API_Mode==true){
+
+                        if(((MainActivity) getActivity()).API_Mode){
                             Call_Web_API CWA = new Call_Web_API();
                             CWA.doInBackground(temp,"Put");
                         }
@@ -396,9 +399,12 @@ public class Fragment_View_Applicant_Resume extends Fragment {
         @TargetApi(Build.VERSION_CODES.M)
         @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
         protected void onPostExecute(Bitmap result) {
-            imageView.setImageBitmap(result);
-            drawView.setBackground(resumepic.getDrawable());
-            drawView.setForeground(overlaypic.getDrawable());
+            try {
+                imageView.setImageBitmap(result);
+                drawView.setBackground(resumepic.getDrawable());
+                drawView.setForeground(overlaypic.getDrawable());
+            } catch (Exception e) {
+            }
         }
     }
 

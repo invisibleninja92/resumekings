@@ -6,7 +6,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.0"
     defaultConfig {
-        applicationId "com.example.t_ste.resumekings"
+        applicationId 'com.example.t_ste.resumekings'
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 1
@@ -19,6 +19,8 @@ android {
         }
     }
     sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
+    productFlavors {
+    }
 }
 
 dependencies {

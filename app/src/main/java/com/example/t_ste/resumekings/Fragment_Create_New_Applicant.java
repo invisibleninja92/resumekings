@@ -57,7 +57,6 @@ public class Fragment_Create_New_Applicant extends Fragment {
     Bitmap ProfilePicBitmap;
     Bitmap ResumePicBitmap;
     Bitmap ResumeOverlayPicBitmap;
-
     // INITIALIZERS //////////
 
 
@@ -84,7 +83,7 @@ public class Fragment_Create_New_Applicant extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(takePictureIntent,0); // 0 specifies the requestCode so the on activity result know what to do
+                startActivityForResult(takePictureIntent, 0); // 0 specifies the requestCode so the on activity result know what to do
             }
         });
 
@@ -172,6 +171,7 @@ public class Fragment_Create_New_Applicant extends Fragment {
             bitmap = (Bitmap) data.getExtras().get("data");
         }
         catch (Exception e) {
+
             e.printStackTrace();
             return;
         }

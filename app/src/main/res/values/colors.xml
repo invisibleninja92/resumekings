@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#e6dd93</color>
+    <color name="colorPrimary">#FCD986</color> // old was e6dd93
     <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#e6dd93</color>
+    <color name="colorAccent">#FCD986</color>
 </resources>
