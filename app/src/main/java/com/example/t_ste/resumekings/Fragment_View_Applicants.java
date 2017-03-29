@@ -11,10 +11,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import static com.example.t_ste.resumekings.R.id.Applicant_ListView;
@@ -47,6 +47,7 @@ public class Fragment_View_Applicants extends Fragment {
 
 
     // INITIALIZERS //////////
+    Applicant_Adapter adapt = null;
     ListView ApplicantCacheList;
     ArrayList<Applicant_Profile> cachedApplicantProfiles;
     EditText searchText;
@@ -69,8 +70,10 @@ public class Fragment_View_Applicants extends Fragment {
         //we need to create an application adapter to create the elements in the list
         if(cachedApplicantProfiles.size() != 0) {
             //
-            final Applicant_Adapter adapt = new Applicant_Adapter(getContext(), cachedApplicantProfiles);
+            adapt = new Applicant_Adapter(getContext(), cachedApplicantProfiles);
             ApplicantCacheList.setAdapter(adapt); // set the adapter of elements to the list view of applicants
+                //TODO this sort works but we need to call it from a button click
+
 
             searchText.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -103,9 +106,10 @@ public class Fragment_View_Applicants extends Fragment {
           //Changed the code above to work with the search function
             }
         });
-        return view; //Return the fragment with all the functionality
-    }
 
+        return view; //Return the fragment with all the functionality
+
+    }
     @Override
     public void onResume() {
         super.onResume();

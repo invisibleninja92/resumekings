@@ -1,23 +1,26 @@
 package com.example.t_ste.resumekings;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.text.InputType;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.RatingBar;
-import android.widget.Toast;
-import java.io.InputStream;
+        import android.content.Intent;
+        import android.graphics.Bitmap;
+        import android.graphics.BitmapFactory;
+        import android.graphics.Paint;
+        import android.net.Uri;
+        import android.os.AsyncTask;
+        import android.os.Bundle;
+        import android.support.v4.app.Fragment;
+        import android.text.InputType;
+        import android.view.KeyEvent;
+        import android.view.LayoutInflater;
+        import android.view.View;
+        import android.view.ViewGroup;
+        import android.widget.Button;
+        import android.widget.EditText;
+        import android.widget.ImageView;
+        import android.widget.RatingBar;
+        import android.widget.Toast;
+        import java.io.InputStream;
+
+        import static android.graphics.Color.BLUE;
 
 
 /**
@@ -91,10 +94,15 @@ public class Fragment_View_Single_Applicant extends Fragment {
         applicantEmail  = (EditText) view.findViewById(R.id.applicantEmail);
         applicantNotes  = (EditText) view.findViewById(R.id.applicantNotes);
 
-        //applicantEmail.setEnabled(false);
-        applicantName.setEnabled(false);
-        applicantNotes.setEnabled(false);
-        //applicantPhone.setEnabled(false);
+        applicantEmail.setFocusable(false);
+        applicantName.setFocusable(false);
+        applicantNotes.setFocusable(false);
+        applicantPhone.setFocusable(false);
+
+        applicantEmail.setTextColor(BLUE);
+        applicantPhone.setTextColor(BLUE);
+        applicantEmail.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+        applicantPhone.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
 
         ResumeImage = (ImageView) view.findViewById(R.id.ResumePicture);
         ProfileImage = (ImageView) view.findViewById(R.id.ProfilePicture);
@@ -113,15 +121,15 @@ public class Fragment_View_Single_Applicant extends Fragment {
         applicantNotes.setBackgroundColor(0);
         applicantPhone.setBackgroundColor(0);
 
-        if(ap.getProfilePictureURL() != null && ((MainActivity)getActivity()).API_Mode) {
+        if(ap.getProfilePictureURL() != null) {
             new DownloadImageFromInternet(ProfileImage).execute(ap.getProfilePictureURL());
         }
 
-        if(ap.getResumePictureURL() != null && ((MainActivity)getActivity()).API_Mode) {
+        if(ap.getResumePictureURL() != null) {
             new DownloadImageFromInternet(ResumeImage).execute(ap.getResumePictureURL());
         }
 
-        if(ap.getResumeOverlayURL() != null && ((MainActivity)getActivity()).API_Mode) {
+        if(ap.getResumeOverlayURL() != null) {
             new DownloadImageFromInternet(ResumeOverlay).execute(ap.getResumeOverlayURL());
         }
 
@@ -158,22 +166,26 @@ public class Fragment_View_Single_Applicant extends Fragment {
                 if(!Update){
                     // Set the background of the Name field as editable and focusable
                     applicantName.setInputType(InputType.TYPE_CLASS_TEXT);
-                    applicantName.setEnabled(true);
+                    applicantName.setFocusable(true);
+                    applicantName.setFocusableInTouchMode(true);
                     applicantName.setBackgroundDrawable(getResources().getDrawable(android.R.drawable.editbox_background));
 
                     // Set the background of the Phone field as editable and focusable
+                    applicantPhone.setFocusable(true);
+                    applicantPhone.setFocusableInTouchMode(true);
                     applicantPhone.setInputType(InputType.TYPE_CLASS_TEXT);
-                    applicantPhone.setEnabled(true);
                     applicantPhone.setBackgroundDrawable(getResources().getDrawable(android.R.drawable.editbox_background));
 
                     // Set the background of the Email field as editable and focusable
+                    applicantEmail.setFocusable(true);
+                    applicantEmail.setFocusableInTouchMode(true);
                     applicantEmail.setInputType(InputType.TYPE_CLASS_TEXT);
-                    applicantEmail.setEnabled(true);
                     applicantEmail.setBackgroundDrawable(getResources().getDrawable(android.R.drawable.editbox_background));
 
                     // Set the background of the Notes field as editable and focusable
                     applicantNotes.setInputType(InputType.TYPE_CLASS_TEXT);
-                    applicantNotes.setEnabled(true);
+                    applicantNotes.setFocusableInTouchMode(true);
+                    applicantNotes.setFocusable(true);
                     applicantNotes.setBackgroundDrawable(getResources().getDrawable(android.R.drawable.editbox_background));
 
                     // Set the rating bar to be changeable
@@ -228,12 +240,14 @@ public class Fragment_View_Single_Applicant extends Fragment {
             @Override
             public void onClick(View view) {
                 if(!Update) {
-                    Intent intent = new Intent(Intent.ACTION_SEND);
-                    intent.setType("message/rfc822");
-                    intent.putExtra(Intent.EXTRA_EMAIL, ap.getEmail());
-                    intent.putExtra(Intent.EXTRA_SUBJECT, "");
-                    intent.putExtra(Intent.EXTRA_TEXT, "");
-                    startActivity(Intent.createChooser(intent, "Send mail..."));
+                    System.out.println("THis: "+ap.getEmail());
+
+                    Intent email = new Intent(Intent.ACTION_SEND);
+                    email.putExtra(Intent.EXTRA_EMAIL, ap.getEmail());
+                    email.putExtra(Intent.EXTRA_SUBJECT, "subject");
+                    email.putExtra(Intent.EXTRA_TEXT, "message");
+                    email.setType("message/rfc822");
+                    startActivity(Intent.createChooser(email, "Choose an Email client :"));
                 }
             }
         });

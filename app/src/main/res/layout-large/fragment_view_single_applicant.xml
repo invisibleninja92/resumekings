@@ -24,14 +24,16 @@
                 android:id="@+id/ProfilePicture"/>
 
             <EditText
+                android:id="@+id/applicantName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/applicantName"
-                android:textSize="36sp"
-                tools:text="name"
-                android:inputType="textPersonName"
+                android:autoText="false"
+                android:background="@android:drawable/editbox_background"
                 android:capitalize="words"
-                android:background="@android:drawable/editbox_background" />
+                android:inputType="textPersonName"
+                android:textSize="36sp"
+                tools:clickable="true"
+                tools:text="name" />
 
             <EditText
                 android:layout_width="match_parent"

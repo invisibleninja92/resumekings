@@ -13,7 +13,9 @@ import cz.msebera.android.httpclient.entity.StringEntity;
 
 public class Web_Rest_API {
 
-    private static final String BASE_URL = "http://138.197.85.203:3003/resume/";
+
+
+    private static final String BASE_URL = "RIP MY LIFE";
     private static AsyncHttpClient client = new AsyncHttpClient();
 
     /**

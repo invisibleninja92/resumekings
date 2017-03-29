@@ -108,13 +108,9 @@ public class Fragment_Create_New_Applicant extends Fragment {
                     Phone.setBackgroundResource(R.drawable.backtext);
                     Phone.setHintTextColor(Color.RED);
                 }
-                else if(isEmpty(Email)){
+                else if(isEmpty(Email)) {
                     Email.setBackgroundResource(R.drawable.backtext);
                     Email.setHintTextColor(Color.RED);
-                }
-                else if(isEmpty(Notes)){
-                    Notes.setBackgroundResource(R.drawable.backtext);
-                    Notes.setHintTextColor(Color.RED);
                 }
                 else{
                 Applicant_Profile ap = new Applicant_Profile();

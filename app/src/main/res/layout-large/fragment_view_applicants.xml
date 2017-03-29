@@ -22,7 +22,6 @@
             android:imeOptions="actionDone"
             android:inputType="text"
             android:fadingEdge="horizontal|vertical" >
-
         </EditText>
 
         <ListView

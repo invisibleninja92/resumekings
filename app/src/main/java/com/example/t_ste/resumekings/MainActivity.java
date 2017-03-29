@@ -18,9 +18,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
-    /**
+import static com.example.t_ste.resumekings.R.id.Container_right;
+
+/**
      *
      *
      *
@@ -33,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public boolean tabletMode      = false;  // Determined at startup. Don't mess with this
     public boolean addToBackStack  = false;  // Set up TAGs to be allowed or not allowed to add to the backstack
-    public boolean API_Mode        = true;  // Toggle this to true if you want to use the cloud
+    public boolean API_Mode        = false;  // Toggle this to true if you want to use the cloud
     private String username        = null;
     private String password        = null;
 
@@ -136,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             // Add in support for the tablet view to show the first applicant in the list
             if(tabletMode) {
                 startupFragmentRight = new Fragment_View_Single_Applicant();
-                fragTransactionRight.add(R.id.Container_right, startupFragmentRight, "ViewSingleApplicant");
+                fragTransactionRight.add(Container_right, startupFragmentRight, "ViewSingleApplicant");
             }
 
             fragTransactionLeft.commit();
@@ -199,15 +202,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_sort_alpha) {
+            Fragment_View_Applicants fragment = (Fragment_View_Applicants) fm.findFragmentById(R.id.Container_left);
+            fragment.adapt.sort(new Comparator<Applicant_Profile>() {
+                @Override
+                public int compare(Applicant_Profile o1, Applicant_Profile o2) {
+                    return o1.getUserName().compareToIgnoreCase(o2.getUserName());
+                }});
+
+        }
+        else if(id == R.id.action_sort_rate){
+            Fragment_View_Applicants fragment = (Fragment_View_Applicants) fm.findFragmentById(R.id.Container_left);
+            fragment.adapt.sort(new Comparator<Applicant_Profile>() {
+                @Override
+                public int compare(Applicant_Profile o1, Applicant_Profile o2) {
+                    if(o1.getStars()>o2.getStars()){
+                        return -1;
+                    }
+                    return 1;
+                }});
         }
         else if (id == R.id.Create_New_Applicant) {
             displayView("CreateNewApplicant");
         }
         return super.onOptionsItemSelected(item);
     }
-
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -298,7 +317,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     // Initialize the create new applicant fragment
                     newFragmentLeft = new Fragment_Create_New_Applicant();
                     // TODO: swap this out to be able to add a resume and also edit with the paint app
-                    transaction2.remove(fm.findFragmentById(R.id.Container_right));
+                    transaction2.remove(fm.findFragmentById(Container_right));
                     break;
 
                 case "ViewApplicants":
@@ -317,6 +336,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     // Initialize the view applicant resume fragment
                     newFragmentLeft = new Fragment_View_Single_Applicant();
                     newFragmentRight = new Fragment_View_Applicant_Resume();
+
+
                     break;
 
                 case "FavoriteApplicants":
@@ -341,7 +362,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             transaction1.replace(R.id.Container_left, newFragmentLeft, TAG).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         }
         if (newFragmentRight != null) {
-            transaction2.replace(R.id.Container_right, newFragmentRight, TAG).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            transaction2.replace(Container_right, newFragmentRight, TAG).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         }
         // Backstack handles whether or not that fragment will reappear if the back button is pressed
         if(addToBackStack) transaction1.addToBackStack(TAG);
