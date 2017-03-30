@@ -8,34 +8,54 @@
     android:scrollbars="vertical"
     app:layout_scrollFlags="scroll">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content">
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@android:color/darker_gray">
 
-        <EditText
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:id="@+id/SearchText"
-            android:orientation="horizontal"
-            android:hint="Search"
-            android:imeOptions="actionDone"
-            android:inputType="text"
-            android:fadingEdge="horizontal|vertical" >
-        </EditText>
+            android:background="@android:color/background_light"
+            android:layout_marginRight="1dp">
 
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/Applicant_ListView"
-            android:dividerHeight="2dp"
-            android:elevation="1dp" />
-    </LinearLayout>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/SearchText"
+                android:orientation="horizontal"
+                android:hint="Search"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:fadingEdge="horizontal|vertical"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:layout_marginBottom="1dp"
+                android:layout_marginTop="1dp">
+            </EditText>
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/Applicant_ListView"
+                android:dividerHeight="2dp"
+                android:elevation="1dp"
+                android:layout_marginBottom="1dp"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:layout_marginTop="1dp" />
+        </LinearLayout>
+    </FrameLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/Container_right">
+        android:id="@+id/Container_right"
+        android:layout_marginBottom="1dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"
+        android:layout_marginTop="1dp">
 
 
     </FrameLayout>

@@ -70,8 +70,8 @@ public class Fragment_View_Applicants extends Fragment {
         //we need to create an application adapter to create the elements in the list
         if(cachedApplicantProfiles.size() != 0) {
             //
-            adapt = new Applicant_Adapter(getContext(), cachedApplicantProfiles);
-            ApplicantCacheList.setAdapter(adapt); // set the adapter of elements to the list view of applicants
+            setAdapt(new Applicant_Adapter(getContext(), cachedApplicantProfiles));
+            ApplicantCacheList.setAdapter(getAdapt()); // set the adapter of elements to the list view of applicants
 
 
             searchText.addTextChangedListener(new TextWatcher() {
@@ -82,7 +82,7 @@ public class Fragment_View_Applicants extends Fragment {
                 @Override
                 public void onTextChanged(CharSequence search_sequence, int start, int before, int count) {
                     // When user changed the Text
-                    adapt.getFilter().filter(search_sequence);
+                    getAdapt().getFilter().filter(search_sequence);
                 }
 
                 @Override
@@ -126,5 +126,13 @@ public class Fragment_View_Applicants extends Fragment {
                 return false;
             }
         });
+    }
+
+    public Applicant_Adapter getAdapt() {
+        return adapt;
+    }
+
+    public void setAdapt(Applicant_Adapter adapt) {
+        this.adapt = adapt;
     }
 }

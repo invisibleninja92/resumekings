@@ -7,125 +7,137 @@
     android:orientation="horizontal"
     android:scrollbars="vertical">
 
-    <ScrollView
+    <FrameLayout
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@android:color/darker_gray">
+        android:layout_height="match_parent"
+        android:background="@android:color/background_dark">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        <ScrollView
+            android:layout_height="match_parent"
+            android:backgroundTint="@android:color/darker_gray"
+            android:layout_width="299dp"
+            android:background="@android:color/background_light">
 
-            <ImageView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/person"
-                android:id="@+id/ProfilePicture"/>
+                android:orientation="vertical"
+                android:background="@android:color/background_light">
 
-            <EditText
-                android:id="@+id/applicantName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autoText="false"
-                android:background="@android:drawable/editbox_background"
-                android:capitalize="words"
-                android:inputType="textPersonName"
-                android:textSize="36sp"
-                tools:clickable="true"
-                tools:text="name" />
+                <ImageView
+                    android:layout_width="match_parent"
+                    app:srcCompat="@drawable/person"
+                    android:id="@+id/ProfilePicture"
+                    android:layout_height="100dp" />
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/applicantEmail"
-                android:textSize="18sp"
-                tools:text="email"
-                android:inputType="textEmailAddress"
-                android:background="@android:drawable/editbox_background" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:id="@+id/applicantPhone"
-                tools:text="phone"
-                android:inputType="phone"
-                android:background="@android:drawable/editbox_background" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/applicantNotes"
-                android:textSize="18sp"
-                tools:text="notes"
-                android:background="@android:drawable/editbox_background" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/applicantName"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/rating"
+                    android:autoText="false"
+                    android:background="@android:drawable/editbox_background"
+                    android:capitalize="words"
+                    android:inputType="textPersonName"
+                    android:textSize="36sp"
+                    tools:clickable="true"
+                    tools:text="name" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/applicantEmail"
                     android:textSize="18sp"
-                    tools:text="Rating"
-                    android:layout_centerVertical="true"
-                    android:paddingLeft="4dp" />
+                    tools:text="email"
+                    android:inputType="textEmailAddress"
+                    android:background="@android:drawable/editbox_background" />
 
-                <RatingBar
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/ratingBar"
-                    android:stepSize="1"
-                    android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@+id/rating"
-                    android:layout_toEndOf="@+id/rating"
-                    android:isIndicator="true" />
+                    android:ems="10"
+                    android:id="@+id/applicantPhone"
+                    tools:text="phone"
+                    android:inputType="phone"
+                    android:background="@android:drawable/editbox_background" />
 
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <Button
-                    android:text="Edit Applicant"
-                    android:layout_width="150dp"
+                <EditText
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/update_applicant"
-                    android:layout_alignParentTop="true"/>
-            </RelativeLayout>
+                    android:id="@+id/applicantNotes"
+                    android:textSize="18sp"
+                    tools:text="notes"
+                    android:background="@android:drawable/editbox_background" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                <Button
-                    android:text="Show Resume"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/show_resume"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rating"
+                        android:textSize="18sp"
+                        tools:text="Rating"
+                        android:layout_centerVertical="true"
+                        android:paddingLeft="4dp" />
 
-                <Button
-                    android:text="Delete"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/delete_applicant"
-                    android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@+id/show_resume"
-                    android:layout_toEndOf="@+id/show_resume" />
+                    <RatingBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ratingBar"
+                        android:stepSize="1"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@+id/rating"
+                        android:layout_toEndOf="@+id/rating"
+                        android:isIndicator="true" />
 
-            </RelativeLayout>
+                </RelativeLayout>
 
-        </LinearLayout>
-    </ScrollView>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <Button
+                        android:text="Edit Applicant"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/update_applicant"
+                        android:layout_alignParentTop="true"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <Button
+                        android:text="Show Resume"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/show_resume"/>
+
+                    <Button
+                        android:text="Delete"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/delete_applicant"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@+id/show_resume"
+                        android:layout_toEndOf="@+id/show_resume" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </FrameLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/Container_right">
+        android:id="@+id/Container_right"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginTop="2dp">
 
         <ImageView
             android:layout_width="match_parent"
@@ -135,7 +147,7 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             app:srcCompat="@android:drawable/picture_frame"
             android:id="@+id/ResumeOverlay"
             android:layout_weight="1"

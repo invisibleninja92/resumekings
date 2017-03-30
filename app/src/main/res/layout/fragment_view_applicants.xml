@@ -25,6 +25,10 @@
         android:layout_height="match_parent"
         android:id="@+id/Applicant_ListView"
         android:dividerHeight="2dp"
-        android:elevation="1dp" />
+        android:elevation="1dp"
+        android:layout_marginBottom="1dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"
+        android:layout_marginTop="1dp" />
 
 </LinearLayout>

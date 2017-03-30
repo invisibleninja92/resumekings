@@ -23,11 +23,7 @@ import java.util.List;
 
 import static com.example.t_ste.resumekings.R.id.Container_right;
 
-/**
-     *
-     *
-     *
-     */
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     ArrayList<Applicant_Profile> cachedApplicantProfiles = new ArrayList<>();           // Local cache of applicants to pass to the other fragments
     FragmentManager fm                                   = getSupportFragmentManager(); // Fragment manager that transitions all fragments in the app
@@ -37,8 +33,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean tabletMode      = false;  // Determined at startup. Don't mess with this
     public boolean addToBackStack  = false;  // Set up TAGs to be allowed or not allowed to add to the backstack
     public boolean API_Mode        = false;  // Toggle this to true if you want to use the cloud
-    private String username        = null;
-    private String password        = null;
 
     //TODO: remove this eventually and make api calls
     public List<String> Names;
@@ -125,12 +119,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Set the initial fragment in the Container_left in the section_user xml layout
         FragmentTransaction fragTransactionLeft = fm.beginTransaction();
         FragmentTransaction fragTransactionRight = fm.beginTransaction();
-        Fragment startupFragmentLeft = null;
-        Fragment startupFragmentRight = null;
+        Fragment startupFragmentLeft;
+        Fragment startupFragmentRight;
 
         // First determine whether or not the cache is empty. If empty then show create new applicant
         if (cachedApplicantProfiles.size() != 0) {
 
+            // Get the first profile saved in the cache locally.
             tempProfile = cachedApplicantProfiles.get(0);
             startupFragmentLeft = new Fragment_View_Applicants();
             fragTransactionLeft.add(R.id.Container_left, startupFragmentLeft, "ViewApplicants");
@@ -142,6 +137,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragTransactionRight.add(Container_right, startupFragmentRight, "ViewSingleApplicant");
             }
 
+            // Commit the first transactions to initialize the first view the user sees
             fragTransactionLeft.commit();
             if(tabletMode) fragTransactionRight.commit();
         }
@@ -168,16 +164,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-
+    // Wait for the back button to be pressed and depending on if the drawer is open then close it,
+    // otherwise pop the first item off of the backstack and show that view.
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
+        // Drawer checking if it needs closed
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
             return;
         }
 
+        // If the backstack count is zero then close the app otherwise show the last item on the backstack
         if (fm.getBackStackEntryCount() == 0) {
             this.finish();
         } else {
@@ -196,32 +195,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+        // This will handle selections in the menu in the top right of the app
+        // When an item is selected in the drop down menu then it will go to create new applicant
+        // or sort the displayed list of applicants by A-Z or rating
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        // Sort by alphabetic order
         if (id == R.id.action_sort_alpha) {
             Fragment_View_Applicants fragment = (Fragment_View_Applicants) fm.findFragmentById(R.id.Container_left);
-            fragment.adapt.sort(new Comparator<Applicant_Profile>() {
+            fragment.getAdapt().sort(new Comparator<Applicant_Profile>() {
                 @Override
-                public int compare(Applicant_Profile o1, Applicant_Profile o2) {
-                    return o1.getUserName().compareToIgnoreCase(o2.getUserName());
+                public int compare(Applicant_Profile applicant_profile_1, Applicant_Profile applicant_profile_2) {
+                    return applicant_profile_1.getUserName().compareToIgnoreCase(applicant_profile_2.getUserName());
                 }});
 
         }
-        else if(id == R.id.action_sort_rate){
+        // Sort by rating from highest to lowest
+        else if(id == R.id.action_sort_rate) {
             Fragment_View_Applicants fragment = (Fragment_View_Applicants) fm.findFragmentById(R.id.Container_left);
-            fragment.adapt.sort(new Comparator<Applicant_Profile>() {
+            fragment.getAdapt().sort(new Comparator<Applicant_Profile> () {
+
                 @Override
-                public int compare(Applicant_Profile o1, Applicant_Profile o2) {
-                    if(o1.getStars()>o2.getStars()){
+                public int compare(Applicant_Profile applicant_profile_1, Applicant_Profile applicant_profile_2) {
+                    if(applicant_profile_1.getStars() > applicant_profile_2.getStars()){
                         return -1;
                     }
                     return 1;
                 }});
         }
+        // The other option in that menu is to create a new applicant profile
         else if (id == R.id.Create_New_Applicant) {
             displayView("CreateNewApplicant");
         }
@@ -275,8 +277,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 case "CreateNewApplicant":
                     // Initialize the create new applicant fragment
                     newFragmentLeft = new Fragment_Create_New_Applicant();
-                    newFragmentRight = new Fragment_View_Applicant_Resume();
-
                     break;
 
                 case "ViewApplicants":
@@ -318,10 +318,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 case "CreateNewApplicant":
                     // Initialize the create new applicant fragment
                     newFragmentLeft = new Fragment_Create_New_Applicant();
-                    // TODO: swap this out to be able to add a resume and also edit with the paint app
-                    newFragmentRight = new Fragment_View_Applicant_Resume();
-
-                    //transaction2.remove(fm.findFragmentById(Container_right));
+                    transaction2.remove(fm.findFragmentById(Container_right));
                     break;
 
                 case "ViewApplicants":
@@ -340,8 +337,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     // Initialize the view applicant resume fragment
                     newFragmentLeft = new Fragment_View_Single_Applicant();
                     newFragmentRight = new Fragment_View_Applicant_Resume();
-
-
                     break;
 
                 case "FavoriteApplicants":
@@ -366,7 +361,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             transaction1.replace(R.id.Container_left, newFragmentLeft, TAG).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         }
         if (newFragmentRight != null) {
-            transaction2.replace(Container_right, newFragmentRight, TAG).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            transaction2.replace(R.id.Container_right, newFragmentRight, TAG).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         }
         // Backstack handles whether or not that fragment will reappear if the back button is pressed
         if(addToBackStack) transaction1.addToBackStack(TAG);
@@ -404,47 +399,64 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return Names;
     }
 
+    // Remove the passed in applicant profile from the cache
     public void removeFromCache(Applicant_Profile ap) {
         cachedApplicantProfiles.remove(ap);
+        // TODO: does this need an api call to remove it from the server?
     }
 
+    // Set whether or not the fragment calling this should be allowed to add the fragment to the backstack
     public void setAddToBackStack(boolean input) {
         addToBackStack = input;
     }
 
+
+    // This determines whether or not the new applicant profile passed in needs to be updated in the
+    // cache of other applicant profiles. It will append the different version on to the bottom of
+    // the cache list
     public void updateCache(Applicant_Profile old, Applicant_Profile updated) {
         int i = cachedApplicantProfiles.indexOf(old);
 
+        // Check the applicant's name first and see if it is different
         if(!(cachedApplicantProfiles.get(i).getUserName()).equals(updated.getUserName()) && updated.getUserName() != null)
             cachedApplicantProfiles.get(i).setUserName(updated.getUserName());
         else cachedApplicantProfiles.get(i).setUserName(old.getUserName());
 
+        // Check the email and see if it is different
         if(!(cachedApplicantProfiles.get(i).getEmail()).equals(updated.getEmail()) && updated.getEmail() != null)
             cachedApplicantProfiles.get(i).setEmail(updated.getEmail());
         else cachedApplicantProfiles.get(i).setEmail(old.getEmail());
 
+        // Check the phone number and see if it is different
         if(!(cachedApplicantProfiles.get(i).getPhoneNumber()).equals(updated.getPhoneNumber()) && updated.getPhoneNumber() != null)
             cachedApplicantProfiles.get(i).setPhoneNumber(updated.getPhoneNumber());
         else cachedApplicantProfiles.get(i).setPhoneNumber(old.getPhoneNumber());
 
+        // Check if the notes have changed
         if(!(cachedApplicantProfiles.get(i).getNotes()).equals(updated.getNotes()) && updated.getNotes() != null)
             cachedApplicantProfiles.get(i).setNotes(updated.getNotes());
         else cachedApplicantProfiles.get(i).setNotes(old.getNotes());
 
+        // Check if the rating is different
         if(!(cachedApplicantProfiles.get(i).getStars() == updated.getStars()))
             cachedApplicantProfiles.get(i).setStars(updated.getStars());
         else cachedApplicantProfiles.get(i).setStars(old.getStars());
 
+        // Swap the resume picture and profile picture links over to the new applicant profile version
         cachedApplicantProfiles.get(i).setResumePicture(old.getResumePicture());
         cachedApplicantProfiles.get(i).setProfilePicture(old.getProfilePicture());
 
     }
 
+    // Grab the cache from the server and save it locally to display to the user
     public void getCache() {
-        Applicant_Profile dummyProfile=new Applicant_Profile(); //need this to call the switch function its dumb I know
+        Applicant_Profile dummyProfile = new Applicant_Profile(); //need this to call the switch function its dumb I know
+        // Do the GET request in the background
         cachedApplicantProfiles = CWA.doInBackground(dummyProfile,"Get");
     }
 
+    // Grab the device size from the OS and determine whether or not the tablet view or phone view
+    // should be displayed.
     public void get_device_size() {
         DisplayMetrics metrics = new DisplayMetrics();
         this.getWindowManager().getDefaultDisplay().getMetrics(metrics);
@@ -459,7 +471,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     public void setUserandPass(String user, String hashedPass){
-        username = user;
-        password = hashedPass;
+        String username = user;
+        String password = hashedPass;
     }
 }
