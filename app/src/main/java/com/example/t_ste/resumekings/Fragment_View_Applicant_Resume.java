@@ -64,22 +64,22 @@ public class Fragment_View_Applicant_Resume extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_view_applicant_resume, container, false); //Creates the view(Fragment)
         ((MainActivity)getActivity()).setAddToBackStack(false);
-        ap = ((MainActivity)getActivity()).getTempProfile();
-
-        drawView = (DrawingView)view.findViewById(R.id.drawing);
-
+        //if WE ARE NOT IN CREATE APPLICANT THEN WE NEED TO DOWNLOAD THE PICTURES OF THE APPLICANT WE ARE VIEWING.
+        drawView = (DrawingView) view.findViewById(R.id.drawing);
         drawView.setupDrawing();
 
-        resumepic = (ImageView) view.findViewById(R.id.ResPic);
+        if(!((MainActivity) getActivity()).fm.findFragmentById(R.id.Container_left).toString().contains("Fragment_Create_New_Applicant")) {
+            ap = ((MainActivity)getActivity()).getTempProfile();
 
-        overlaypic= (ImageView) view.findViewById(R.id.OvePic);
-        if(ap.getResumePictureURL() != null) {
+            resumepic = (ImageView) view.findViewById(R.id.ResPic);
+            overlaypic = (ImageView) view.findViewById(R.id.OvePic);
+            if (ap.getResumePictureURL() != null) {
                 new DownloadImageFromInternet(resumepic).execute(ap.getResumePictureURL());
+            }
+            if (ap.getResumeOverlayURL() != null) {
+                new DownloadImageFromInternet(overlaypic).execute(ap.getResumeOverlayURL());
+            }
         }
-        if(ap.getResumeOverlayURL() != null) {
-            new DownloadImageFromInternet(overlaypic).execute(ap.getResumeOverlayURL());
-        }
-
         ImageButton drawButton  = (ImageButton) view.findViewById(R.id.drawButton);
         ImageButton eraseButton = (ImageButton) view.findViewById(R.id.eraseButton);
         ImageButton newButton   = (ImageButton) view.findViewById(R.id.newDrawing);
@@ -311,7 +311,7 @@ public class Fragment_View_Applicant_Resume extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         Applicant_Profile temp = new Applicant_Profile();
 
-//                        temp.setResumeOverlay(drawView.getResumeBitmap());
+                        temp.setResumeOverlay(drawView.getResumeBitmap());
                         temp.setID(ap.getID());
                         temp.setUserName(ap.getUserName());
                         temp.setEmail(ap.getEmail());
@@ -322,7 +322,6 @@ public class Fragment_View_Applicant_Resume extends Fragment {
                         temp.setProfilePictureURL(ap.getProfilePictureURL());//will be the same
                         temp.setResumePictureURL(ap.getResumePictureURL()); //will be the same
                         temp.setResumeOverlayURL("http://s3.amazonaws.com/testbucketsource11/"+ap.getID()+"ResumeOverlay.png");//we know this will be the url so we can go ahead and set it
-                        //temp.setResumeOverlayURL("http://s3.amazonaws.com/testbucketsource11/"+ap.getUserName()+ap.getPhoneNumber()+"ResumeOverlay.png");
 
                         if(((MainActivity) getActivity()).API_Mode){
                             Call_Web_API CWA = new Call_Web_API();

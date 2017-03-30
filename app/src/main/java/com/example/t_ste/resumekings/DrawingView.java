@@ -39,8 +39,7 @@ public class DrawingView extends View{
     //erase on or off
     private boolean erase = false;
 
-    public ImageView ResumeImage;// = (ImageView) findViewById(R.id.ResPic);
-    BitmapDrawable drawable;
+
 
     public DrawingView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -61,8 +60,7 @@ public class DrawingView extends View{
         drawPaint.setStrokeCap(Paint.Cap.ROUND);
         canvasPaint = new Paint(Paint.DITHER_FLAG);
 
-//        new DrawingView.DownloadImageFromInternet(ResumeImage).execute(tempAP.getResumePictureURL());
-//        drawable = (BitmapDrawable) ResumeImage.getDrawable();
+
     }
 
     @Override
@@ -135,14 +133,12 @@ public class DrawingView extends View{
         drawCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
         invalidate();
     }
-//
-//    public Bitmap getResumeBitmap() {
-//        return resumeBitmap;
-//    }
 
-//    public void setTempAP(Applicant_Profile ap) {
-//        tempAP = ap;
-//    }
+    public Bitmap getResumeBitmap() {
+        return drawingBitmap;
+    }
+
+
 
     private class DownloadImageFromInternet extends AsyncTask<String, Void, Bitmap> {
         ImageView imageView;

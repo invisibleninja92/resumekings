@@ -275,6 +275,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 case "CreateNewApplicant":
                     // Initialize the create new applicant fragment
                     newFragmentLeft = new Fragment_Create_New_Applicant();
+                    newFragmentRight = new Fragment_View_Applicant_Resume();
+
                     break;
 
                 case "ViewApplicants":
@@ -317,7 +319,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     // Initialize the create new applicant fragment
                     newFragmentLeft = new Fragment_Create_New_Applicant();
                     // TODO: swap this out to be able to add a resume and also edit with the paint app
-                    transaction2.remove(fm.findFragmentById(Container_right));
+                    newFragmentRight = new Fragment_View_Applicant_Resume();
+
+                    //transaction2.remove(fm.findFragmentById(Container_right));
                     break;
 
                 case "ViewApplicants":

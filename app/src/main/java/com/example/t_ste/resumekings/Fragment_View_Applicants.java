@@ -72,7 +72,6 @@ public class Fragment_View_Applicants extends Fragment {
             //
             adapt = new Applicant_Adapter(getContext(), cachedApplicantProfiles);
             ApplicantCacheList.setAdapter(adapt); // set the adapter of elements to the list view of applicants
-                //TODO this sort works but we need to call it from a button click
 
 
             searchText.addTextChangedListener(new TextWatcher() {

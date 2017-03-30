@@ -251,21 +251,6 @@ public class Fragment_View_Single_Applicant extends Fragment {
                 }
             }
         });
-//        ProfileImage.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v) {
-//                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                startActivityForResult(takePictureIntent,0); // 0 specifies the requestCode so the on activity result know what to do
-//            }
-//        });
-//
-//        ResumeImage.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v) {
-//                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                startActivityForResult(takePictureIntent, 1);
-//            }
-//        });
         // Inflate the layout for this fragment
         return view;
     }

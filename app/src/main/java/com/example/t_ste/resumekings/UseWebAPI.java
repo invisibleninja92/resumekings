@@ -81,10 +81,10 @@ public class UseWebAPI {
                             AP.setPhoneNumber(Applicant.getString("Number"));
                             AP.setNotes(Applicant.getString("Notes"));
                             AP.setStars(Integer.parseInt(Applicant.getString("Rating")));
-                            AP.setProfilePictureURL(Applicant.getString("Profile"));
-                            AP.setResumePictureURL(Applicant.getString("Resume"));
-                            AP.setResumeOverlayURL(Applicant.getString("ResumeOverlay"));
                             AP.setID(Applicant.getString("Id"));
+                            AP.setResumePictureURL("http://s3.amazonaws.com/testbucketsource11/"+Applicant.getString("Id")+"Resume.png");
+                            AP.setProfilePictureURL("http://s3.amazonaws.com/testbucketsource11/"+Applicant.getString("Id")+"Profile.png");
+                            AP.setResumeOverlayURL("http://s3.amazonaws.com/testbucketsource11/"+Applicant.getString("Id")+"ResumeOverlay.png");
                             cachedApplicantProfiles.add(AP);
 
                         } catch (JSONException e) {
