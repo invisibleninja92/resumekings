@@ -15,9 +15,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginLeft="1dp"
-            android:layout_marginRight="1dp"
-            android:layout_marginTop="1dp">
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp">
 
             <ImageView
                 android:layout_width="match_parent"
@@ -87,7 +86,8 @@
 
             </RelativeLayout>
 
-            <RelativeLayout
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -97,17 +97,12 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/update_applicant"
                     android:layout_alignParentTop="true"/>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
 
                 <Button
                     android:text="Show Resume"
-                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/show_resume" />
+                    android:id="@+id/show_resume"
+                    android:layout_width="150dp" />
 
                 <Button
                     android:text="Delete"
@@ -117,10 +112,10 @@
                     android:layout_alignParentTop="true"
                     android:layout_toRightOf="@+id/show_resume"
                     android:layout_toEndOf="@+id/show_resume" />
-            </RelativeLayout>
-
-
             </LinearLayout>
+
+
+        </LinearLayout>
     </ScrollView>
 
     <ImageView

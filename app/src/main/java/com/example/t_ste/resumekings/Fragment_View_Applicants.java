@@ -63,7 +63,6 @@ public class Fragment_View_Applicants extends Fragment {
 
         ApplicantCacheList = (ListView)view.findViewById(Applicant_ListView);
         cachedApplicantProfiles = ((MainActivity)getActivity()).getCachedApplicantProfiles(); //Local cache from Main Activity
-        Names = ((MainActivity)getActivity()).getNameList();
         searchText = (EditText)view.findViewById(SearchText);
         ((MainActivity)getActivity()).setAddToBackStack(true);
 
@@ -71,8 +70,7 @@ public class Fragment_View_Applicants extends Fragment {
         if(cachedApplicantProfiles.size() != 0) {
             //
             setAdapt(new Applicant_Adapter(getContext(), cachedApplicantProfiles));
-            ApplicantCacheList.setAdapter(getAdapt()); // set the adapter of elements to the list view of applicants
-
+            ApplicantCacheList.setAdapter(adapt); // set the adapter of elements to the list view of applicants
 
             searchText.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -88,7 +86,6 @@ public class Fragment_View_Applicants extends Fragment {
                 @Override
                 public void afterTextChanged(Editable editable) {
                 }
-
             });
         }
         else {Toast.makeText(getContext(), "create an applicant!", Toast.LENGTH_SHORT).show();
@@ -96,19 +93,17 @@ public class Fragment_View_Applicants extends Fragment {
             ((MainActivity)getActivity()).displayView("CreateNewApplicant");
         }
 
-
         //When the ListView Element is clicked we need to change the images
         ApplicantCacheList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               ((MainActivity)getActivity()).setAddToBackStack(false);
-               ((MainActivity)getActivity()).viewApplicant((Applicant_Profile) ApplicantCacheList.getAdapter().getItem(position));
-          //Changed the code above to work with the search function
+                ((MainActivity)getActivity()).setAddToBackStack(false);
+                Applicant_Profile temp = (Applicant_Profile)ApplicantCacheList.getAdapter().getItem(position);
+                ((MainActivity)getActivity()).viewApplicant(temp);
             }
         });
-
         return view; //Return the fragment with all the functionality
-
     }
+
     @Override
     public void onResume() {
         super.onResume();

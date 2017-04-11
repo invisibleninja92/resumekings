@@ -16,7 +16,8 @@
         android:hint="Search"
         android:imeOptions="actionDone"
         android:inputType="text"
-        android:fadingEdge="horizontal|vertical" >
+        android:fadingEdge="horizontal|vertical"
+        android:background="@android:drawable/editbox_background">
 
     </EditText>
 

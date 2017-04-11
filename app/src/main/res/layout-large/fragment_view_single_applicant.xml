@@ -10,11 +10,10 @@
     <FrameLayout
         android:layout_width="300dp"
         android:layout_height="match_parent"
-        android:background="@android:color/background_dark">
+        android:background="@android:color/darker_gray">
 
         <ScrollView
             android:layout_height="match_parent"
-            android:backgroundTint="@android:color/darker_gray"
             android:layout_width="299dp"
             android:background="@android:color/background_light">
 
@@ -22,7 +21,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@android:color/background_light">
+                android:background="@android:color/background_light"
+                android:layout_marginRight="2dp"
+                android:paddingLeft="2dp">
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -70,7 +71,9 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:paddingLeft="2dp"
+                    android:paddingRight="2dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -93,21 +96,26 @@
 
                 </RelativeLayout>
 
-                <RelativeLayout
+                <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
                     <Button
                         android:text="Edit Applicant"
-                        android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:id="@+id/update_applicant"
-                        android:layout_alignParentTop="true"/>
-                </RelativeLayout>
+                        android:layout_alignParentTop="true"
+                        android:layout_width="150dp" />
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    <Button
+                        android:text="Delete"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/delete_applicant"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@+id/show_resume"
+                        android:layout_toEndOf="@+id/show_resume"
+                        android:layout_width="150dp" />
 
                     <Button
                         android:text="Show Resume"
@@ -115,16 +123,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/show_resume"/>
 
-                    <Button
-                        android:text="Delete"
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/delete_applicant"
-                        android:layout_alignParentTop="true"
-                        android:layout_toRightOf="@+id/show_resume"
-                        android:layout_toEndOf="@+id/show_resume" />
-
-                </RelativeLayout>
+                </LinearLayout>
 
             </LinearLayout>
         </ScrollView>
