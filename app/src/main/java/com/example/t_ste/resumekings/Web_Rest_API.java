@@ -15,22 +15,27 @@ public class Web_Rest_API {
 
 
 
-    private static final String BASE_URL = "RIP MY LIFE";
+    private static final String BASE_URL = "LOL";
     private static AsyncHttpClient client = new AsyncHttpClient();
 
     /**
+     * This is written to get all the applicants that are saved in the database
+     * and to place them in the cache.
      *
-     *
-     *
+     * @param url IP:port/Resume/
+     * @param params
+     * @param responseHandler
      */
     static void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         client.get(getAbsoluteUrl(url), params, responseHandler);
     }
 
     /**
+     * This is called when we are creating a new applicant.
      *
-     *
-     *
+     * @param url IP:Port/Resume/
+     * @param entity Contains JSON of the Applicant_Profile with Images
+     * @param responseHandler
      */
     static void post(String url, StringEntity entity , AsyncHttpResponseHandler responseHandler) {
         client.post(null,getAbsoluteUrl(url), entity, "application/json", responseHandler);
@@ -38,8 +43,10 @@ public class Web_Rest_API {
 
     /**
      *
+     *  This will send the URL to the API telling it to delete a specific ID.
      *
-     *
+     * @param url IP:Port/Resume/ID
+     * @param responseHandler
      */
     static void delete(String url, AsyncHttpResponseHandler responseHandler) {
         client.delete(getAbsoluteUrl(url), responseHandler);
@@ -47,8 +54,11 @@ public class Web_Rest_API {
 
     /**
      *
+     *  Update gives a StringEntity of the Applicant_Profile information and calls the update URL
      *
-     *
+     * @param url IP:Port/Resume/ID
+     * @param entity Applicant_Profile JSON object with updated info
+     * @param responseHandler
      */
     static void update(String url, StringEntity entity, AsyncHttpResponseHandler responseHandler){
         client.put(null, getAbsoluteUrl(url), entity, "application/json", responseHandler);
@@ -56,8 +66,11 @@ public class Web_Rest_API {
 
     /**
      *
+     * Returns the Base URL which is IP:Port/Resume/Resume plus the relativeURL which is the ID if
+     * one is specified
      *
-     *
+     * @param relativeUrl
+     * @return
      */
     private static String getAbsoluteUrl(String relativeUrl) {
         return BASE_URL + relativeUrl;

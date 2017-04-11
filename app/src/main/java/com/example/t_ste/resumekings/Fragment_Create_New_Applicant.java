@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 
+import static android.widget.ImageView.ScaleType.FIT_CENTER;
 
 
 /**
@@ -183,9 +184,12 @@ public class Fragment_Create_New_Applicant extends Fragment {
             case 1: //if the requestCode was 1 the user took a Resume picture
                 ResumePic.setImageBitmap(bitmap);
                 ResumePicBitmap = bitmap;
+                ResumePic.setScaleType(FIT_CENTER);
 
                 Fragment_View_Applicant_Resume fragment = (Fragment_View_Applicant_Resume) ((MainActivity)getActivity()).fm.findFragmentById(R.id.Container_right);
                 fragment.drawView.setBackground(ResumePic.getDrawable());
+
+
                 //Checking the widths and hieghts of the image and of the drawing view
                 //Attempted to do onSizeChange but I dont think that that is the correct function.
                 //TODO figure out the resize
@@ -194,7 +198,7 @@ public class Fragment_Create_New_Applicant extends Fragment {
                 System.out.println("W2: "+ fragment.drawView.getWidth());
                 System.out.println("H2: "+ fragment.drawView.getHeight());
 
-                fragment.drawView.onSizeChanged(ResumePic.getWidth(),ResumePic.getHeight(),fragment.drawView.getWidth(),fragment.drawView.getHeight());
+                //fragment.drawView.onSizeChanged(ResumePic.getWidth(),ResumePic.getHeight(),fragment.drawView.getWidth(),fragment.drawView.getHeight());
 
                 break;
         }

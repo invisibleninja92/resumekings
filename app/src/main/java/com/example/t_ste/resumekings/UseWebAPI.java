@@ -24,7 +24,12 @@ import cz.msebera.android.httpclient.entity.StringEntity;
 
 public class UseWebAPI {
 
-
+    /**
+     *
+     * @param AP The Applicant_Profile created via the form
+     * @throws JSONException
+     * @throws IOException
+     */
     public void PostNewResume(final Applicant_Profile AP) throws JSONException, IOException {
         JSONObject JO= new JSONObject();
         StringEntity entity = null;

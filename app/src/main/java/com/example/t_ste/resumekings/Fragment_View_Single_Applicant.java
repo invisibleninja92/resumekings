@@ -8,6 +8,7 @@ package com.example.t_ste.resumekings;
         import android.os.AsyncTask;
         import android.os.Bundle;
         import android.support.v4.app.Fragment;
+        import android.support.v4.app.FragmentTransaction;
         import android.text.InputType;
         import android.view.KeyEvent;
         import android.view.LayoutInflater;
@@ -20,6 +21,8 @@ package com.example.t_ste.resumekings;
         import android.widget.Toast;
         import java.io.InputStream;
 
+        import static android.content.ContentValues.TAG;
+        import static android.graphics.Color.BLACK;
         import static android.graphics.Color.BLUE;
 
 
@@ -142,16 +145,24 @@ public class Fragment_View_Single_Applicant extends Fragment {
         deleteApplicant.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View V){
-                ((MainActivity)getActivity()).removeFromCache(ap);
 
                 if (((MainActivity)getActivity()).API_Mode) {
                     CWA.doInBackground(ap, "Delete"); //Passes the SQL ID and calls the "Delete function
                 }
+                Fragment_View_Applicants fragment = (Fragment_View_Applicants) ((MainActivity)getActivity()).fm.findFragmentById(R.id.Container_left);
 
-                if(((MainActivity)getActivity()).cachedApplicantProfiles.size() != 0) {
+                if(fragment.adapt.mOriginalValues != null){ //Means that we have performed a search and we need the original values
+
+                    ((MainActivity) getActivity()).viewApplicant(fragment.adapt.mOriginalValues.get(0));
+                    ((MainActivity) getActivity()).cachedApplicantProfiles=fragment.adapt.mOriginalValues;
+                    ((MainActivity)getActivity()).removeFromCache(ap);//TODO not removing
+                    ((MainActivity) getActivity()).displayView("ViewSingleApplicantWithSearch");
+
+
+                }else if(((MainActivity)getActivity()).cachedApplicantProfiles.size() != 0){
+                    ((MainActivity)getActivity()).removeFromCache(ap);
                     ((MainActivity) getActivity()).viewApplicant(((MainActivity) getActivity()).cachedApplicantProfiles.get(0));
                 }
-
                 else {
                     Toast.makeText(getContext(), "create an applicant!", Toast.LENGTH_SHORT).show();
                     ((MainActivity) getActivity()).setAddToBackStack(false);
@@ -172,12 +183,16 @@ public class Fragment_View_Single_Applicant extends Fragment {
 
                     // Set the background of the Phone field as editable and focusable
                     applicantPhone.setFocusable(true);
+                    applicantPhone.setTextColor(BLACK);
+                    applicantPhone.setPaintFlags(applicantPhone.getPaintFlags()&(~Paint.UNDERLINE_TEXT_FLAG));
                     applicantPhone.setFocusableInTouchMode(true);
                     applicantPhone.setInputType(InputType.TYPE_CLASS_TEXT);
                     applicantPhone.setBackgroundDrawable(getResources().getDrawable(android.R.drawable.editbox_background));
 
                     // Set the background of the Email field as editable and focusable
                     applicantEmail.setFocusable(true);
+                    applicantEmail.setTextColor(BLACK);
+                    applicantEmail.setPaintFlags(applicantEmail.getPaintFlags()&(~Paint.UNDERLINE_TEXT_FLAG));
                     applicantEmail.setFocusableInTouchMode(true);
                     applicantEmail.setInputType(InputType.TYPE_CLASS_TEXT);
                     applicantEmail.setBackgroundDrawable(getResources().getDrawable(android.R.drawable.editbox_background));
@@ -211,7 +226,7 @@ public class Fragment_View_Single_Applicant extends Fragment {
                     ((MainActivity)getActivity()).updateCache(ap, temp);
                     ((MainActivity)getActivity()).setAddToBackStack(false);
                     ((MainActivity)getActivity()).viewApplicant(temp);
-                    CWA.doInBackground(temp,"Put"); //Updates the applicant in the web api
+                     CWA.doInBackground(temp,"Put"); //Updates the applicant in the web api
                 }
             }
         });

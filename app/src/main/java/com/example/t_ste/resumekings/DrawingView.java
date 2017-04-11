@@ -60,7 +60,6 @@ public class DrawingView extends View{
         drawPaint.setStrokeCap(Paint.Cap.ROUND);
         canvasPaint = new Paint(Paint.DITHER_FLAG);
 
-
     }
 
     @Override
@@ -138,27 +137,4 @@ public class DrawingView extends View{
         return drawingBitmap;
     }
 
-
-
-    private class DownloadImageFromInternet extends AsyncTask<String, Void, Bitmap> {
-        ImageView imageView;
-
-        public DownloadImageFromInternet(ImageView imageView) {
-            this.imageView = imageView;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String imageURL = urls[0];
-            Bitmap bimage = null;
-            try {
-                InputStream in = new java.net.URL(imageURL).openStream();
-                bimage = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-            }
-            return bimage;
-        }
-        protected void onPostExecute(Bitmap result) {
-            imageView.setImageBitmap(result);
-        }
-    }
 }

@@ -22,8 +22,8 @@ import java.util.List;
  */
 
 public class Applicant_Adapter extends ArrayAdapter<Applicant_Profile> implements Filterable {
-    List<Applicant_Profile> arrayList;
-    List<Applicant_Profile> mOriginalValues; // Original Values
+    ArrayList<Applicant_Profile> arrayList;
+    ArrayList<Applicant_Profile> mOriginalValues = null; // Original Values
     Context AboveContexts;
 
     public Applicant_Adapter(Context context, ArrayList<Applicant_Profile> arrayList){
