@@ -334,7 +334,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     newFragmentRight = new Fragment_View_Single_Applicant();
                     break;
 
-                case "ViewSingleApplicant":
+                case "ViewSingleApplicantWithSearch":
                     // Initialize the view single applicant fragment
                     Fragment_View_Applicants fragment = (Fragment_View_Applicants) fm.findFragmentById(R.id.Container_left);
                     if(fragment.adapt.mOriginalValues == null){ //We have not searched so its ok to update left without updating cache
@@ -343,7 +343,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     newFragmentRight = new Fragment_View_Single_Applicant();
                     break;
 
-                case "ViewSingleApplicantWithSearch":
+                case "ViewSingleApplicant":
                     newFragmentLeft = new Fragment_View_Applicants();
                     newFragmentRight = new Fragment_View_Single_Applicant();
                     break;

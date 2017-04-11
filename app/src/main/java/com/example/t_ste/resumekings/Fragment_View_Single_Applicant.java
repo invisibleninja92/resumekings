@@ -156,7 +156,7 @@ public class Fragment_View_Single_Applicant extends Fragment {
                     ((MainActivity) getActivity()).viewApplicant(fragment.adapt.mOriginalValues.get(0));
                     ((MainActivity) getActivity()).cachedApplicantProfiles=fragment.adapt.mOriginalValues;
                     ((MainActivity)getActivity()).removeFromCache(ap);//TODO not removing
-                    ((MainActivity) getActivity()).displayView("ViewSingleApplicantWithSearch");
+                    ((MainActivity) getActivity()).displayView("ViewSingleApplicant");
 
 
                 }else if(((MainActivity)getActivity()).cachedApplicantProfiles.size() != 0){
