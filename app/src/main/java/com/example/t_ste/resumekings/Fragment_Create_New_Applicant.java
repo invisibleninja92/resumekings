@@ -60,6 +60,7 @@ public class Fragment_Create_New_Applicant extends Fragment {
     Bitmap ProfilePicBitmap;
     Bitmap ResumePicBitmap;
     Bitmap ResumeOverlayPicBitmap;
+    Fragment_View_Applicant_Resume drawFragment;
     // INITIALIZERS //////////
 
 
@@ -74,7 +75,6 @@ public class Fragment_Create_New_Applicant extends Fragment {
         ProfilePic = (ImageView)view.findViewById(R.id.EditProfilePic);
         ResumePic = (ImageView)view.findViewById(R.id.EditResumePic);
         //TODO: add this to the xml
-        //ResumeOverlayPic = (ImageView)view.findViewById(R.id.EditResumeOverlay);
         SaveButton = (Button) view.findViewById(R.id.saveButton);
         Name = (EditText)view.findViewById(R.id.EditName);
         Email = (EditText)view.findViewById(R.id.EditEmail);
@@ -124,7 +124,7 @@ public class Fragment_Create_New_Applicant extends Fragment {
                 ap.setStars((int) RatingBar.getRating());
                 ap.setProfilePicture(ProfilePicBitmap);
                 ap.setResumePicture(ResumePicBitmap);
-                // ap.setResumeOverlay(ResumeOverlayBitmap);
+                    ap.setResumeOverlay(drawFragment.drawView.getResumeBitmap());
 
                 if(((MainActivity) getActivity()).API_Mode) {
                     Call_Web_API CWA = new Call_Web_API();
@@ -165,6 +165,7 @@ public class Fragment_Create_New_Applicant extends Fragment {
     // handles the camera process
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        drawFragment = (Fragment_View_Applicant_Resume) ((MainActivity)getActivity()).fm.findFragmentById(R.id.Container_right);
 
         super.onActivityResult(requestCode, resultCode, data);
         try {
@@ -176,6 +177,7 @@ public class Fragment_Create_New_Applicant extends Fragment {
             return;
         }
         switch(requestCode){
+
             case 0: //if the requestCode was 0 the user took a profile picture
                 ProfilePic.setImageBitmap(bitmap);
                 ProfilePicBitmap = bitmap;
@@ -186,8 +188,7 @@ public class Fragment_Create_New_Applicant extends Fragment {
                 ResumePicBitmap = bitmap;
                 ResumePic.setScaleType(FIT_CENTER);
 
-                Fragment_View_Applicant_Resume fragment = (Fragment_View_Applicant_Resume) ((MainActivity)getActivity()).fm.findFragmentById(R.id.Container_right);
-                fragment.drawView.setBackground(ResumePic.getDrawable());
+                drawFragment.drawView.setBackground(ResumePic.getDrawable());
 
 
                 //Checking the widths and hieghts of the image and of the drawing view
@@ -195,8 +196,8 @@ public class Fragment_Create_New_Applicant extends Fragment {
                 //TODO figure out the resize
                 System.out.println("W: "+ ResumePic.getWidth());
                 System.out.println("H: "+ ResumePic.getHeight());
-                System.out.println("W2: "+ fragment.drawView.getWidth());
-                System.out.println("H2: "+ fragment.drawView.getHeight());
+                System.out.println("W2: "+ drawFragment.drawView.getWidth());
+                System.out.println("H2: "+ drawFragment.drawView.getHeight());
 
                 //fragment.drawView.onSizeChanged(ResumePic.getWidth(),ResumePic.getHeight(),fragment.drawView.getWidth(),fragment.drawView.getHeight());
 

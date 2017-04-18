@@ -39,6 +39,7 @@ public class UseWebAPI {
         JO.put("Notes",AP.getNotes());
         JO.put("Resume", BitMapToString(AP.getResumePicture()));
         JO.put("Profile", BitMapToString(AP.getProfilePicture()));
+        JO.put("ResumeOverlay",BitMapToString(AP.getResumeOverlay()));
         JO.put("Rating",AP.getStars());
 
       try {
