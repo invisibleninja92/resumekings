@@ -329,7 +329,7 @@ public class Fragment_View_Applicant_Resume extends Fragment {
                         }
                         ((MainActivity)getActivity()).updateCache(ap, temp);
                         ((MainActivity)getActivity()).setAddToBackStack(false);
-                        ((MainActivity)getActivity()).viewApplicant(temp);
+                        ((MainActivity)getActivity()).viewApplicantResumeSave(temp);
                     }
                 });
                 newDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
