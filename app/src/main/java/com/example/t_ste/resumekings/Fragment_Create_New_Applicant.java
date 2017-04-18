@@ -135,7 +135,7 @@ public class Fragment_Create_New_Applicant extends Fragment {
                 // call the setTaskListFunction then call the displayView to go back to the main screen.
                 ((MainActivity)getActivity()).addToCache(ap);
                 ((MainActivity)getActivity()).setAddToBackStack(false);
-                ((MainActivity)getActivity()).viewApplicant(ap);}
+                ((MainActivity)getActivity()).viewApplicantResumeSave(ap);}
             }
         });
         return view; // This returns the view(Fragment) with all the initializers
