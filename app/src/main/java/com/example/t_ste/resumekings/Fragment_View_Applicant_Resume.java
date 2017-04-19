@@ -301,7 +301,7 @@ public class Fragment_View_Applicant_Resume extends Fragment {
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) { //TODO we NEED to remove the save button from the create applicant screen
                 AlertDialog.Builder newDialog = new AlertDialog.Builder(getContext());
                 newDialog.setTitle("Save Drawing");
                 newDialog.setMessage("Save the current drawing?");

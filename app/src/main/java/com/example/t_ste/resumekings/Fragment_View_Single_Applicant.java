@@ -72,7 +72,7 @@ public class Fragment_View_Single_Applicant extends Fragment {
     Bitmap ResumePicBitmap;
     ImageView ResumeOverlay;
     final Call_Web_API CWA = new Call_Web_API();
-    Fragment_View_Applicants searchFragmentChecker;
+    Fragment_View_Applicants searchFragmentChecker=null;
 
     // INITIALIZERS //////////
 
@@ -93,7 +93,6 @@ public class Fragment_View_Single_Applicant extends Fragment {
         ProfileImage    = (ImageView) view.findViewById(R.id.ProfilePicture);
         // TODO: add the resume overlay to the xml and then uncomment the few lines here to implement it
         // ResumeOverlay = (ImageView) view.findViewById(R.id.ResumeOverlay);
-        searchFragmentChecker = (Fragment_View_Applicants) ((MainActivity)getActivity()).fm.findFragmentById(R.id.Container_left);
         applicantName   = (EditText) view.findViewById(R.id.applicantName);
         applicantPhone  = (EditText) view.findViewById(R.id.applicantPhone);
         applicantEmail  = (EditText) view.findViewById(R.id.applicantEmail);
@@ -113,8 +112,12 @@ public class Fragment_View_Single_Applicant extends Fragment {
         ProfileImage = (ImageView) view.findViewById(R.id.ProfilePicture);
         ResumeOverlay = (ImageView) view.findViewById(R.id.ResumeOverlay);
 
-//        System.out.println(ap.getProfilePictureURL());
-//        System.out.println(ap.getResumePictureURL());
+
+        if(((MainActivity)getActivity()).fm.findFragmentById(R.id.Container_left).toString().contains("Fragment_View_Applicants")){
+            searchFragmentChecker = (Fragment_View_Applicants) ((MainActivity)getActivity()).fm.findFragmentById(R.id.Container_left);
+            System.out.println("YAY!");
+
+        }
 
         if(((MainActivity)getActivity()).API_Mode) {
             final Call_Web_API CWA = new Call_Web_API();
@@ -152,7 +155,7 @@ public class Fragment_View_Single_Applicant extends Fragment {
                     CWA.doInBackground(ap, "Delete"); //Passes the SQL ID and calls the "Delete function
                 }
 
-                if(searchFragmentChecker.adapt.mOriginalValues != null){ //Means that we have performed a search and we need the original values
+                if(searchFragmentChecker!=null && searchFragmentChecker.adapt.mOriginalValues != null){ //Means that we have performed a search and we need the original values
 
                     ((MainActivity) getActivity()).viewApplicant(searchFragmentChecker.adapt.mOriginalValues.get(0));
                     ((MainActivity) getActivity()).cachedApplicantProfiles=searchFragmentChecker.adapt.mOriginalValues;
@@ -160,9 +163,9 @@ public class Fragment_View_Single_Applicant extends Fragment {
                     ((MainActivity) getActivity()).displayView("ViewSingleApplicant");
 
 
-                }else if(((MainActivity)getActivity()).cachedApplicantProfiles.size() != 0){
+                }else if(((MainActivity)getActivity()).cachedApplicantProfiles.size() != 0){ //TODO If updating or deleting from show resume screen when searched we lose all applicant profiles
                     ((MainActivity)getActivity()).removeFromCache(ap);
-                    ((MainActivity) getActivity()).viewApplicant(((MainActivity) getActivity()).cachedApplicantProfiles.get(0));
+                    ((MainActivity) getActivity()).viewApplicantResumeSave(((MainActivity) getActivity()).cachedApplicantProfiles.get(0));
                 }
                 else {
                     Toast.makeText(getContext(), "create an applicant!", Toast.LENGTH_SHORT).show();
@@ -175,6 +178,8 @@ public class Fragment_View_Single_Applicant extends Fragment {
         updateApplicant.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+
+
                 if(!Update){
                     // Set the background of the Name field as editable and focusable
                     applicantName.setInputType(InputType.TYPE_CLASS_TEXT);
@@ -223,21 +228,22 @@ public class Fragment_View_Single_Applicant extends Fragment {
                     temp.setProfilePictureURL(ap.getProfilePictureURL());
                     temp.setResumePictureURL(ap.getResumePictureURL());
                     temp.setResumeOverlayURL(ap.getResumeOverlayURL());
-                    if(searchFragmentChecker.adapt.mOriginalValues != null){ //Means that we have performed a search and we need the original values
+                    if(searchFragmentChecker!=null && searchFragmentChecker.adapt.mOriginalValues != null){ //Means that we have performed a search and we need the original values
                         ((MainActivity)getActivity()).updateCache(ap, temp);
 
                         ((MainActivity) getActivity()).viewApplicant(searchFragmentChecker.adapt.mOriginalValues.get(0));
                         ((MainActivity) getActivity()).cachedApplicantProfiles=searchFragmentChecker.adapt.mOriginalValues;
                         ((MainActivity) getActivity()).displayView("ViewSingleApplicant");
-
+                        ((MainActivity)getActivity()).viewApplicant(temp);
+                        ((MainActivity)getActivity()).setAddToBackStack(false);
 
                     }else if(((MainActivity)getActivity()).cachedApplicantProfiles.size() != 0){
                         ((MainActivity)getActivity()).updateCache(ap, temp);
-                        ((MainActivity) getActivity()).viewApplicant(((MainActivity) getActivity()).cachedApplicantProfiles.get(0));
+                        ((MainActivity) getActivity()).viewApplicantResumeSave(((MainActivity) getActivity()).cachedApplicantProfiles.get(0));
+                        ((MainActivity)getActivity()).setAddToBackStack(false);
+
                     }
-                    ((MainActivity)getActivity()).setAddToBackStack(false);
-                    ((MainActivity)getActivity()).viewApplicant(temp);
-                     CWA.doInBackground(temp,"Put"); //Updates the applicant in the web api
+                     CWA.doInBackground(temp,"Put"); //viewApplicantResumeSave the applicant in the web api
                 }
             }
         });
