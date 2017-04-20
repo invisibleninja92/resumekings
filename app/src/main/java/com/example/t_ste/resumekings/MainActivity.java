@@ -427,7 +427,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // Remove the passed in applicant profile from the cache
     public void removeFromCache(Applicant_Profile ap) {
         cachedApplicantProfiles.remove(ap);
-        // TODO: does this need an api call to remove it from the server?
     }
 
     // Set whether or not the fragment calling this should be allowed to add the fragment to the backstack

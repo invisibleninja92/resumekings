@@ -91,8 +91,6 @@ public class Fragment_View_Single_Applicant extends Fragment {
         ratingBar       = (RatingBar) view.findViewById(R.id.ratingBar);
         ResumeImage     = (ImageView) view.findViewById(R.id.ResumePicture);
         ProfileImage    = (ImageView) view.findViewById(R.id.ProfilePicture);
-        // TODO: add the resume overlay to the xml and then uncomment the few lines here to implement it
-        // ResumeOverlay = (ImageView) view.findViewById(R.id.ResumeOverlay);
         applicantName   = (EditText) view.findViewById(R.id.applicantName);
         applicantPhone  = (EditText) view.findViewById(R.id.applicantPhone);
         applicantEmail  = (EditText) view.findViewById(R.id.applicantEmail);
@@ -159,7 +157,7 @@ public class Fragment_View_Single_Applicant extends Fragment {
 
                     ((MainActivity) getActivity()).viewApplicant(searchFragmentChecker.adapt.mOriginalValues.get(0));
                     ((MainActivity) getActivity()).cachedApplicantProfiles=searchFragmentChecker.adapt.mOriginalValues;
-                    ((MainActivity)getActivity()).removeFromCache(ap);//TODO not removing
+                    ((MainActivity)getActivity()).removeFromCache(ap);
                     ((MainActivity) getActivity()).displayView("ViewSingleApplicant");
 
 
