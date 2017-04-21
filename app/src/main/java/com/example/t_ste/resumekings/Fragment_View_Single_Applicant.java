@@ -249,6 +249,8 @@ public class Fragment_View_Single_Applicant extends Fragment {
         viewResume.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View V){
+                ((MainActivity)getActivity()).resetList();
+
                 ((MainActivity)getActivity()).setAddToBackStack(false);
                 ((MainActivity)getActivity()).displayView("ViewApplicantResume");
             }
