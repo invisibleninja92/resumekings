@@ -102,18 +102,19 @@ public class Fragment_Create_New_Applicant extends Fragment {
         SaveButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View V){
+                drawFragment = (Fragment_View_Applicant_Resume) ((MainActivity)getActivity()).fm.findFragmentById(R.id.Container_right);
 
                 if(isEmpty(Name)){
                     Name.setBackgroundResource(R.drawable.backtext);
                     Name.setHintTextColor(Color.RED);
                 }
-                else if(isEmpty(Phone)){
-                    Phone.setBackgroundResource(R.drawable.backtext);
-                    Phone.setHintTextColor(Color.RED);
-                }
                 else if(isEmpty(Email)) {
                     Email.setBackgroundResource(R.drawable.backtext);
                     Email.setHintTextColor(Color.RED);
+                }
+                else if(isEmpty(Phone)){
+                    Phone.setBackgroundResource(R.drawable.backtext);
+                    Phone.setHintTextColor(Color.RED);
                 }
                 else{
                 Applicant_Profile ap = new Applicant_Profile();
@@ -124,8 +125,9 @@ public class Fragment_Create_New_Applicant extends Fragment {
                 ap.setStars((int) RatingBar.getRating());
                 ap.setProfilePicture(ProfilePicBitmap);
                 ap.setResumePicture(ResumePicBitmap);
-                    ap.setResumeOverlay(drawFragment.drawView.getResumeBitmap());
-
+                    if(drawFragment.drawView!=null) {
+                        ap.setResumeOverlay(drawFragment.drawView.getResumeBitmap());
+                    }
                 if(((MainActivity) getActivity()).API_Mode) {
                     Call_Web_API CWA = new Call_Web_API();
                     CWA.doInBackground(ap, "Post");
