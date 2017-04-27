@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * Created by t_ste on 11/1/2016.
- * The ApplicantAdapter class the creates a new personitem object and places the converView into
+ * The ApplicantAdapter class the creates a new personitem object and places the convertView into
  * The listview in the Fragment_view_applicants The adapter is important.
  */
 
@@ -26,12 +26,25 @@ public class Applicant_Adapter extends ArrayAdapter<Applicant_Profile> implement
     ArrayList<Applicant_Profile> mOriginalValues = null; // Original Values
     Context AboveContexts;
 
+    /**
+     *
+     * @param context
+     * @param arrayList
+     */
     public Applicant_Adapter(Context context, ArrayList<Applicant_Profile> arrayList){
         super(context,0,arrayList);
         this.arrayList=arrayList;
         this.AboveContexts=context;
     }
 
+    /**
+     *  Creates the object to place in the array AKA the view applicants list
+     *
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
         Applicant_Profile tempProfile = getItem(position);
@@ -48,6 +61,12 @@ public class Applicant_Adapter extends ArrayAdapter<Applicant_Profile> implement
         return convertView;
     }
 
+    /**
+     * Since our adapter is made up of a unique item we must create our own filter for search
+     *
+     *
+     * @return
+     */
     @Override
     public Filter getFilter() {
         Filter filter = new Filter() {
@@ -61,6 +80,16 @@ public class Applicant_Adapter extends ArrayAdapter<Applicant_Profile> implement
                 notifyDataSetChanged();  // notifies the data with new filtered values
             }
 
+            /**
+             * The performFiltering function is where we use the constraints entered to compare against
+             * the elements in the adapter object. we check with the name, phone number, and email
+             * it then returns the filtered array list of applicants and saved the old unfiltered list
+             * in the mOriginalValues applicant profile list. This will be used to return the main list
+             * back to normal.
+             *
+             * @param constraint The sequence of characters searched for
+             * @return
+             */
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 FilterResults results = new FilterResults();        // Holds the results of a filtering operation in values
