@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public boolean tabletMode      = false;  // Determined at startup. Don't mess with this
     public boolean addToBackStack  = false;  // Set up TAGs to be allowed or not allowed to add to the backstack
-    public boolean API_Mode        = false;  // Toggle this to true if you want to use the cloud
+    public boolean API_Mode        = true;  // Toggle this to true if you want to use the cloud
 
     //TODO: remove this eventually and make api calls
     public List<String> Names;
@@ -517,6 +517,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     }
+
     public void setUserandPass(String user, String hashedPass){
         String username = user;
         String password = hashedPass;

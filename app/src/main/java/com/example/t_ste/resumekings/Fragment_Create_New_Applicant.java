@@ -124,7 +124,8 @@ public class Fragment_Create_New_Applicant extends Fragment {
                 ap.setStars((int) RatingBar.getRating());
                 ap.setProfilePicture(ProfilePicBitmap);
                 ap.setResumePicture(ResumePicBitmap);
-                    ap.setResumeOverlay(drawFragment.drawView.getResumeBitmap());
+                // should this be wrapped?
+                ap.setResumeOverlay(drawFragment.drawView.getResumeBitmap());
 
                 if(((MainActivity) getActivity()).API_Mode) {
                     Call_Web_API CWA = new Call_Web_API();
@@ -139,7 +140,6 @@ public class Fragment_Create_New_Applicant extends Fragment {
             }
         });
         return view; // This returns the view(Fragment) with all the initializers
-
     }
 
     @Override

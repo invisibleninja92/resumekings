@@ -46,7 +46,6 @@ public class Fragment_View_Applicant_Resume extends Fragment {
     // INITIALIZERS //////////
     Applicant_Profile ap;
     private ImageButton currentPaint;
-
     private float smallBrush = 10;
     private float mediumBrush = 20;
     private float largeBrush = 30;
@@ -63,13 +62,13 @@ public class Fragment_View_Applicant_Resume extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_view_applicant_resume, container, false); //Creates the view(Fragment)
-        ((MainActivity)getActivity()).setAddToBackStack(false);
+        ((MainActivity) getActivity()).setAddToBackStack(false);
         //if WE ARE NOT IN CREATE APPLICANT THEN WE NEED TO DOWNLOAD THE PICTURES OF THE APPLICANT WE ARE VIEWING.
         drawView = (DrawingView) view.findViewById(R.id.drawing);
         drawView.setupDrawing();
 
-        if(!((MainActivity) getActivity()).fm.findFragmentById(R.id.Container_left).toString().contains("Fragment_Create_New_Applicant")) {
-            ap = ((MainActivity)getActivity()).getTempProfile();
+        if (!((MainActivity) getActivity()).fm.findFragmentById(R.id.Container_left).toString().contains("Fragment_Create_New_Applicant")) {
+            ap = ((MainActivity) getActivity()).getTempProfile();
 
             resumepic = (ImageView) view.findViewById(R.id.ResPic);
             overlaypic = (ImageView) view.findViewById(R.id.OvePic);
@@ -80,13 +79,22 @@ public class Fragment_View_Applicant_Resume extends Fragment {
                 new DownloadImageFromInternet(overlaypic).execute(ap.getResumeOverlayURL());
             }
         }
-        ImageButton drawButton  = (ImageButton) view.findViewById(R.id.drawButton);
-        ImageButton eraseButton = (ImageButton) view.findViewById(R.id.eraseButton);
-        ImageButton newButton   = (ImageButton) view.findViewById(R.id.newDrawing);
-        ImageButton saveButton  = (ImageButton) view.findViewById(R.id.saveButton);
 
+        // Create all the buttons to control drawing on the image
+        ImageButton drawButton = (ImageButton) view.findViewById(R.id.drawButton);
+        ImageButton eraseButton = (ImageButton) view.findViewById(R.id.eraseButton);
+        ImageButton newButton = (ImageButton) view.findViewById(R.id.newDrawing);
+        ImageButton saveButton = (ImageButton) view.findViewById(R.id.saveButton);
+
+        // Check if the tablet mode is active and then also check if the view applicant resume fragment is
+        // visible and if it is then remove the save button. Should not be shown in create new applicant.
+        if(((MainActivity)getActivity()).tabletMode && ((MainActivity) getActivity()).fm.findFragmentById(R.id.Container_left).toString().contains("Fragment_Create_New_Applicant"))
+            saveButton.setVisibility(view.GONE);
+
+        // Grab the paint colors from the xml view
         paintColors = (LinearLayout)view.findViewById(R.id.paintTopColors);
 
+        // Create all the buttons for the paint view.
         ImageButton orange  = (ImageButton) view.findViewById(R.id.orange);
         ImageButton maroon  = (ImageButton) view.findViewById(R.id.maroon);
         ImageButton red     = (ImageButton) view.findViewById(R.id.red);
@@ -187,6 +195,7 @@ public class Fragment_View_Applicant_Resume extends Fragment {
             }
         });
 
+        // On click listener for the draw button
         drawButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View V){
@@ -233,6 +242,7 @@ public class Fragment_View_Applicant_Resume extends Fragment {
             }
         });
 
+        // On click listener for the erase button
         eraseButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View V) {
@@ -274,6 +284,7 @@ public class Fragment_View_Applicant_Resume extends Fragment {
             }
         });
 
+        // // On click listener for the new drawing button
         newButton.setOnClickListener(new View.OnClickListener(){
          @Override
          public void onClick(View v){
@@ -299,9 +310,10 @@ public class Fragment_View_Applicant_Resume extends Fragment {
          }
         });
 
+        // On click listener for the save drawing button
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { //TODO we NEED to remove the save button from the create applicant screen
+            public void onClick(View v) {
                 AlertDialog.Builder newDialog = new AlertDialog.Builder(getContext());
                 newDialog.setTitle("Save Drawing");
                 newDialog.setMessage("Save the current drawing?");
@@ -323,6 +335,7 @@ public class Fragment_View_Applicant_Resume extends Fragment {
                         temp.setResumePictureURL(ap.getResumePictureURL()); //will be the same
                         temp.setResumeOverlayURL("http://s3.amazonaws.com/testbucketsource11/"+ap.getID()+"ResumeOverlay.png");//we know this will be the url so we can go ahead and set it
 
+                        // sync the drawing back to the server to save with the applicant
                         if(((MainActivity) getActivity()).API_Mode){
                             Call_Web_API CWA = new Call_Web_API();
                             CWA.doInBackground(temp,"Put");

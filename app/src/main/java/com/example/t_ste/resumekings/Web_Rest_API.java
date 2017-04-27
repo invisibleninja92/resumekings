@@ -15,7 +15,7 @@ public class Web_Rest_API {
 
 
 
-    private static final String BASE_URL = "RIP";
+    private static final String BASE_URL = "boob";
     private static AsyncHttpClient client = new AsyncHttpClient();
 
     /**

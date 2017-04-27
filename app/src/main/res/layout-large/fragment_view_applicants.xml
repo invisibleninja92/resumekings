@@ -24,18 +24,18 @@
 
             <EditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:id="@+id/SearchText"
                 android:orientation="horizontal"
-                android:hint="Search"
+                android:hint="    Search"
                 android:imeOptions="actionDone"
                 android:inputType="text"
                 android:fadingEdge="horizontal|vertical"
-                android:layout_marginLeft="1dp"
-                android:layout_marginRight="1dp"
-                android:layout_marginBottom="1dp"
-                android:layout_marginTop="1dp"
-                android:background="@android:drawable/editbox_background">
+                android:background="@android:drawable/editbox_background"
+                android:paddingBottom="2dp"
+                android:paddingLeft="1dp"
+                android:paddingRight="1dp"
+                android:paddingTop="2dp">
             </EditText>
 
             <ListView
