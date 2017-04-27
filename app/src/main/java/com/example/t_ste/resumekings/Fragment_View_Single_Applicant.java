@@ -273,9 +273,11 @@ public class Fragment_View_Single_Applicant extends Fragment {
             public void onClick(View view) {
                 if(!Update) {
                     System.out.println("THis: "+ap.getEmail());
+                    String[] emailList= new String[1];
+                    emailList[0] = ap.getEmail();
 
                     Intent email = new Intent(Intent.ACTION_SEND);
-                    email.putExtra(Intent.EXTRA_EMAIL, ap.getEmail());
+                    email.putExtra(Intent.EXTRA_EMAIL, emailList);
                     email.putExtra(Intent.EXTRA_SUBJECT, "subject");
                     email.putExtra(Intent.EXTRA_TEXT, "message");
                     email.setType("message/rfc822");
