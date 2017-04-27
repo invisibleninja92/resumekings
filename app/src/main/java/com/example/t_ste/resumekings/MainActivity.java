@@ -1,5 +1,7 @@
 package com.example.t_ste.resumekings;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -508,9 +510,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      *
      */
     public void resetList(){
-        //TODO put this is try catch @greg :)
         Fragment_View_Applicants fragment = null;
+        try{
         fragment = (Fragment_View_Applicants) fm.findFragmentById(R.id.Container_left);
+        }catch(Exception e){
+            return;
+        }
         if(fragment.adapt.mOriginalValues != null){
             cachedApplicantProfiles=fragment.adapt.mOriginalValues;
         }
