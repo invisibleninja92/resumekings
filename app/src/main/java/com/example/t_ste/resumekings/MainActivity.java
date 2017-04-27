@@ -416,20 +416,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return Names;
     }
 
-    // Remove the passed in applicant profile from the cache
+    /**
+     * Remove the passed in applicant profile from the cache
+     * @param ap
+     */
     public void removeFromCache(Applicant_Profile ap) {
         cachedApplicantProfiles.remove(ap);
     }
 
-    // Set whether or not the fragment calling this should be allowed to add the fragment to the backstack
+    /**
+     * Set whether or not the fragment calling this should be allowed to add the fragment to the backstack
+     * @param input
+     */
     public void setAddToBackStack(boolean input) {
         addToBackStack = input;
     }
 
-
-    // This determines whether or not the new applicant profile passed in needs to be updated in the
-    // cache of other applicant profiles. It will append the different version on to the bottom of
-    // the cache list
+    /**
+     *     This determines whether or not the new applicant profile passed in needs to be updated in the
+     *     cache of other applicant profiles. It will append the different version on to the bottom of
+     *     the cache list
+     * @param old
+     * @param updated
+     */
     public void updateCache(Applicant_Profile old, Applicant_Profile updated) {
         int i = cachedApplicantProfiles.indexOf(old);
 
@@ -465,15 +474,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    // Grab the cache from the server and save it locally to display to the user
+
+    /**
+     * This is how we initially get all the applicants from the cloud server when the application is loaded.
+     */
     public void getCache() {
         Applicant_Profile dummyProfile = new Applicant_Profile(); //need this to call the switch function its dumb I know
         // Do the GET request in the background
         cachedApplicantProfiles = CWA.doInBackground(dummyProfile,"Get");
     }
 
-    // Grab the device size from the OS and determine whether or not the tablet view or phone view
-    // should be displayed.
+
+
+    /**
+     *      Grab the device size from the OS and determine whether or not the tablet view or phone view
+     *      should be displayed.
+     */
     public void get_device_size() {
         DisplayMetrics metrics = new DisplayMetrics();
         this.getWindowManager().getDefaultDisplay().getMetrics(metrics);
@@ -486,6 +502,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tabletMode = diagonalInches >= 6.5;
     }
 
+    /**
+     * If we have searched for an applicant and clicked show resume then we must reset the applicant list
+     * with the original values before deleteing the fragment. This is due to search changing the cachedprofile list
+     *
+     */
     public void resetList(){
         //TODO put this is try catch @greg :)
         Fragment_View_Applicants fragment = null;

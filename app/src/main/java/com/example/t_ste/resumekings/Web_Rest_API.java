@@ -15,12 +15,13 @@ public class Web_Rest_API {
 
 
 
-    private static final String BASE_URL = "LOL";
+    private static final String BASE_URL = "RIP";
     private static AsyncHttpClient client = new AsyncHttpClient();
 
     /**
      * This is written to get all the applicants that are saved in the database
-     * and to place them in the cache.
+     * and to place them in the cache. is uses the AsyncHttpClient.get() function sending it
+     * the BASE_URL+ any additional URL we sent it
      *
      * @param url IP:port/Resume/
      * @param params
@@ -32,6 +33,7 @@ public class Web_Rest_API {
 
     /**
      * This is called when we are creating a new applicant.
+     * uses AsyncHttpClient.post() to send a stringEntity which is the Applicant Profile information as json
      *
      * @param url IP:Port/Resume/
      * @param entity Contains JSON of the Applicant_Profile with Images
@@ -44,6 +46,7 @@ public class Web_Rest_API {
     /**
      *
      *  This will send the URL to the API telling it to delete a specific ID.
+     *  When calling delete we place the ID in the URL to append it to the BASE_URL.
      *
      * @param url IP:Port/Resume/ID
      * @param responseHandler
@@ -55,6 +58,7 @@ public class Web_Rest_API {
     /**
      *
      *  Update gives a StringEntity of the Applicant_Profile information and calls the update URL
+     *  When updating we add the ID to the end of the URL
      *
      * @param url IP:Port/Resume/ID
      * @param entity Applicant_Profile JSON object with updated info
