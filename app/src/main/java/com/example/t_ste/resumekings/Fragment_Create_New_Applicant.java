@@ -1,5 +1,6 @@
 package com.example.t_ste.resumekings;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -173,6 +174,7 @@ public class Fragment_Create_New_Applicant extends Fragment {
 
     // Since we start a camera activity we need to get the results of that this function
     // handles the camera process
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         drawFragment = (Fragment_View_Applicant_Resume) ((MainActivity)getActivity()).fm.findFragmentById(R.id.Container_right);
@@ -194,8 +196,11 @@ public class Fragment_Create_New_Applicant extends Fragment {
                 break;
 
             case 1: //if the requestCode was 1 the user took a Resume picture
-                ResumePic.setImageBitmap(bitmap);
-                ResumePicBitmap = bitmap;
+
+                Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, 960, 760, false);
+
+                ResumePic.setImageBitmap(resizedBitmap);
+                ResumePicBitmap = resizedBitmap;
 
                 ((MainActivity) getActivity()).tempProfile.setResumePicture(bitmap);
                 ((MainActivity)getActivity()).displayView("CanvasImage");
