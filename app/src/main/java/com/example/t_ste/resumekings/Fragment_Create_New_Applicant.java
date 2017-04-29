@@ -197,10 +197,9 @@ public class Fragment_Create_New_Applicant extends Fragment {
 
             case 1: //if the requestCode was 1 the user took a Resume picture
 
-                Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, 960, 760, false);
 
-                ResumePic.setImageBitmap(resizedBitmap);
-                ResumePicBitmap = resizedBitmap;
+                ResumePic.setImageBitmap(bitmap);
+                ResumePicBitmap = bitmap;
 
                 ((MainActivity) getActivity()).tempProfile.setResumePicture(bitmap);
                 ((MainActivity)getActivity()).displayView("CanvasImage");

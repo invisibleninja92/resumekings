@@ -145,12 +145,13 @@
             android:id="@+id/ResumePicture" />
 
         <ImageView
+            android:id="@+id/ResumeOverlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:srcCompat="@android:drawable/picture_frame"
-            android:id="@+id/ResumeOverlay"
-            android:layout_weight="1"
-            android:forceHasOverlappingRendering="true" />
+            android:adjustViewBounds="false"
+            android:cropToPadding="false"
+            app:srcCompat="@android:drawable/picture_frame" />
+
     </FrameLayout>
 
 </LinearLayout>

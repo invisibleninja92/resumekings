@@ -24,16 +24,16 @@
 
     <com.example.t_ste.resumekings.DrawingView
         android:id="@+id/drawing"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="3dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginTop="3dp"
         android:layout_weight="1"
-        android:visibility="visible"
         android:background="@android:color/transparent"
-        android:forceHasOverlappingRendering="true" />
+        android:forceHasOverlappingRendering="true"
+        android:visibility="visible" />
 
     <LinearLayout
         android:orientation="horizontal"
