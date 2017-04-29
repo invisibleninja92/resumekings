@@ -75,6 +75,11 @@ public class Fragment_View_Applicant_Resume extends Fragment {
             if (ap.getResumeOverlayURL() != null) {
                 new DownloadImageFromInternet(overlaypic).execute(ap.getResumeOverlayURL());
             }
+        }else{
+            resumepic = (ImageView) view.findViewById(R.id.ResPic);
+            resumepic.setImageBitmap(((MainActivity)getActivity()).tempProfile.getResumePicture());
+            drawView.setBackground(resumepic.getDrawable());
+
         }
 
         // Create all the buttons to control drawing on the image

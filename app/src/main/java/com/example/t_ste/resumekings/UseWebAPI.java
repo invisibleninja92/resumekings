@@ -2,6 +2,10 @@ package com.example.t_ste.resumekings;
 
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 
 import com.loopj.android.http.Base64;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -40,9 +44,16 @@ public class UseWebAPI {
         JO.put("Email",AP.getEmail());
         JO.put("Number",AP.getPhoneNumber());
         JO.put("Notes",AP.getNotes());
+
+        if(AP.getResumePicture()!=null){
         JO.put("Resume", BitMapToString(AP.getResumePicture()));
-        JO.put("Profile", BitMapToString(AP.getProfilePicture()));
-        JO.put("ResumeOverlay",BitMapToString(AP.getResumeOverlay()));
+        }
+        if(AP.getProfilePicture()!=null){
+            JO.put("Profile", BitMapToString(AP.getProfilePicture()));
+        }
+        if(AP.getResumeOverlay()!=null){
+            JO.put("ResumeOverlay",BitMapToString(AP.getResumeOverlay()));
+        }
         JO.put("Rating",AP.getStars());
 
       try {

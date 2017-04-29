@@ -1,8 +1,13 @@
 package com.example.t_ste.resumekings;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ScaleDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -17,7 +22,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 
+import static android.R.attr.dropDownWidth;
+import static android.R.attr.width;
 import static android.widget.ImageView.ScaleType.FIT_CENTER;
+import static com.example.t_ste.resumekings.R.attr.height;
 
 
 /**
@@ -50,7 +58,6 @@ public class Fragment_Create_New_Applicant extends Fragment {
     Button SaveButton;
     ImageView ProfilePic;
     ImageView ResumePic;
-    ImageView ResumeOverlayPic;
     EditText Name;
     EditText Email;
     EditText Phone;
@@ -59,7 +66,6 @@ public class Fragment_Create_New_Applicant extends Fragment {
     Bitmap bitmap;
     Bitmap ProfilePicBitmap;
     Bitmap ResumePicBitmap;
-    Bitmap ResumeOverlayPicBitmap;
     Fragment_View_Applicant_Resume drawFragment;
     // INITIALIZERS //////////
 
@@ -81,6 +87,7 @@ public class Fragment_Create_New_Applicant extends Fragment {
         Notes = (EditText)view.findViewById(R.id.EditNotes);
         RatingBar = (RatingBar)view.findViewById(R.id.EditRating);
 
+
         ProfilePic.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -101,7 +108,9 @@ public class Fragment_Create_New_Applicant extends Fragment {
         SaveButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View V){
-                drawFragment = (Fragment_View_Applicant_Resume) ((MainActivity)getActivity()).fm.findFragmentById(R.id.Container_right);
+                if(((MainActivity) getActivity()).tabletMode) {
+                    drawFragment = (Fragment_View_Applicant_Resume) ((MainActivity) getActivity()).fm.findFragmentById(R.id.Container_right);
+                }
 
                 if(isEmpty(Name)){
                     Name.setBackgroundResource(R.drawable.backtext);
@@ -122,7 +131,15 @@ public class Fragment_Create_New_Applicant extends Fragment {
                 ap.setEmail(Email.getText().toString());
                 ap.setNotes(Notes.getText().toString());
                 ap.setStars((int) RatingBar.getRating());
-                ap.setProfilePicture(ProfilePicBitmap);
+                    if(ProfilePicBitmap==null) {
+                        ProfilePic.setDrawingCacheEnabled(true);
+                        ProfilePicBitmap = ProfilePic.getDrawingCache();
+                    }
+                    ap.setProfilePicture(ProfilePicBitmap);
+                    if(ResumePicBitmap==null) {
+                        ResumePic.setDrawingCacheEnabled(true);
+                        ResumePicBitmap = ResumePic.getDrawingCache();
+                    }
                 ap.setResumePicture(ResumePicBitmap);
 
                 if(drawFragment.drawView!=null) {
@@ -188,20 +205,10 @@ public class Fragment_Create_New_Applicant extends Fragment {
             case 1: //if the requestCode was 1 the user took a Resume picture
                 ResumePic.setImageBitmap(bitmap);
                 ResumePicBitmap = bitmap;
-                ResumePic.setScaleType(FIT_CENTER);
 
-                drawFragment.drawView.setBackground(ResumePic.getDrawable());
+                ((MainActivity) getActivity()).tempProfile.setResumePicture(bitmap);
+                ((MainActivity)getActivity()).displayView("CanvasImage");
 
-
-                //Checking the widths and hieghts of the image and of the drawing view
-                //Attempted to do onSizeChange but I dont think that that is the correct function.
-                //TODO figure out the resize
-                System.out.println("W: "+ ResumePic.getWidth());
-                System.out.println("H: "+ ResumePic.getHeight());
-                System.out.println("W2: "+ drawFragment.drawView.getWidth());
-                System.out.println("H2: "+ drawFragment.drawView.getHeight());
-
-                //fragment.drawView.onSizeChanged(ResumePic.getWidth(),ResumePic.getHeight(),fragment.drawView.getWidth(),fragment.drawView.getHeight());
 
                 break;
         }

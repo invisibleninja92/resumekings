@@ -322,6 +322,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             switch (TAG) {
                 case "CreateNewApplicant":
                     // Initialize the create new applicant fragment
+                    tempProfile = new Applicant_Profile();
                     newFragmentLeft = new Fragment_Create_New_Applicant();
                     newFragmentRight= new Fragment_View_Applicant_Resume();
                     break;
@@ -363,6 +364,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     // Initialize the Settings fragment
                     newFragmentLeft = new Fragment_Settings();
                     break;
+                case "CanvasImage":
+                    newFragmentRight = new Fragment_View_Applicant_Resume();
             }
         } // END Tablet view switch
 

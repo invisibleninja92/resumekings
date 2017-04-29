@@ -9,18 +9,18 @@
     android:background="#FFCCCCCC">
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/ResPic"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:visibility="gone"
         tools:ignore="ContentDescription" />
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/large"
         android:id="@+id/OvePic"
-        android:visibility="gone" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:srcCompat="@drawable/large" />
 
     <com.example.t_ste.resumekings.DrawingView
         android:id="@+id/drawing"
