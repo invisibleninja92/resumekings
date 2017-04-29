@@ -70,6 +70,8 @@ public class Fragment_View_Applicants extends Fragment {
             //
             setAdapt(new Applicant_Adapter(getContext(), cachedApplicantProfiles));
             ApplicantCacheList.setAdapter(adapt); // set the adapter of elements to the list view of applicants
+            Applicant_Profile temp = (Applicant_Profile)ApplicantCacheList.getAdapter().getItem(0);
+            ((MainActivity) getActivity()).viewApplicant(temp);
 
             searchText.addTextChangedListener(new TextWatcher() {
                 @Override
