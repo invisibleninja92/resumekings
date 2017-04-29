@@ -74,7 +74,6 @@ public class Fragment_Create_New_Applicant extends Fragment {
 
         ProfilePic = (ImageView)view.findViewById(R.id.EditProfilePic);
         ResumePic = (ImageView)view.findViewById(R.id.EditResumePic);
-        //TODO: add this to the xml
         SaveButton = (Button) view.findViewById(R.id.saveButton);
         Name = (EditText)view.findViewById(R.id.EditName);
         Email = (EditText)view.findViewById(R.id.EditEmail);

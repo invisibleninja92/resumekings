@@ -8,7 +8,6 @@ package com.example.t_ste.resumekings;
         import android.os.AsyncTask;
         import android.os.Bundle;
         import android.support.v4.app.Fragment;
-        import android.support.v4.app.FragmentTransaction;
         import android.text.InputType;
         import android.view.KeyEvent;
         import android.view.LayoutInflater;
@@ -21,7 +20,6 @@ package com.example.t_ste.resumekings;
         import android.widget.Toast;
         import java.io.InputStream;
 
-        import static android.content.ContentValues.TAG;
         import static android.graphics.Color.BLACK;
         import static android.graphics.Color.BLUE;
 
@@ -161,7 +159,7 @@ public class Fragment_View_Single_Applicant extends Fragment {
                     ((MainActivity) getActivity()).displayView("ViewSingleApplicant");
 
 
-                }else if(((MainActivity)getActivity()).cachedApplicantProfiles.size() != 0){ //TODO If updating or deleting from show resume screen when searched we lose all applicant profiles
+                }else if(((MainActivity)getActivity()).cachedApplicantProfiles.size() != 0){
                     ((MainActivity)getActivity()).removeFromCache(ap);
                     ((MainActivity) getActivity()).viewApplicantResumeSave(((MainActivity) getActivity()).cachedApplicantProfiles.get(0));
                 }
