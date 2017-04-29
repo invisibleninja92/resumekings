@@ -202,16 +202,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Sort by alphabetic order
         if (id == R.id.action_sort_alpha) {
+            try{
             Fragment_View_Applicants fragment = (Fragment_View_Applicants) fm.findFragmentById(R.id.Container_left);
             fragment.getAdapt().sort(new Comparator<Applicant_Profile>() {
                 @Override
                 public int compare(Applicant_Profile applicant_profile_1, Applicant_Profile applicant_profile_2) {
                     return applicant_profile_1.getUserName().compareToIgnoreCase(applicant_profile_2.getUserName());
-                }});
+                }});}
+            catch(Exception e){
 
+            }
         }
         // Sort by rating from highest to lowest
         else if(id == R.id.action_sort_rate) {
+            try{
             Fragment_View_Applicants fragment = (Fragment_View_Applicants) fm.findFragmentById(R.id.Container_left);
             fragment.getAdapt().sort(new Comparator<Applicant_Profile> () {
 
@@ -221,7 +225,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         return -1;
                     }
                     return 1;
-                }});
+                }});}
+            catch(Exception e){
+
+            }
         }
         // The other option in that menu is to create a new applicant profile
         else if (id == R.id.Create_New_Applicant) {
@@ -395,6 +402,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tempProfile = ap;
         displayView("ViewSingleApplicantWithSearch");
     }
+
     public void viewApplicantResumeSave(Applicant_Profile ap){
         if (ap == null){
             return;

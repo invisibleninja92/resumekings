@@ -1,13 +1,8 @@
 package com.example.t_ste.resumekings;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.ScaleDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -22,10 +17,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 
-import static android.R.attr.dropDownWidth;
-import static android.R.attr.width;
-import static android.widget.ImageView.ScaleType.FIT_CENTER;
-import static com.example.t_ste.resumekings.R.attr.height;
 
 
 /**
