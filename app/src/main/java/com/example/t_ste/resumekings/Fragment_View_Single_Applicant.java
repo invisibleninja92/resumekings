@@ -71,7 +71,6 @@ public class Fragment_View_Single_Applicant extends Fragment {
     ImageView ResumeOverlay;
     final Call_Web_API CWA = new Call_Web_API();
     Fragment_View_Applicants searchFragmentChecker=null;
-
     // INITIALIZERS //////////
 
 

@@ -15,7 +15,7 @@ public class Web_Rest_API {
 
 
 
-    private static final String BASE_URL = "RIP";
+    private static final String BASE_URL = "http://138.197.85.203:3005/resume/";
     private static AsyncHttpClient client = new AsyncHttpClient();
 
     /**

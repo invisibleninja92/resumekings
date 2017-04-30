@@ -79,7 +79,6 @@ public class Fragment_Create_New_Applicant extends Fragment {
         Notes = (EditText)view.findViewById(R.id.EditNotes);
         RatingBar = (RatingBar)view.findViewById(R.id.EditRating);
 
-
         ProfilePic.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -102,6 +101,9 @@ public class Fragment_Create_New_Applicant extends Fragment {
             public void onClick(View V){
                 if(((MainActivity) getActivity()).tabletMode) {
                     drawFragment = (Fragment_View_Applicant_Resume) ((MainActivity) getActivity()).fm.findFragmentById(R.id.Container_right);
+                }
+                if (((MainActivity) getActivity()).tabletMode) {
+                    drawFragment = (Fragment_View_Applicant_Resume)((MainActivity) getActivity()).fm.findFragmentById(R.id.Container_right);
                 }
 
                 if(isEmpty(Name)){
@@ -134,7 +136,7 @@ public class Fragment_Create_New_Applicant extends Fragment {
                     }
                 ap.setResumePicture(ResumePicBitmap);
 
-                if(drawFragment.drawView!=null) {
+                if(drawFragment.drawView != null && ((MainActivity) getActivity()).tabletMode) {
                     ap.setResumeOverlay(drawFragment.drawView.getResumeBitmap());
                 }
 

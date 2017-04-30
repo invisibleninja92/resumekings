@@ -484,9 +484,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Swap the resume picture and profile picture links over to the new applicant profile version
         cachedApplicantProfiles.get(i).setResumePicture(old.getResumePicture());
         cachedApplicantProfiles.get(i).setProfilePicture(old.getProfilePicture());
-
     }
-
 
     /**
      * This is how we initially get all the applicants from the cloud server when the application is loaded.
@@ -496,8 +494,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Do the GET request in the background
         cachedApplicantProfiles = CWA.doInBackground(dummyProfile,"Get");
     }
-
-
 
     /**
      *      Grab the device size from the OS and determine whether or not the tablet view or phone view
@@ -517,21 +513,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     /**
      * If we have searched for an applicant and clicked show resume then we must reset the applicant list
-     * with the original values before deleteing the fragment. This is due to search changing the cachedprofile list
+     * with the original values before deleting the fragment. This is due to search changing the cachedprofile list
      *
      */
     public void resetList(){
-        Fragment_View_Applicants fragment = null;
+        Fragment_View_Applicants fragment;
         try{
-        fragment = (Fragment_View_Applicants) fm.findFragmentById(R.id.Container_left);
+            fragment = (Fragment_View_Applicants) fm.findFragmentById(R.id.Container_left);
         }catch(Exception e){
             return;
         }
         if(fragment.adapt.mOriginalValues != null){
-            cachedApplicantProfiles=fragment.adapt.mOriginalValues;
+            cachedApplicantProfiles = fragment.adapt.mOriginalValues;
         }
-
-
     }
 
     public void setUserandPass(String user, String hashedPass){
