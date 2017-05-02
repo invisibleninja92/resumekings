@@ -1,0 +1,67 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.t_ste.resumekings.Fragment_View_Applicants"
+    android:orientation="horizontal"
+    android:scrollbars="vertical"
+    app:layout_scrollFlags="scroll"
+    android:background="@android:color/darker_gray">
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@android:color/background_light">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/background_light"
+            android:layout_marginRight="1dp"
+            android:scrollbarSize="15dp">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/SearchText"
+                android:orientation="horizontal"
+                android:hint="Search"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:fadingEdge="horizontal|vertical"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:layout_marginBottom="1dp"
+                android:layout_marginTop="1dp"
+                android:background="@android:drawable/editbox_background">
+            </EditText>
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/Applicant_ListView"
+                android:dividerHeight="2dp"
+                android:elevation="1dp"
+                android:layout_marginBottom="1dp"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:layout_marginTop="1dp" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/Container_right"
+        android:layout_marginBottom="1dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"
+        android:layout_marginTop="1dp"
+        android:background="@android:color/background_light">
+
+
+    </FrameLayout>
+
+</LinearLayout>

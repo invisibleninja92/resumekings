@@ -8,47 +8,28 @@
     android:scrollbars="vertical"
     app:layout_scrollFlags="scroll">
 
-    <ImageView
-        android:layout_height="90dp"
-        android:id="@+id/Resume_Applicant_ImageView"
-        android:src="@drawable/person"
-        android:textAlignment="center"
-        android:longClickable="false"
-        android:layout_width="90dp" />
-
-    <TextView
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/resume_kings"
-        android:id="@+id/textView"
-        android:textAlignment="center"
-        android:layout_marginTop="16dp" />
-
-    <SearchView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/search"
+        android:id="@+id/SearchText"
         android:orientation="horizontal"
         android:hint="Search"
-        android:imeOptions="actionSearch"
-        android:inputType="text" />
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:fadingEdge="horizontal|vertical"
+        android:background="@android:drawable/editbox_background">
+
+    </EditText>
 
     <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/Applicant_ListView" />
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="108dp">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView2"
-            android:src="@drawable/person" />
-    </RelativeLayout>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/Applicant_ListView"
+        android:dividerHeight="2dp"
+        android:elevation="1dp"
+        android:layout_marginBottom="1dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"
+        android:layout_marginTop="1dp" />
 
 </LinearLayout>

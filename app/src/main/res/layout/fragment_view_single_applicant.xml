@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -6,22 +7,120 @@
     android:orientation="vertical"
     android:scrollbars="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TREVOR LOVES BEER!"
-        android:textSize="36sp" />
-
-    <Button
-        android:text="Save"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/save_applicant" />
+        android:backgroundTint="@android:color/darker_gray">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp">
 
-    <Button
-        android:text="Delete"
+            <ImageView
+                android:layout_width="match_parent"
+                app:srcCompat="@drawable/person"
+                android:id="@+id/ResumePicture"
+                android:layout_height="70dp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/applicantName"
+                android:textSize="36sp"
+                tools:text="name"
+                android:inputType="textPersonName"
+                android:capitalize="words"
+                android:background="@android:drawable/editbox_background"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/applicantEmail"
+                android:textSize="18sp"
+                tools:text="email"
+                android:inputType="textEmailAddress"
+                android:background="@android:drawable/editbox_background" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:id="@+id/applicantPhone"
+                tools:text="phone"
+                android:inputType="phone"
+                android:background="@android:drawable/editbox_background" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/applicantNotes"
+                android:textSize="18sp"
+                tools:text="notes"
+                android:background="@android:drawable/editbox_background" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rating"
+                    android:textSize="18sp"
+                    tools:text="Rating"
+                    android:layout_centerVertical="true"
+                    android:paddingLeft="4dp" />
+
+                <RatingBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ratingBar"
+                    android:stepSize="1"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/rating"
+                    android:layout_toEndOf="@+id/rating"
+                    android:isIndicator="true" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:text="Edit Applicant"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/update_applicant"
+                    android:layout_alignParentTop="true"/>
+
+                <Button
+                    android:text="Show Resume"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/show_resume"
+                    android:layout_width="150dp" />
+
+                <Button
+                    android:text="Delete"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/delete_applicant"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/show_resume"
+                    android:layout_toEndOf="@+id/show_resume" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/delete_applicant" />
-
+        app:srcCompat="@drawable/person"
+        android:id="@+id/ProfilePicture" />
 </LinearLayout>

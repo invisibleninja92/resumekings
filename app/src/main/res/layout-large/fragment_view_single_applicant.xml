@@ -1,0 +1,156 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.t_ste.resumekings.Fragment_View_Single_Applicant"
+    android:orientation="horizontal"
+    android:scrollbars="vertical">
+
+    <FrameLayout
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:background="@android:color/darker_gray">
+
+        <ScrollView
+            android:layout_height="match_parent"
+            android:layout_width="299dp"
+            android:background="@android:color/background_light">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@android:color/background_light"
+                android:layout_marginRight="2dp"
+                android:paddingLeft="2dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    app:srcCompat="@drawable/person"
+                    android:id="@+id/ProfilePicture"
+                    android:layout_height="100dp" />
+
+                <EditText
+                    android:id="@+id/applicantName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autoText="false"
+                    android:background="@android:drawable/editbox_background"
+                    android:capitalize="words"
+                    android:inputType="textPersonName"
+                    android:textSize="36sp"
+                    tools:clickable="true"
+                    tools:text="name" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/applicantEmail"
+                    android:textSize="18sp"
+                    tools:text="email"
+                    android:inputType="textEmailAddress"
+                    android:background="@android:drawable/editbox_background" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:id="@+id/applicantPhone"
+                    tools:text="phone"
+                    android:inputType="phone"
+                    android:background="@android:drawable/editbox_background" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/applicantNotes"
+                    android:textSize="18sp"
+                    tools:text="notes"
+                    android:background="@android:drawable/editbox_background" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="2dp"
+                    android:paddingRight="2dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rating"
+                        android:textSize="18sp"
+                        tools:text="Rating"
+                        android:layout_centerVertical="true"
+                        android:paddingLeft="4dp" />
+
+                    <RatingBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ratingBar"
+                        android:stepSize="1"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@+id/rating"
+                        android:layout_toEndOf="@+id/rating"
+                        android:isIndicator="true" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <Button
+                        android:text="Edit Applicant"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/update_applicant"
+                        android:layout_alignParentTop="true"
+                        android:layout_width="150dp" />
+
+                    <Button
+                        android:text="Delete"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/delete_applicant"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@+id/show_resume"
+                        android:layout_toEndOf="@+id/show_resume"
+                        android:layout_width="150dp" />
+
+                    <Button
+                        android:text="Show Resume"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/show_resume"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/Container_right"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginTop="2dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/person"
+            android:id="@+id/ResumePicture" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@android:drawable/picture_frame"
+            android:id="@+id/ResumeOverlay"
+            android:layout_weight="1"
+            android:forceHasOverlappingRendering="true" />
+    </FrameLayout>
+
+</LinearLayout>

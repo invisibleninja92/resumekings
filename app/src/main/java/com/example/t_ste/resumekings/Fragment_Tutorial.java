@@ -1,16 +1,11 @@
 package com.example.t_ste.resumekings;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.RatingBar;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,17 +14,14 @@ import android.widget.RatingBar;
  * Use the {@link Fragment_Tutorial#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Fragment_Tutorial extends Fragment{
+public class Fragment_Tutorial extends Fragment {
+    // THE STANDARD BLOCK FOR A FRAGMENT DONT EDIT IN HERE ///////////
+    public Fragment_Tutorial() {}
 
-    public Fragment_Tutorial() {
-        // Required empty public constructor
+    public String getName(){
+        return "Tutorial";
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters
-     * @return A new instance of Fragment_Tutorial.
-     */
     public static Fragment_Tutorial newInstance() {
         return new Fragment_Tutorial();
     }
@@ -38,6 +30,13 @@ public class Fragment_Tutorial extends Fragment{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+    // THE STANDARD BLOCK FOR A FRAGMENT DONT EDIT IN HERE ///////////
+
+
+    // INITIALIZERS //////////
+
+
+    // INITIALIZERS //////////
 
     @Override
     // The onCreateView is where you will create the fragment and all the listeners in the fragment
@@ -45,15 +44,27 @@ public class Fragment_Tutorial extends Fragment{
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tutorial, container, false); //create the view of the fragment
         // the next lines are finding the elements that are inside the fragment to then set the listeners and things
+        ((MainActivity)getActivity()).setAddToBackStack(true);
 
         return view; // This returns the view(Fragment) with all the initializers
     }
 
-    public void onBackPressed() {
-        getFragmentManager().popBackStack();
-    }
+    @Override
+    public void onResume() {
+        super.onResume();
 
-    public String getName(){
-        return "Tutorial";
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                    // handle back button's click listener
+                    getActivity().onBackPressed();
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 }

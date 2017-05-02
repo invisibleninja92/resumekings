@@ -2,6 +2,7 @@ package com.example.t_ste.resumekings;
 
 import android.graphics.Bitmap;
 
+
 /**
  * Created by t_ste on 11/1/2016.
  * This is the data structure for the Applicant_Profile there is an array of these objects in the main
@@ -11,10 +12,16 @@ public class Applicant_Profile {
 
     private Bitmap ProfilePicture;
     private Bitmap ResumePicture;
-    public String UserName;
+    private Bitmap ResumeOverlay;
+    public  String UserName;
     private String Email;
     private String PhoneNumber;
     private String Notes;
+    private String ProfilePictureURL;
+    private String ResumePictureURL;
+    private String ResumeOverlayURL;
+    private String ID;
+    private int Stars;
 
     public int getStars() {
         return Stars;
@@ -23,8 +30,6 @@ public class Applicant_Profile {
     public void setStars(int stars) {
         Stars = stars;
     }
-
-    private int Stars;
 
     public Bitmap getProfilePicture() {
         return ProfilePicture;
@@ -76,6 +81,50 @@ public class Applicant_Profile {
 
     @Override
     public String toString() {
-        return UserName+"\n"+Email;
+        return "Name:"+UserName+" Email:"+Email+" PhoneNumber: "+PhoneNumber+" Picture: "+ProfilePicture;
+    }
+
+    public String getProfilePictureURL() {
+
+        return ProfilePictureURL;
+    }
+
+    public void setProfilePictureURL(String profilePictureURL) {
+
+        ProfilePictureURL = profilePictureURL;
+    }
+
+    public String getResumePictureURL() {
+
+        return ResumePictureURL;
+    }
+
+    public void setResumePictureURL(String resumePictureURL) {
+        ResumePictureURL = resumePictureURL;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+
+    public String getResumeOverlayURL() {
+        return ResumeOverlayURL;
+    }
+
+    public void setResumeOverlayURL(String resumeOverlayURL) {
+        ResumeOverlayURL = resumeOverlayURL;
+    }
+
+    public Bitmap getResumeOverlay() {
+        return ResumeOverlay;
+    }
+
+    public void setResumeOverlay(Bitmap resumeOverlay) {
+        ResumeOverlay = resumeOverlay;
     }
 }
+
