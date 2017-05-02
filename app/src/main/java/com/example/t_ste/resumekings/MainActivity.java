@@ -295,13 +295,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 case "ViewSingleApplicant":
                     // Initialize the view single applicant fragment
-                    Fragment_View_Applicants fragment = (Fragment_View_Applicants) fm.findFragmentById(R.id.Container_left);
-                    break;
-
-                case "ViewSingleApplicantWithSearch":
                     resetList();
                     newFragmentLeft = new Fragment_View_Single_Applicant();
                     break;
+
 
                 case "ViewApplicantResume":
                     // Initialize the view applicant resume fragment
@@ -332,12 +329,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 case "CreateNewApplicant":
                     // Initialize the create new applicant fragment
                     tempProfile = new Applicant_Profile();
+                    resetList();// LOL this works and IDK how :)
+
                     newFragmentLeft = new Fragment_Create_New_Applicant();
                     newFragmentRight= new Fragment_View_Applicant_Resume();
                     break;
 
                 case "ViewApplicants":
                     // Initialize the view applicants fragment
+
                     newFragmentLeft = new Fragment_View_Applicants();
                     newFragmentRight = new Fragment_View_Single_Applicant();
                     break;
@@ -349,6 +349,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     break;
 
                 case "ViewSingleApplicant":
+                    resetList();// LOL this works and IDK how :)
                     newFragmentLeft = new Fragment_View_Applicants();
                     newFragmentRight = new Fragment_View_Single_Applicant();
                     break;
@@ -520,12 +521,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Fragment_View_Applicants fragment;
         try{
             fragment = (Fragment_View_Applicants) fm.findFragmentById(R.id.Container_left);
+            if(fragment.adapt.mOriginalValues != null){
+                cachedApplicantProfiles = fragment.adapt.mOriginalValues;
+            }
         }catch(Exception e){
             return;
         }
-        if(fragment.adapt.mOriginalValues != null){
-            cachedApplicantProfiles = fragment.adapt.mOriginalValues;
-        }
+
     }
 
     public void setUserandPass(String user, String hashedPass){
